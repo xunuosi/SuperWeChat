@@ -3,24 +3,14 @@
     android:id="@+id/splash_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/em_splash" >
+    android:background="@color/black_deep" >
 
     <ImageView
         android:id="@+id/iv_splash_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/em_splash_logo" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/iv_splash_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dip"
-        android:text="@string/app_slogon"
-        android:textColor="#fff"
-        android:textSize="30sp" />
+        android:src="@drawable/icon_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +26,8 @@
             android:text="@string/app_name"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:typeface="normal" >
+            android:typeface="normal"
+            android:id="@+id/textView2">
         </TextView>
 
         <TextView
@@ -44,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:text="2.1.7"
+            android:text="1.0.0"
             android:textColor="#fff"
             android:textSize="20sp"
             tools:ignore="HardcodedText">
