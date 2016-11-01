@@ -106,7 +106,6 @@ public class RegisterActivity extends BaseActivity {
             pd.setMessage(getResources().getString(R.string.Is_the_registered));
             pd.show();
             registerLocService();
-            registerHXService();
         }
     }
 
@@ -115,25 +114,21 @@ public class RegisterActivity extends BaseActivity {
                 , new OkHttpUtils.OnCompleteListener<Result>() {
                     @Override
                     public void onSuccess(Result result) {
-                        if (result != null && result.isRetMsg()) {
-                            L.e(TAG, "retCode:" + result.getRetCode());
-                            // 本地服务器注册成功，注册环信服务器
-                            registerHXService();
+                        if (result == null) {
+                            CommonUtils.showShortToast(R.string.Registration_failed);
+                            pd.dismiss();
                         } else {
-                            if (result == null) {
-                                pd.dismiss();
-                                return;
-                            }
-                            if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
-                                L.e(TAG, "retCode:" + result.getRetCode());
+                            if (result.isRetMsg()) {
+                                L.e(TAG, "retCode2:" + result.getRetCode());
+                                registerHXService();
+                            } else if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
+                                L.e(TAG, "retCode3:" + result.getRetCode());
                                 CommonUtils.showShortMsgToast(result.getRetCode());
-                                pd.dismiss();
                             } else {
-                                pd.dismiss();
-                                L.e(TAG, "retCode:" + result.getRetCode());
-                                CommonUtils.showShortMsgToast(result.getRetCode());
+                                L.e(TAG, "retCode4:" + result.getRetCode());
                                 unRegister();
                             }
+                            pd.dismiss();
                         }
                     }
 
@@ -164,6 +159,7 @@ public class RegisterActivity extends BaseActivity {
                 } catch (final HyphenateException e) {
                     runOnUiThread(new Runnable() {
                         public void run() {
+                            unRegister();
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
                             int errorCode = e.getErrorCode();
