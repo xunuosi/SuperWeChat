@@ -49,4 +49,20 @@ public class NetDao {
                 .execute(listener);
     }
 
+    /**
+     * 取消注册的方法
+     * @param mcontext
+     * @param username
+     * @param listener
+     */
+    public static void unregister(Context mcontext, String username
+            ,OkHttpUtils.OnCompleteListener<Result> listener) {
+
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_UNREGISTER)
+                .addParam(I.User.USER_NAME, username)
+                .targetClass(Result.class)
+                .execute(listener);
+    }
+
 }
