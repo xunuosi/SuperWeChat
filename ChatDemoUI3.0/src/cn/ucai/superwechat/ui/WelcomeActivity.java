@@ -8,6 +8,7 @@ import cn.ucai.superwechat.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.superwechat.utils.MFGT;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -22,10 +23,10 @@ public class WelcomeActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login_wel:
-
+                MFGT.gotoLogin(this);
                 break;
             case R.id.btn_register_wel:
-                startActivity(new Intent(this, RegisterActivity.class));
+                MFGT.gotoRegister(this);
                 break;
         }
     }
