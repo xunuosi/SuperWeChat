@@ -15,6 +15,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/rp_back_arrow_white"
         android:visibility="gone"
+        android:contentDescription="@string/register"
         />
     <TextView
         android:id="@+id/ctitle_tvTitle"
