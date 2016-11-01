@@ -66,8 +66,8 @@
 
     <!--contact-->
     <string name="addcontact_title">添加联系人</string>
-    <string name="addcontact_search">正在查找联系人...</string>
-    <string name="addcontact_adding">正在添加...</string>
+    <string name="addcontact_search">正在查找联系人…</string>
+    <string name="addcontact_adding">正在添加…</string>
     <string name="addcontact_send_msg">发送</string>
     <string name="addcontact_send_msg_title">你需要发送验证申请,等对方通过</string>
     <string name="addcontact_send_msg_prefix">我是</string>
@@ -103,4 +103,44 @@
     <string name="setting_txt_tongyong">通用</string>
     <string name="setting_txt_about">关于微信</string>
     <string name="setting_btn_exit">退出登录</string>
+
+    <!--msg-->
+    <string name="msg_101">register username exists</string>
+    <string name="msg_102">register fail</string>
+    <string name="msg_103">unregister fail</string>
+    <string name="msg_104">user search fail</string>
+    <string name="msg_105">login unknow user</string>
+    <string name="msg_106">login error password</string>
+    <string name="msg_107">login success</string>
+    <string name="msg_108">user same nick</string>
+    <string name="msg_109">user update nick fail</string>
+    <string name="msg_110">user same password</string>
+    <string name="msg_111">user update password fail</string>
+    <string name="msg_112">location upload fail</string>
+    <string name="msg_113">location update fail</string>
+    <string name="msg_201">register upload avatar fail</string>
+    <string name="msg_202">upload avatar fail</string>
+    <string name="msg_301">contact firended</string>
+    <string name="msg_302">contact add fail</string>
+    <string name="msg_303">contact del fail</string>
+    <string name="msg_304">get contact all fail</string>
+    <string name="msg_305">get contact pages fail</string>
+    <string name="msg_401">group hxid exists</string>
+    <string name="msg_402">group create fail</string>
+    <string name="msg_403">group add member fail</string>
+    <string name="msg_404">group get members fail</string>
+    <string name="msg_405">group unkonw</string>
+    <string name="msg_406">group same name</string>
+    <string name="msg_407">group update name fail</string>
+    <string name="msg_408">group delete member fail</string>
+    <string name="msg_409">group delete members fail</string>
+    <string name="msg_410">group delete fail</string>
+    <string name="msg_411">group find by gourp id fail</string>
+    <string name="msg_412">group find by hx id fail</string>
+    <string name="msg_413">group find by user name fail</string>
+    <string name="msg_414">group find by group name fail</string>
+    <string name="msg_415">public group fail</string>
+    <string name="msg_501">location get fail</string>
+    <string name="msg_999">unknow</string>
+    <string name="msg_1">illegal request</string>
 </resources>

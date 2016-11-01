@@ -91,7 +91,7 @@
     <string name="jd_pay_title">京东支付</string>
     <string name="money_qa_title">帮助</string>
     <string name="forget_pwd_title">找回密码</string>
-    <string name="loading_msg">加载中...</string>
+    <string name="loading_msg">加载中…</string>
     <string name="title_small_change">零钱</string>
     <string name="title_add_bankcard">添加银行卡</string>
     <string name="title_set_pay_pwd">设置支付密码</string>
@@ -248,5 +248,6 @@
     <string name="single_withdraw_min_limit">单笔提现最少%1$s元</string>
     <string name="str_choose_camera">选择相机</string>
     <string name="str_choose_album">选择相册</string>
+
 
 </resources>

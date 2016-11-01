@@ -31,10 +31,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 
 public class RegisterActivity extends BaseActivity {
+    private static final String TAG = RegisterActivity.class.getSimpleName();
+
     @BindView(R.id.ctitle_ivback)
     ImageView mCtitleIvback;
     @BindView(R.id.ctitle_tvTitle)
@@ -51,6 +57,7 @@ public class RegisterActivity extends BaseActivity {
     RegisterActivity mContext;
     String username;
     String pwd;
+    String nick;
     ProgressDialog pd = null;
 
     @Override
@@ -66,7 +73,7 @@ public class RegisterActivity extends BaseActivity {
     public void register() {
         username = mEtUsername.getText().toString().trim();
         pwd = mEtPassword.getText().toString().trim();
-        String nick = mEtNick.getText().toString().trim();
+        nick = mEtNick.getText().toString().trim();
         String confirm_pwd = mEtRepassword.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
             CommonUtils.showShortToast(R.string.User_name_cannot_be_empty);
@@ -97,10 +104,27 @@ public class RegisterActivity extends BaseActivity {
             pd = new ProgressDialog(this);
             pd.setMessage(getResources().getString(R.string.Is_the_registered));
             pd.show();
-
+            registerLocService();
             registerHXService();
-
         }
+    }
+
+    private void registerLocService() {
+        NetDao.register(mContext, username, nick, pwd
+                , new OkHttpUtils.OnCompleteListener<Result>() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        if (result != null && result.isRetMsg()) {
+                            pd.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        L.e(TAG, "error:" + error);
+                        CommonUtils.showShortToast(error);
+                    }
+                });
     }
 
     private void registerHXService() {
@@ -122,6 +146,7 @@ public class RegisterActivity extends BaseActivity {
                 } catch (final HyphenateException e) {
                     runOnUiThread(new Runnable() {
                         public void run() {
+                            unRegister();
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
                             int errorCode = e.getErrorCode();
@@ -141,6 +166,21 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         }).start();
+    }
+
+    private void unRegister() {
+        NetDao.unregister(mContext, username
+                , new OkHttpUtils.OnCompleteListener<Result>() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        L.e(TAG, "unRegister");
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
     }
 
     @Override
