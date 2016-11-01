@@ -320,7 +320,7 @@
     <string name="toast_nick_not_isnull">nickname cannot be empty!</string>
     <string name="dl_update_nick">update nickname</string>
     <string name="dl_update_photo">update photo</string>
-    <string name="dl_waiting">waiting...</string>
+    <string name="dl_waiting">waiting…</string>
     <string name="toast_updatenick_success">update nickname success!</string>
     <string name="toast_updatenick_fail">update nickname fail!</string>
     <string name="toast_updatephoto_success">update photo success!</string>
@@ -335,5 +335,45 @@
 
     <!-- lint -->
     <string name="delete_contact">Delete contact</string>
-    <string name="loading_more">loading more...</string>
+    <string name="loading_more">loading more…</string>
+
+    <!--msg-->
+    <String name="msg_101">register username exists</String>
+    <String name="msg_102">register fail</String>
+    <String name="msg_103">unregister fail</String>
+    <String name="msg_104">user search fail</String>
+    <String name="msg_105">login unknow user</String>
+    <String name="msg_106">login error password</String>
+    <String name="msg_107">login success</String>
+    <String name="msg_108">user same nick</String>
+    <String name="msg_109">user update nick fail</String>
+    <String name="msg_110">user same password</String>
+    <String name="msg_111">user update password fail</String>
+    <String name="msg_112">location upload fail</String>
+    <String name="msg_113">location update fail</String>
+    <String name="msg_201">register upload avatar fail</String>
+    <String name="msg_202">upload avatar fail</String>
+    <String name="msg_301">contact firended</String>
+    <String name="msg_302">contact add fail</String>
+    <String name="msg_303">contact del fail</String>
+    <String name="msg_304">get contact all fail</String>
+    <String name="msg_305">get contact pages fail</String>
+    <String name="msg_401">group hxid exists</String>
+    <String name="msg_402">group create fail</String>
+    <String name="msg_403">group add member fail</String>
+    <String name="msg_404">group get members fail</String>
+    <String name="msg_405">group unkonw</String>
+    <String name="msg_406">group same name</String>
+    <String name="msg_407">group update name fail</String>
+    <String name="msg_408">group delete member fail</String>
+    <String name="msg_409">group delete members fail</String>
+    <String name="msg_410">group delete fail</String>
+    <String name="msg_411">group find by gourp id fail</String>
+    <String name="msg_412">group find by hx id fail</String>
+    <String name="msg_413">group find by user name fail</String>
+    <String name="msg_414">group find by group name fail</String>
+    <String name="msg_415">public group fail</String>
+    <String name="msg_501">location get fail</String>
+    <String name="msg_999">unknow</String>
+    <String name="msg_1">illegal request</String>
 </resources>
