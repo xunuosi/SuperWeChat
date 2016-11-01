@@ -61,7 +61,7 @@ public class ContextMenuActivity extends BaseActivity {
 				//red packet code : 屏蔽红包消息的撤回功能
 				|| message.getBooleanAttribute(RedPacketConstant.MESSAGE_ATTR_IS_RED_PACKET_MESSAGE, false)) {
 			    //end of red packet code
-			View v = (View) findViewById(R.id.forward);
+			View v = findViewById(R.id.forward);
 	        if (v != null) {
 	            v.setVisibility(View.GONE);
 	        }
