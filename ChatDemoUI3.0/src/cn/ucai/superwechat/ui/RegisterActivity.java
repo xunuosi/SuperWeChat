@@ -29,6 +29,7 @@ import com.hyphenate.exceptions.HyphenateException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
@@ -115,7 +116,24 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Result result) {
                         if (result != null && result.isRetMsg()) {
-                            pd.dismiss();
+                            L.e(TAG, "retCode:" + result.getRetCode());
+                            // 本地服务器注册成功，注册环信服务器
+                            registerHXService();
+                        } else {
+                            if (result == null) {
+                                pd.dismiss();
+                                return;
+                            }
+                            if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
+                                L.e(TAG, "retCode:" + result.getRetCode());
+                                CommonUtils.showShortMsgToast(result.getRetCode());
+                                pd.dismiss();
+                            } else {
+                                pd.dismiss();
+                                L.e(TAG, "retCode:" + result.getRetCode());
+                                CommonUtils.showShortMsgToast(result.getRetCode());
+                                unRegister();
+                            }
                         }
                     }
 
@@ -140,13 +158,12 @@ public class RegisterActivity extends BaseActivity {
                             // save current user
                             SuperWeChatHelper.getInstance().setCurrentUserName(username);
                             Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
-                            finish();
+                            MFGT.finish(mContext);
                         }
                     });
                 } catch (final HyphenateException e) {
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            unRegister();
                             if (!RegisterActivity.this.isFinishing())
                                 pd.dismiss();
                             int errorCode = e.getErrorCode();
@@ -161,6 +178,7 @@ public class RegisterActivity extends BaseActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed), Toast.LENGTH_SHORT).show();
                             }
+                            L.e(TAG, "HX Fail");
                         }
                     });
                 }
