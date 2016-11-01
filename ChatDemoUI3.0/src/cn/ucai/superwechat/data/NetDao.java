@@ -2,7 +2,6 @@ package cn.ucai.superwechat.data;
 
 import android.content.Context;
 
-import java.io.File;
 
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.bean.Result;
