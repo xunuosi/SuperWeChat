@@ -46,6 +46,7 @@ import com.hyphenate.easeui.controller.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseNotifier.EaseNotificationInfoProvider;
@@ -91,8 +92,12 @@ public class SuperWeChatHelper {
 	private static SuperWeChatHelper instance = null;
 	
 	private SuperWeChatModel demoModel = null;
-	
-	/**
+
+    /**
+     * sync login user info
+     */
+    private User mUser = null;
+    /**
      * sync groups status listener
      */
     private List<DataSyncListener> syncGroupsListeners;
@@ -917,7 +922,7 @@ public class SuperWeChatHelper {
 	 /**
      * update user list to cache and database
      *
-     * @param contactList
+     * @param contactInfoList
      */
     public void updateContactList(List<EaseUser> contactInfoList) {
          for (EaseUser u : contactInfoList) {
@@ -1240,4 +1245,18 @@ public class SuperWeChatHelper {
         easeUI.popActivity(activity);
     }
 
+    /**
+     * 操作登录信息的方法
+     */
+    public void setCurrentUser(User user) {
+        mUser = user;
+    }
+
+    public User getCurrentUser() {
+        if (mUser == null) {
+            mUser = new User();
+            mUser.setMUserName(EMClient.getInstance().getCurrentUser());
+        }
+        return mUser;
+    }
 }
