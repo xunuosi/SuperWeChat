@@ -845,7 +845,7 @@ public class SuperWeChatHelper {
 	/**
 	 * update contact list
 	 * 
-	 * @param contactList
+	 * @param aContactList
 	 */
 	public void setContactList(Map<String, EaseUser> aContactList) {
 		if(aContactList == null){
