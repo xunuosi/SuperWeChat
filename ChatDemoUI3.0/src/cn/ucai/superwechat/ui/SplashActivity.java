@@ -1,5 +1,6 @@
 package cn.ucai.superwechat.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
@@ -7,8 +8,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.User;
+
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.db.UserDao;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 
 /**
@@ -16,13 +21,15 @@ import cn.ucai.superwechat.utils.MFGT;
  *
  */
 public class SplashActivity extends BaseActivity {
-
-	private static final int sleepTime = 2000;
+    private static final String TAG = SplashActivity.class.getSimpleName();
+    private static final int sleepTime = 2000;
+    Context mContext;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		setContentView(R.layout.em_activity_splash);
 		super.onCreate(arg0);
+        mContext = SplashActivity.this;
 
 		RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.splash_root);
 		TextView versionText = (TextView) findViewById(R.id.tv_version);
@@ -44,7 +51,13 @@ public class SplashActivity extends BaseActivity {
 					long start = System.currentTimeMillis();
 					EMClient.getInstance().groupManager().loadAllGroups();
 					EMClient.getInstance().chatManager().loadAllConversations();
-					long costTime = System.currentTimeMillis() - start;
+					// 从数据库中得到登录用户的信息并保存到内存中
+                    String userName = EMClient.getInstance().getCurrentUser();
+                    UserDao dao = new UserDao(mContext);
+                    User user = dao.getUser(userName);
+                    L.e(TAG, "user:" + user);
+                    SuperWeChatHelper.getInstance().setCurrentUser(user);
+                    long costTime = System.currentTimeMillis() - start;
 					//wait
 					if (sleepTime - costTime > 0) {
 						try {
