@@ -37,43 +37,45 @@
         android:singleLine="true"
         android:textSize="18sp"/>
 
-    <LinearLayout
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_bg_green"
+        android:gravity="center"
+        android:onClick="login"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_login_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="10dp"
+        android:text="@string/login_txt_qustion"
+        android:textColor="#158af7"
+        android:textSize="16sp"
+        android:gravity="right"
+        android:paddingRight="20dp"
+        />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_bg_gray"
-            android:gravity="center"
-            android:onClick="register"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:text="@string/register"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_bg_green"
-            android:gravity="center"
-            android:onClick="login"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:text="@string/login"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
-    </LinearLayout>
-
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/btn_bg_gray"
+        android:gravity="center"
+        android:onClick="register"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp"
+        android:text="@string/register"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"/>
 </LinearLayout>
