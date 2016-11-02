@@ -1,6 +1,5 @@
 package com.hyphenate.easeui.domain;
 
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 
 import java.io.Serializable;
 

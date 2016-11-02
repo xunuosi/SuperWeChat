@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 
 import butterknife.BindView;
@@ -233,7 +234,7 @@ public class LoginActivity extends BaseActivity {
                 , new OkHttpUtils.OnCompleteListener<String>() {
                     @Override
                     public void onSuccess(String json) {
-                        Result result = ResultUtils.getResultFromJson(json, UserBean.class);
+                        Result result = ResultUtils.getResultFromJson(json, User.class);
                         L.e(TAG, "result:" + result);
                         if (result != null && result.isRetMsg()) {
                             loginSuccess();
