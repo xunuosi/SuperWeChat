@@ -44,6 +44,7 @@ import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.data.UserBean;
 import cn.ucai.superwechat.db.SuperWeChatDBManager;
+import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MD5;
 import cn.ucai.superwechat.utils.MFGT;
@@ -235,7 +236,11 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(String json) {
                         Result result = ResultUtils.getResultFromJson(json, UserBean.class);
                         L.e(TAG, "result:" + result);
-                        loginSuccess();
+                        if (result != null && result.isRetMsg()) {
+                            loginSuccess();
+                        } else {
+                            CommonUtils.showShortToast(R.string.Login_failed);
+                        }
                     }
 
                     @Override
