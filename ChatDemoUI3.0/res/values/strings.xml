@@ -143,4 +143,5 @@
     <string name="msg_501">location get fail</string>
     <string name="msg_999">unknow</string>
     <string name="msg_1">illegal request</string>
+    <string name="wei_xin">WeiXin</string>
 </resources>
