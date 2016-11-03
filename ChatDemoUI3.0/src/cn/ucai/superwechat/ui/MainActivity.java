@@ -235,7 +235,7 @@ public class MainActivity extends BaseActivity {
         mAdpter.addFragment(new ConversationListFragment(),getString(R.string.app_name));
         mAdpter.addFragment(new ContactListFragment(),getString(R.string.contacts));
         mAdpter.addFragment(new DiscoverFragment(),getString(R.string.discover));
-        mAdpter.addFragment(new ConversationListFragment(),getString(R.string.app_name));
+        mAdpter.addFragment(new MyCenterFragment(),getString(R.string.me));
         // 设置pager元素为四个
         mMainVP.setOffscreenPageLimit(4);
         mAdpter.notifyDataSetChanged();

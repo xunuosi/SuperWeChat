@@ -1,0 +1,284 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/black3"
+              tools:context="cn.ucai.superwechat.ui.MyCenterFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/mycenter_personInfo_layout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/mycenter_ivAvatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/default_avatar"
+                    />
+
+                <TextView
+                    android:id="@+id/mycenter_tvNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/mycenter_ivAvatar"
+                    android:gravity="center_vertical"
+                    android:paddingTop="5dp"
+                    android:text="@string/nickname"
+                    android:textColor="@color/black2"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/mycenter_tvAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/mycenter_tvNick"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/mycenter_ivAvatar"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:text="@string/official_accounts"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/em_icon_pwd"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/mycenter_cam_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/mycenter_ivCam"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_me_photo"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/mycenter_ivCam"
+                        android:gravity="center_vertical"
+                        android:text="@string/profile_txt_album"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_color"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/mycenter_col_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/mycenter_ivCol"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_me_collect"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/mycenter_ivCol"
+                        android:gravity="center_vertical"
+                        android:text="@string/profile_txt_collect"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/mycenter_wallet_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/mycenter_ivMon"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_me_money"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/mycenter_ivMon"
+                        android:gravity="center_vertical"
+                        android:text="@string/profile_txt_money"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_color"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/mycenter_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/mycenter_ivCard"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_me_card"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/mycenter_ivCard"
+                        android:gravity="center_vertical"
+                        android:text="@string/profile_txt_card"
+                        android:textColor="@color/black2"
+                        android:textSize="18sp"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/mycenter_smail_layout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:paddingBottom="2dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                >
+
+                <ImageView
+                    android:id="@+id/mycenter_ivSmail"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_me_smail"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/mycenter_ivSmail"
+                    android:gravity="center_vertical"
+                    android:text="@string/profile_txt_smail"
+                    android:textColor="@color/black2"
+                    android:textSize="18sp"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mycenter_setting_layout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:paddingBottom="2dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                >
+
+                <ImageView
+                    android:id="@+id/mycenter_ivSetting"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_me_setting"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/mycenter_ivSetting"
+                    android:gravity="center_vertical"
+                    android:text="@string/profile_txt_setting"
+                    android:textColor="@color/black2"
+                    android:textSize="18sp"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
