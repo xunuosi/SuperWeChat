@@ -39,6 +39,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseContactList;
+import com.hyphenate.easeui.widget.EaseTitleBar;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public class EaseContactListFragment extends EaseBaseFragment {
     protected EaseContactList contactListLayout;
     protected boolean isConflict;
     protected FrameLayout contentContainer;
-    
+    EaseTitleBar mEaseTitleBar;
+
     private Map<String, EaseUser> contactsMap;
 
     
@@ -85,6 +87,10 @@ public class EaseContactListFragment extends EaseBaseFragment {
 
     @Override
     protected void initView() {
+        // 修改环信标题头不显示
+        mEaseTitleBar = (EaseTitleBar) getActivity().findViewById(R.id.title_bar);
+        mEaseTitleBar.setVisibility(View.GONE);
+
         contentContainer = (FrameLayout) getView().findViewById(R.id.content_container);
         
         contactListLayout = (EaseContactList) getView().findViewById(R.id.contact_list);        

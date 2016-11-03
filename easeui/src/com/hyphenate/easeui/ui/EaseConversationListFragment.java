@@ -27,6 +27,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.widget.EaseConversationList;
+import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +47,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected List<EMConversation> conversationList = new ArrayList<EMConversation>();
     protected EaseConversationList conversationListView;
     protected FrameLayout errorItemContainer;
+    EaseTitleBar mEaseTitleBar;
 
     protected boolean isConflict;
     
@@ -72,6 +74,10 @@ public class EaseConversationListFragment extends EaseBaseFragment{
 
     @Override
     protected void initView() {
+        // 修改环信标题头不显示
+        mEaseTitleBar = (EaseTitleBar) getActivity().findViewById(R.id.title_bar);
+        mEaseTitleBar.setVisibility(View.GONE);
+
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         conversationListView = (EaseConversationList) getView().findViewById(R.id.list);
         query = (EditText) getView().findViewById(R.id.query);
