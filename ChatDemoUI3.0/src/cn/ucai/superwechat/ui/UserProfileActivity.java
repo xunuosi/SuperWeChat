@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 
 import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
-import com.hyphenate.chat.EMClient;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.R;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -88,7 +87,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 			tvUsername.setText(username);
 			EaseUserUtils.setAppUserNick(username, tvNickName);
 			EaseUserUtils.setAppUserAvatar(this, username, headAvatar);
-			asyncFetchUserInfo(username);
 		}
 	}
 

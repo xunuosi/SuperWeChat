@@ -90,9 +90,7 @@ public class LoginActivity extends BaseActivity {
         initView();
         setListener();
 
-        if (SuperWeChatHelper.getInstance().getCurrentUsernName() != null) {
-            mUsername.setText(SuperWeChatHelper.getInstance().getCurrentUsernName());
-        }
+
     }
 
     private void setListener() {
@@ -261,6 +259,9 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
         if (autoLogin) {
             return;
+        }
+        if (SuperWeChatHelper.getInstance().getCurrentUsernName() != null) {
+            mUsername.setText(SuperWeChatHelper.getInstance().getCurrentUsernName());
         }
     }
 

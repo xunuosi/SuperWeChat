@@ -38,6 +38,7 @@ import cn.ucai.superwechat.ui.ChatActivity;
 import cn.ucai.superwechat.ui.MainActivity;
 import cn.ucai.superwechat.ui.VideoCallActivity;
 import cn.ucai.superwechat.ui.VoiceCallActivity;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.PreferenceManager;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseEmojiconInfoProvider;
@@ -739,6 +740,7 @@ public class SuperWeChatHelper {
      * @return
      */
     private User getAppUserInfo(String username){
+        L.e(TAG, "username:" + username);
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
         User user = null;
@@ -1258,6 +1260,8 @@ public class SuperWeChatHelper {
         isGroupAndContactListenerRegisted = false;
         
         setContactList(null);
+        setAppContactList(null);
+        setCurrentUser(null);
         setRobotList(null);
         getUserProfileManager().reset();
         SuperWeChatDBManager.getInstance().closeDB();
@@ -1315,7 +1319,8 @@ public class SuperWeChatHelper {
      * @return
      */
     public Map<String, User> getAppContactList() {
-        if (isLoggedIn() && appContactList == null) {
+        // 如果内存中获取不到数据从数据库中重新获取
+        if (isLoggedIn() && appContactList == null || appContactList.size() == 0) {
             appContactList = demoModel.getAppContactList();
         }
 
@@ -1323,7 +1328,7 @@ public class SuperWeChatHelper {
         if(appContactList == null){
             return new Hashtable<String, User>();
         }
-
+        L.e(TAG, "AppConList:" + appContactList);
         return appContactList;
     }
 
