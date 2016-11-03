@@ -191,7 +191,7 @@ public class EaseCommonUtils {
     }
 
     /**
-     * set initial letter of according user's nickname( username if no nickname)
+     * 复制修改设置App服务器中用户名的小写拼音字母方法
      *
      * @param user
      */

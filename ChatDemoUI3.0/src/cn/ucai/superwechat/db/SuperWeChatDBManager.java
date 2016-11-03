@@ -472,7 +472,7 @@ public class SuperWeChatDBManager {
             contentValues.put(UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME, user.getMAvatarLastUpdateTime());
         }
         if(db.isOpen()){
-            db.replace(UserDao.TABLE_NAME, null, contentValues);
+            db.replace(UserDao.USER_TABLE_NAME, null, contentValues);
         }
     }
 
@@ -509,7 +509,7 @@ public class SuperWeChatDBManager {
     synchronized public void saveAppContactList(ArrayList<User> contactList) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
-            db.delete(UserDao.TABLE_NAME, null, null);
+            db.delete(UserDao.USER_TABLE_NAME, null, null);
             for (User user : contactList) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(UserDao.USER_COLUMN_NAME, user.getMUserName());
