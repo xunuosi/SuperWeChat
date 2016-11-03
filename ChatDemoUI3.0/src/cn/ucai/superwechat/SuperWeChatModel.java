@@ -6,6 +6,7 @@ import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.RobotUser;
 import cn.ucai.superwechat.utils.PreferenceManager;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class SuperWeChatModel {
     UserDao dao = null;
     protected Context context = null;
     protected Map<Key,Object> valueCache = new HashMap<Key,Object>();
-    
+    private Map<String, User> mAppContactList;
+
     public SuperWeChatModel(Context ctx){
         context = ctx;
         PreferenceManager.init(context);
@@ -266,7 +268,28 @@ public class SuperWeChatModel {
     public boolean isCustomServerEnable(){
         return PreferenceManager.getInstance().isCustomServerEnable();
     }
-    
+
+    /**
+     * 读取App服务器中的好友列表方法
+     * @param user
+     */
+    public void saveAppContact(User user) {
+        UserDao dao = new UserDao(context);
+        dao.saveAppContact(user);
+    }
+
+    public Map<String, User> getAppContactList() {
+        UserDao dao = new UserDao(context);
+        return dao.getAppContactList();
+    }
+
+    public boolean saveAppContactList(ArrayList<User> contactList) {
+        UserDao dao = new UserDao(context);
+        dao.saveAppContactList(contactList);
+        return true;
+    }
+
+
     enum Key{
         VibrateAndPlayToneOn,
         VibrateOn,

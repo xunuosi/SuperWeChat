@@ -13,6 +13,7 @@
  */
 package cn.ucai.superwechat.db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -124,4 +125,21 @@ public class UserDao {
     public boolean updateUser(User userBean) {
         return SuperWeChatDBManager.getInstance().updateUserData(userBean);
     }
+
+	/**
+	 * 读取App服务器中的好友列表方法
+	 * @param user
+     */
+	public void saveAppContact(User user) {
+        SuperWeChatDBManager.getInstance().saveAppContact(user);
+	}
+
+
+	public Map<String, User> getAppContactList() {
+        return SuperWeChatDBManager.getInstance().getAppContactList();
+	}
+
+	public void saveAppContactList(ArrayList<User> contactList) {
+        SuperWeChatDBManager.getInstance().saveAppContactList(contactList);
+	}
 }

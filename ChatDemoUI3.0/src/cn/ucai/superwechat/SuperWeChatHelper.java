@@ -85,6 +85,8 @@ public class SuperWeChatHelper {
 
 	private Map<String, EaseUser> contactList;
 
+    private Map<String, User> appContactList;
+
 	private Map<String, RobotUser> robotList;
 
 	private UserProfileManager userProManager;
@@ -1258,5 +1260,60 @@ public class SuperWeChatHelper {
             mUser.setMUserName(EMClient.getInstance().getCurrentUser());
         }
         return mUser;
+    }
+
+    /**
+     * 读取App服务器中的好友列表方法
+     *
+     */
+    public void setAppContactList(Map<String, User> aContactList) {
+        if(aContactList == null){
+            if (appContactList != null) {
+                appContactList.clear();
+            }
+            return;
+        }
+
+        appContactList = aContactList;
+    }
+
+    /**
+     * save single contact
+     */
+    public void saveAppContact(User user){
+        appContactList.put(user.getMUserName(), user);
+        demoModel.saveAppContact(user);
+    }
+
+    /**
+     * get contact list
+     *
+     * @return
+     */
+    public Map<String, User> getAppContactList() {
+        if (isLoggedIn() && appContactList == null) {
+            appContactList = demoModel.getAppContactList();
+        }
+
+        // return a empty non-null object to avoid app crash
+        if(appContactList == null){
+            return new Hashtable<String, User>();
+        }
+
+        return appContactList;
+    }
+
+    /**
+     * update user list to cache and database
+     *
+     * @param contactInfoList
+     */
+    public void updateAppContactList(List<User> contactInfoList) {
+        for (User u : contactInfoList) {
+            appContactList.put(u.getMUserName(), u);
+        }
+        ArrayList<User> mList = new ArrayList<User>();
+        mList.addAll(appContactList.values());
+        demoModel.saveAppContactList(mList);
     }
 }
