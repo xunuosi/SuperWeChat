@@ -1,5 +1,6 @@
 package cn.ucai.superwechat.ui;
 
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.MFGT;
 
 public class UserProfileActivity extends BaseActivity implements OnClickListener {
@@ -58,7 +61,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         setContentView(R.layout.em_activity_user_profile);
         ButterKnife.bind(this);
         initView();
-        initListener();
     }
 
     private void initView() {
@@ -74,10 +76,6 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
         mUserProfileTvAccount.setText(user.getMUserName());
         mUserProfileTvNick.setText(user.getMUserNick());
         EaseUserUtils.setAppCurrentUserAvatar(this, mUserProfileIvAvatar);
-    }
-
-    private void initListener() {
-
     }
 
     public void asyncFetchUserInfo(String username) {
@@ -257,11 +255,31 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
                 MFGT.finish(this);
                 break;
             case R.id.user_profile_avatarLayout:
+                uploadHeadPhoto();
                 break;
             case R.id.user_profile_nickLayout:
+                startUpdateNick();
                 break;
             case R.id.user_profile_account:
+                CommonUtils.showShortToast(R.string.toast_account_not_change);
                 break;
         }
+    }
+
+    private void startUpdateNick() {
+        final EditText editText = new EditText(this);
+        new AlertDialog.Builder(this).setTitle(R.string.setting_nickname).setIcon(android.R.drawable.ic_dialog_info).setView(editText)
+                .setPositiveButton(R.string.dl_ok, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String nickString = editText.getText().toString();
+                        if (TextUtils.isEmpty(nickString)) {
+                            Toast.makeText(UserProfileActivity.this, getString(R.string.toast_nick_not_isnull), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        updateRemoteNick(nickString);
+                    }
+                }).setNegativeButton(R.string.dl_cancel, null).show();
     }
 }
