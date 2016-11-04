@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.utils.MFGT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +82,7 @@ public class MyCenterFragment extends Fragment {
             case R.id.mycenter_personInfo_layout:
                 break;
             case R.id.mycenter_setting_layout:
+                MFGT.gotoSettingsActivity(getActivity());
                 break;
             //red packet code : 进入零钱页面
             case R.id.mycenter_wallet_layout:
