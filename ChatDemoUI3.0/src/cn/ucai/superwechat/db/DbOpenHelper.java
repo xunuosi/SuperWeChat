@@ -55,9 +55,8 @@ public class DbOpenHelper extends SQLiteOpenHelper{
             + UserDao.COLUMN_NAME_DISABLED_IDS + " TEXT);";
 
     private static final String CREATE_USER_TABLE_SQL =
-            "create table " + UserDao.USER_TABLE_NAME + "(" +
-                    " _id integer primary key autoincrement, " +
-                    UserDao.USER_COLUMN_NAME + ", " +
+            "create table " + UserDao.USER_TABLE_NAME + " (" +
+                    UserDao.USER_COLUMN_NAME + " TEXT PRIMARY KEY, " +
                     UserDao.USER_COLUMN_NICk + ", " +
                     UserDao.USER_COLUMN_AVATAR_ID + ", " +
                     UserDao.USER_COLUMN_AVATAR_PATH + ", " +
