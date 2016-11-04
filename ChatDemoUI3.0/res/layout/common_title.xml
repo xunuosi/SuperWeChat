@@ -26,6 +26,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:text="@string/register"
+        android:layout_toRightOf="@+id/ctitle_ivback"
         android:visibility="gone"
         />
     <TextView
