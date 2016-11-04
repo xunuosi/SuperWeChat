@@ -44,7 +44,6 @@ import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.db.SuperWeChatDBManager;
-import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.utils.CommonUtils;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MD5;
@@ -237,10 +236,8 @@ public class LoginActivity extends BaseActivity {
                         L.e(TAG, "result:" + result);
                         if (result != null && result.isRetMsg()) {
                             // 将登录用户保存在数据库中
-                            UserDao dao = new UserDao(mContext);
-                            dao.addUser((User) result.getRetData());
                             // 将登录信息保存到内存中
-                            SuperWeChatHelper.getInstance().setCurrentUser((User) result.getRetData());
+                            SuperWeChatHelper.getInstance().saveAppContact((User) result.getRetData());
                             loginSuccess();
                         } else {
                             CommonUtils.showShortToast(R.string.Login_failed);

@@ -8,12 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.domain.User;
 
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.db.UserDao;
-import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
 
 /**
@@ -51,12 +48,6 @@ public class SplashActivity extends BaseActivity {
 					long start = System.currentTimeMillis();
 					EMClient.getInstance().groupManager().loadAllGroups();
 					EMClient.getInstance().chatManager().loadAllConversations();
-					// 从数据库中得到登录用户的信息并保存到内存中
-                    String userName = EMClient.getInstance().getCurrentUser();
-                    UserDao dao = new UserDao(mContext);
-                    User user = dao.getUser(userName);
-                    L.e(TAG, "user:" + user);
-                    SuperWeChatHelper.getInstance().setCurrentUser(user);
                     long costTime = System.currentTimeMillis() - start;
 					//wait
 					if (sleepTime - costTime > 0) {

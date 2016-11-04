@@ -97,10 +97,6 @@ public class SuperWeChatHelper {
 	private SuperWeChatModel demoModel = null;
 
     /**
-     * sync login user info
-     */
-    private User mUser = null;
-    /**
      * sync groups status listener
      */
     private List<DataSyncListener> syncGroupsListeners;
@@ -1261,7 +1257,6 @@ public class SuperWeChatHelper {
         
         setContactList(null);
         setAppContactList(null);
-        setCurrentUser(null);
         setRobotList(null);
         getUserProfileManager().reset();
         SuperWeChatDBManager.getInstance().closeDB();
@@ -1275,20 +1270,6 @@ public class SuperWeChatHelper {
         easeUI.popActivity(activity);
     }
 
-    /**
-     * 操作登录信息的方法
-     */
-    public void setCurrentUser(User user) {
-        mUser = user;
-    }
-
-    public User getCurrentUser() {
-        if (mUser == null) {
-            mUser = new User();
-            mUser.setMUserName(EMClient.getInstance().getCurrentUser());
-        }
-        return mUser;
-    }
 
     /**
      * 读取App服务器中的好友列表方法

@@ -110,22 +110,6 @@ public class UserDao {
     	SuperWeChatDBManager.getInstance().saveRobotList(robotList);
     }
 
-    /**
-     * 以下为操作登录用户信息的方法
-     */
-
-    public boolean addUser(User userBean) {
-        return SuperWeChatDBManager.getInstance().addUserData(userBean);
-    }
-
-    public User getUser(String username) {
-        return SuperWeChatDBManager.getInstance().getUser(username);
-    }
-
-    public boolean updateUser(User userBean) {
-        return SuperWeChatDBManager.getInstance().updateUserData(userBean);
-    }
-
 	/**
 	 * 读取App服务器中的好友列表方法
 	 * @param user
