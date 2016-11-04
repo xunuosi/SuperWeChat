@@ -1,6 +1,5 @@
 package cn.ucai.superwechat.ui;
 
-import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -14,15 +13,14 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.utils.MFGT;
 
 public class UserProfileActivity extends BaseActivity implements OnClickListener {
 
@@ -47,9 +46,11 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     TextView mUserProfileTvNick;
     @BindView(R.id.user_profile_tvAccount)
     TextView mUserProfileTvAccount;
+    @BindView(R.id.ctitle_view_left)
+    View mCtitleViewLeft;
 
     private ProgressDialog dialog;
-
+    User user = null;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -61,7 +62,18 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     }
 
     private void initView() {
+        mCtitleIvback.setVisibility(View.VISIBLE);
+        mCtitleTvLeft.setVisibility(View.VISIBLE);
+        mCtitleViewLeft.setVisibility(View.VISIBLE);
+        mCtitleTvLeft.setText(R.string.userinfo_txt_title);
 
+        user = SuperWeChatHelper.getInstance().getCurrentUser();
+        if (user == null) {
+            finish();
+        }
+        mUserProfileTvAccount.setText(user.getMUserName());
+        mUserProfileTvNick.setText(user.getMUserNick());
+        EaseUserUtils.setAppCurrentUserAvatar(this, mUserProfileIvAvatar);
     }
 
     private void initListener() {
@@ -242,6 +254,7 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ctitle_ivback:
+                MFGT.finish(this);
                 break;
             case R.id.user_profile_avatarLayout:
                 break;
