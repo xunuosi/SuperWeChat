@@ -65,4 +65,22 @@ public class NetDao {
                 .execute(listener);
     }
 
+    /**
+     * 更新昵称的方法
+     * @param mcontext
+     * @param username
+     * @param newNick
+     * @param listener
+     */
+    public static void updateNick(Context mcontext,String username,String newNick
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
+                .addParam(I.User.USER_NAME, username)
+                .addParam(I.User.NICK, newNick)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
 }

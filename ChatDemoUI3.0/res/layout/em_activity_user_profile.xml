@@ -263,7 +263,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical"
-                        android:text="@string/change_detail"
+                        android:text="我们终究会是怎样"
                         android:textColor="@color/line_color"
                         android:textSize="18sp"
                         />

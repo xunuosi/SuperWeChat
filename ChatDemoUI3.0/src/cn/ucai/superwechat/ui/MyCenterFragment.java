@@ -91,4 +91,10 @@ public class MyCenterFragment extends Fragment {
             //end of red packet code
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setInfo();
+    }
 }

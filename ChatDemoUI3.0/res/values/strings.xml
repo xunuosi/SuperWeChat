@@ -150,4 +150,5 @@
     <string name="photo">Photo</string>
     <string name="wu_nuo">WuNuo</string>
     <string name="toast_account_not_change">Account don`t change</string>
+    <string name="toast_sameNick">Nick is not change</string>
 </resources>
