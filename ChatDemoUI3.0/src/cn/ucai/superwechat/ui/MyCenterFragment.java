@@ -80,6 +80,7 @@ public class MyCenterFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mycenter_personInfo_layout:
+                MFGT.gotoUserProfileActivity(getActivity());
                 break;
             case R.id.mycenter_setting_layout:
                 MFGT.gotoSettingsActivity(getActivity());
