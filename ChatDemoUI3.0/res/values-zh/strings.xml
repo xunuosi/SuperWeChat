@@ -6,4 +6,5 @@
     <string name="toast_account_not_change">无诺号不能改变</string>
     <string name="toast_sameNick">昵称无变化</string>
     <string name="search_hint">无诺号/QQ/手机号</string>
+    <string name="show_search_word">搜索:</string>
 </resources>

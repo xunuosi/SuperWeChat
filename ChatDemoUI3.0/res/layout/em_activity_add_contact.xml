@@ -1,59 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/black2"
-                android:padding="5dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ac_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/ac_ivback"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:contentDescription="@string/register"
-        android:src="@drawable/arrow_white_back"
-        android:visibility="visible"
-        />
-
-    <View
-        android:id="@+id/ac_view_left"
-        android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_toRightOf="@+id/ac_ivback"
-        android:background="@color/black"
-        android:visibility="visible"
-        />
-
-    <ImageView
-        android:id="@+id/ac_ivSearch"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/ac_view_left"
-        android:src="@drawable/search_white"/>
-
-    <EditText
-        android:id="@+id/ac_etSearch"
+    <RelativeLayout
+        android:id="@+id/ac_search_layout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/ac_ivSearch"
-        android:background="@null"
-        android:textCursorDrawable="@null"
-        android:hint="@string/search"
-        android:textColorHint="@color/text_color_hint"
-        android:textSize="16sp"
-        android:textColor="@color/white"/>
+        android:layout_height="60dp"
+        android:background="@color/black2"
+        android:padding="5dp">
 
+        <ImageView
+            android:id="@+id/ac_ivback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:contentDescription="@string/register"
+            android:src="@drawable/arrow_white_back"
+            android:visibility="visible"
+            />
+
+        <View
+            android:id="@+id/ac_view_left"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/ac_ivback"
+            android:background="@color/black"
+            android:visibility="visible"
+            />
+
+        <ImageView
+            android:id="@+id/ac_ivSearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ac_view_left"
+            android:src="@drawable/search_white"/>
+
+        <EditText
+            android:id="@+id/ac_etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ac_ivSearch"
+            android:background="@null"
+            android:hint="@string/search"
+            android:textColor="@color/white"
+            android:textColorHint="@color/text_color_hint"
+            android:textCursorDrawable="@null"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/ac_etSearch"
+            android:layout_toRightOf="@id/ac_view_left"
+            android:background="@color/green"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ac_showSearch_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ac_iv_empty"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/green"
+            android:src="@drawable/search_white_32"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:id="@+id/ac_tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/show_search_word"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/ac_tv_showMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/green"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
     <View
+        android:id="@+id/ac_view_empty"
+        android:background="@color/line_color"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/ac_etSearch"
-        android:layout_toRightOf="@id/ac_view_left"
-        android:background="@color/green"/>
-</RelativeLayout>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"/>
+</LinearLayout>

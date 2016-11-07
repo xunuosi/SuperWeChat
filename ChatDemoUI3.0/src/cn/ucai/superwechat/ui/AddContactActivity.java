@@ -1,10 +1,10 @@
 /**
  * Copyright (C) 2016 Hyphenate Inc. All rights reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,32 +15,66 @@ package cn.ucai.superwechat.ui;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.hyphenate.chat.EMClient;
-import cn.ucai.superwechat.SuperWeChatHelper;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
-import com.hyphenate.easeui.widget.EaseAlertDialog;
 
-public class AddContactActivity extends BaseActivity{
+public class AddContactActivity extends BaseActivity {
 
-	private String toAddUsername;
-	private ProgressDialog progressDialog;
+    @BindView(R.id.ac_etSearch)
+    EditText mAcEtSearch;
+    @BindView(R.id.ac_tv_showMessage)
+    TextView mAcTvShowMessage;
+    @BindView(R.id.ac_showSearch_Layout)
+    LinearLayout mAcShowSearchLayout;
+    @BindView(R.id.ac_view_empty)
+    View mAcViewEmpty;
+    private String toAddUsername;
+    private ProgressDialog progressDialog;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.em_activity_add_contact);
-	}
-	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.em_activity_add_contact);
+        ButterKnife.bind(this);
+        setListener();
+    }
+
+    private void setListener() {
+        // 监听EditText的实时录入
+        mAcEtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mAcShowSearchLayout.setVisibility(View.VISIBLE);
+                mAcViewEmpty.setVisibility(View.VISIBLE);
+                mAcTvShowMessage.setText(mAcEtSearch.getText().toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mAcEtSearch.getText().length() == 0) {
+                    mAcShowSearchLayout.setVisibility(View.GONE);
+                    mAcViewEmpty.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
 	/*
-	public void searchContact(View v) {
+    public void searchContact(View v) {
 		final String name = editText.getText().toString();
 		String saveText = searchBtn.getText().toString();
 		
@@ -102,8 +136,8 @@ public class AddContactActivity extends BaseActivity{
 			}
 		}).start();
 	}*/
-	
-	public void back(View v) {
-		finish();
-	}
+
+    public void back(View v) {
+        finish();
+    }
 }
