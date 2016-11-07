@@ -190,7 +190,6 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 	/**
 	 * exit group
 	 * 
-	 * @param groupId
 	 */
 	private void exitGroup() {
 		new Thread(new Runnable() {
