@@ -31,6 +31,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,11 +55,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.adapter.MainTabAdpter;
 import cn.ucai.superwechat.db.InviteMessgeDao;
+import cn.ucai.superwechat.dialog.TitleMenu.ActionItem;
+import cn.ucai.superwechat.dialog.TitleMenu.TitlePopup;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
 import cn.ucai.superwechat.widget.DMTabHost;
@@ -93,7 +97,8 @@ public class MainActivity extends BaseActivity {
     public boolean isConflict = false;
     // user account was removed
     private boolean isCurrentAccountRemoved = false;
-
+    // 自定义弹窗View
+    TitlePopup mTitlePopup;
 
     /**
      * check if current user account was remove
@@ -125,7 +130,7 @@ public class MainActivity extends BaseActivity {
         inviteMessgeDao = new InviteMessgeDao(this);
         //UserDao userDao = new UserDao(this);
         conversationListFragment = new ConversationListFragment();
-		/*contactListFragment = new ContactListFragment();
+        /*contactListFragment = new ContactListFragment();
 		SettingsFragment settingFragment = new SettingsFragment();
 		fragments = new Fragment[] { conversationListFragment, contactListFragment, settingFragment};
 
@@ -147,7 +152,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCheckedChange(int checkedPosition, boolean byUser) {
                 // 点击底部菜单完成pagerView的跟随显示
-                mMainVP.setCurrentItem(checkedPosition,true);
+                mMainVP.setCurrentItem(checkedPosition, true);
             }
         });
 
@@ -232,15 +237,22 @@ public class MainActivity extends BaseActivity {
         mAdpter = new MainTabAdpter(getSupportFragmentManager());
         mMainVP.setAdapter(mAdpter);
         mAdpter.clear();
-        mAdpter.addFragment(new ConversationListFragment(),getString(R.string.app_name));
-        mAdpter.addFragment(new ContactListFragment(),getString(R.string.contacts));
-        mAdpter.addFragment(new DiscoverFragment(),getString(R.string.discover));
-        mAdpter.addFragment(new MyCenterFragment(),getString(R.string.me));
+        mAdpter.addFragment(new ConversationListFragment(), getString(R.string.app_name));
+        mAdpter.addFragment(new ContactListFragment(), getString(R.string.contacts));
+        mAdpter.addFragment(new DiscoverFragment(), getString(R.string.discover));
+        mAdpter.addFragment(new MyCenterFragment(), getString(R.string.me));
         // 设置pager元素为四个
         mMainVP.setOffscreenPageLimit(4);
         mAdpter.notifyDataSetChanged();
         // 设置底部按钮第一个被点击
         mMainDMTabHost.setChecked(0);
+        // 初始化弹窗View
+        mTitlePopup = new TitlePopup(MainActivity.this, ViewGroup.LayoutParams.WRAP_CONTENT
+                , ViewGroup.LayoutParams.WRAP_CONTENT);
+        mTitlePopup.addAction(new ActionItem(this, R.string.menu_groupchat, R.drawable.icon_menu_group));
+        mTitlePopup.addAction(new ActionItem(this, R.string.menu_addfriend, R.drawable.icon_menu_addfriend));
+        mTitlePopup.addAction(new ActionItem(this, R.string.menu_qrcode, R.drawable.icon_menu_sao));
+        mTitlePopup.addAction(new ActionItem(this, R.string.menu_money, R.drawable.icon_menu_money));
     }
 
     EMMessageListener messageListener = new EMMessageListener() {
@@ -339,6 +351,12 @@ public class MainActivity extends BaseActivity {
             }
         };
         broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @OnClick(R.id.ctitle_ivAdd)
+    public void showTitlePop() {
+        // 传入弹窗位置的父容器
+        mTitlePopup.show(findViewById(R.id.title_layout));
     }
 
     public class MyContactListener implements EMContactListener {
