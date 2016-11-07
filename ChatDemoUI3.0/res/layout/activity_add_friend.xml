@@ -26,13 +26,14 @@
             android:layout_height="30dp"
             android:src="@drawable/search"
             android:layout_centerVertical="true"/>
-        <EditText
+        <TextView
             android:id="@+id/af_etSearch"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:layout_toRightOf="@id/af_ivSearch"
+            android:text="@string/search_hint"
             android:textColor="@color/text_color_hint"
-            android:hint="@string/search_hint"
             android:layout_centerVertical="true"
             android:textSize="14sp"
             android:layout_marginLeft="5dp"

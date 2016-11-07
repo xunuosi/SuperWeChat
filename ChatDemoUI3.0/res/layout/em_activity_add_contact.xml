@@ -1,95 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f2f2f2"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/black2"
+                android:padding="5dp">
 
+    <ImageView
+        android:id="@+id/ac_ivback"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/register"
+        android:src="@drawable/arrow_white_back"
+        android:visibility="visible"
+        />
 
-    <RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
-        android:gravity="center_vertical">
+    <View
+        android:id="@+id/ac_view_left"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/ac_ivback"
+        android:background="@color/black"
+        android:visibility="visible"
+        />
 
-        <include layout="@layout/common_title" />
-
-        <TextView
-            android:id="@+id/add_list_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#fff"
-            android:textSize="18sp" />
-        
-        <Button
-            android:id="@+id/search"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ease_common_tab_bg"
-            android:onClick="searchContact"
-            android:text="@string/button_search"
-            android:textColor="#fff"
-            android:textSize="16sp" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/ac_ivSearch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/ac_view_left"
+        android:src="@drawable/search_white"/>
 
     <EditText
-        android:id="@+id/edit_note"
+        android:id="@+id/ac_etSearch"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:layout_margin="10dp"
-        android:paddingLeft="5dp"
-        android:background="@drawable/em_button_normal_shape"
-        android:hint="@string/user_name"
-        android:singleLine="true"
-        android:textColorHint="#b3b3b3"
-        android:textSize="18sp" />
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/ac_ivSearch"
+        android:background="@null"
+        android:textCursorDrawable="@null"
+        android:hint="@string/search"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="16sp"
+        android:textColor="@color/white"/>
 
-    <RelativeLayout
-        android:id="@+id/ll_user"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/ease_mm_listitem"
-        android:duplicateParentState="true"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="11dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/em_default_avatar" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="18dp"
-            android:layout_toRightOf="@id/avatar"
-            android:textColor="#0F0F0F"
-            android:textSize="16sp" />
-
-
-        <Button
-            android:id="@+id/indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="11dp"
-            android:background="@drawable/em_button_bg"
-            android:onClick="addContact"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:text="@string/button_add"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-
-</LinearLayout>
+        android:layout_height="0.5dp"
+        android:layout_below="@id/ac_etSearch"
+        android:layout_toRightOf="@id/ac_view_left"
+        android:background="@color/green"/>
+</RelativeLayout>
