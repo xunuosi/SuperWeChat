@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.utils.MFGT;
+import rx.subjects.BehaviorSubject;
 
 public class AddFriendActivity extends AppCompatActivity {
 
@@ -36,8 +37,17 @@ public class AddFriendActivity extends AppCompatActivity {
         mCtitleTvLeft.setText(R.string.add_friend);
     }
 
-    @OnClick({R.id.af_find_layout,R.id.af_etSearch})
-    public void gotoFindFriend() {
-        MFGT.gotoAddContactActivity(this);
+    @OnClick({R.id.af_find_layout,R.id.af_etSearch,R.id.ctitle_ivback})
+    public void gotoFindFriend(View view) {
+        switch (view.getId()) {
+            case R.id.af_find_layout:
+                MFGT.gotoAddContactActivity(this);
+            case R.id.af_etSearch:
+                MFGT.gotoAddContactActivity(this);
+                break;
+            case R.id.ctitle_ivback:
+                MFGT.finish(this);
+                break;
+        }
     }
 }

@@ -59,7 +59,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan"/>
-
+        <!-- 欢迎界面-->
+        <activity android:name=".ui.WelcomeActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 添加好友的中转界面-->
+        <activity android:name=".ui.AddFriendActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 好友详情信息界面-->
+        <activity android:name=".ui.FriendProfileActivity"
+                  android:screenOrientation="portrait"/>
         <!-- 开屏页 -->
         <activity
             android:name=".ui.SplashActivity"
@@ -474,9 +482,6 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="3ecea51f560650b1ed8a4b99808f52e8"/>
 
-        <activity android:name=".ui.WelcomeActivity"/>
-        <activity android:name=".ui.AddFriendActivity">
-        </activity>
     </application>
 
 </manifest>

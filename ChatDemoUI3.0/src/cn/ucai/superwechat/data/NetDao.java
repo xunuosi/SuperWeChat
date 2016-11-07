@@ -104,4 +104,19 @@ public class NetDao {
                 .execute(listener);
     }
 
+    /**
+     * 查询用户信息的方法
+     * @param mcontext
+     * @param username
+     * @param listener
+     */
+    public static void findUserByUserName(Context mcontext,String username
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME, username)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

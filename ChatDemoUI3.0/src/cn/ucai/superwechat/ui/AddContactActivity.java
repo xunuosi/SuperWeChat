@@ -17,17 +17,27 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hyphenate.easeui.domain.User;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.utils.CommonUtils;
+import cn.ucai.superwechat.utils.L;
+import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 public class AddContactActivity extends BaseActivity {
+    private static final String TAG = AddContactActivity.class.getSimpleName();
 
     @BindView(R.id.ac_etSearch)
     EditText mAcEtSearch;
@@ -37,7 +47,7 @@ public class AddContactActivity extends BaseActivity {
     LinearLayout mAcShowSearchLayout;
     @BindView(R.id.ac_view_empty)
     View mAcViewEmpty;
-    private String toAddUsername;
+
     private ProgressDialog progressDialog;
 
     @Override
@@ -73,6 +83,54 @@ public class AddContactActivity extends BaseActivity {
         });
     }
 
+    @OnClick({R.id.ac_ivback, R.id.ac_showSearch_Layout})
+    public void onClickToChoose(View view) {
+        switch (view.getId()) {
+            case R.id.ac_ivback:
+                MFGT.finish(this);
+                break;
+            case R.id.ac_showSearch_Layout:
+                // 根据输入用户名查询用户信息
+                searchUserInfo();
+                break;
+        }
+    }
+
+    private void searchUserInfo() {
+        progressDialog = new ProgressDialog(this);
+        String stri = getResources().getString(R.string.Is_sending_a_request);
+        progressDialog.setMessage(stri);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        String username = mAcTvShowMessage.getText().toString().trim();
+        NetDao.findUserByUserName(this, username
+                , new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        progressDialog.dismiss();
+                        if (s != null) {
+                            Result result = ResultUtils.getResultFromJson(s, User.class);
+                            L.e(TAG, "searchAppUser,result=" + result);
+                            if (result != null && result.isRetMsg()) {
+                                User user = (User) result.getRetData();
+                                if (user != null) {
+                                    MFGT.gotoFriendProfile(AddContactActivity.this, user);
+                                }
+                            } else {
+                                CommonUtils.showShortToast(R.string.msg_104);
+                            }
+                        } else {
+                            CommonUtils.showShortToast(R.string.msg_104);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+    }
+
 	/*
     public void searchContact(View v) {
 		final String name = editText.getText().toString();
@@ -87,8 +145,8 @@ public class AddContactActivity extends BaseActivity {
 
 		} 
 	}	*/
-	/*
-	public void addContact(View view){
+    /*
+    public void addContact(View view){
 		if(EMClient.getInstance().getCurrentUser().equals(nameText.getText().toString())){
 			new EaseAlertDialog(this, R.string.not_add_myself).show();
 			return;
@@ -137,7 +195,4 @@ public class AddContactActivity extends BaseActivity {
 		}).start();
 	}*/
 
-    public void back(View v) {
-        finish();
-    }
 }
