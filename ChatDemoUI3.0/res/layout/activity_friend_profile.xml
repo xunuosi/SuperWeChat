@@ -1,7 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <include
+        android:id="@+id/fp_title"
+        layout="@layout/common_title"/>
+
+    <RelativeLayout
+        android:id="@+id/fp_personInfo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/fp_ivAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/default_avatar"
+            />
+
+        <TextView
+            android:id="@+id/fp_tvNick"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/fp_ivAvatar"
+            android:gravity="center_vertical"
+            android:paddingTop="10dp"
+            android:text="@string/nickname"
+            android:textColor="@color/black2"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/fp_tvAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_below="@id/fp_tvNick"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/fp_ivAvatar"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:text="@string/official_accounts"
+            android:textSize="16sp"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/qr_code"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/fp_area_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            >
+
+            <TextView
+                android:id="@+id/fp_area_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/userinfo_txt_area"
+                android:textColor="@color/black2"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@id/fp_area_empty"
+                android:gravity="center_vertical"
+                android:text="@string/userinfo_txt_area_exp"
+                android:textColor="@color/text_hint"
+                android:textSize="16sp"
+                />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_color"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/userinfo_txt_more"
+            android:textColor="@color/black2"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/fp_btn_sendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/green"
+        android:text="@string/send_message"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/fp_btn_addContacts"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/green"
+        android:text="@string/add_contacts"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/fp_btn_videoTalk"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/white"
+        android:text="@string/attach_video_call"
+        android:textSize="18sp"
+        android:textColor="@color/black2"
+        android:visibility="gone"
+        />
 </LinearLayout>

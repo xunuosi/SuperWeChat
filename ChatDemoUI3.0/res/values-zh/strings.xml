@@ -7,4 +7,9 @@
     <string name="toast_sameNick">昵称无变化</string>
     <string name="search_hint">无诺号/QQ/手机号</string>
     <string name="show_search_word">搜索:</string>
+    <string name="userinfo_txt_area_exp">辽宁 鞍山</string>
+    <string name="userinfo_txt_more">更多</string>
+    <string name="send_message">发消息</string>
+    <string name="add_contacts">添加到通讯录</string>
+    <string name="complete_information">详细资料</string>
 </resources>

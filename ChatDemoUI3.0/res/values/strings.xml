@@ -153,4 +153,9 @@
     <string name="toast_sameNick">Nick is not change</string>
     <string name="search_hint">WuNuo/QQ/Phone</string>
     <string name="show_search_word">Search:</string>
+    <string name="userinfo_txt_area_exp">LiaoNing AnShan</string>
+    <string name="userinfo_txt_more">More</string>
+    <string name="send_message">Send Message</string>
+    <string name="add_contacts">Add Contacts</string>
+    <string name="complete_information">Complete Information</string>
 </resources>

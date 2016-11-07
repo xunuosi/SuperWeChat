@@ -88,4 +88,8 @@ public class MFGT {
         intent.putExtra(I.User.USER_NAME, user);
         startActivity(activity, intent);
     }
+
+    public static void gotoCheckMessageActivity(Activity activity) {
+
+    }
 }
