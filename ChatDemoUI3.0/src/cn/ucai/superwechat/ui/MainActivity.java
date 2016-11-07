@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity {
                     case 0:
                         break;
                     case 1:
-                        MFGT.gotoAddContactActivity(MainActivity.this);
+                        MFGT.gotoAddFriendActivity(MainActivity.this);
                         break;
                     case 2:
                         break;

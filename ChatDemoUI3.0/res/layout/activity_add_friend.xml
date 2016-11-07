@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_friend"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.ucai.superwechat.ui.AddFriendActivity">
+    <include android:id="@+id/af_title_layout" layout="@layout/common_title"/>
+
+    <RelativeLayout
+        android:id="@+id/af_find_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="2.5dp"
+        android:paddingBottom="2.5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/af_ivSearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/search"
+            android:layout_centerVertical="true"/>
+        <EditText
+            android:id="@+id/af_etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/af_ivSearch"
+            android:textColor="@color/text_color_hint"
+            android:hint="@string/search_hint"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:background="@null"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/green"
+            android:layout_below="@id/af_etSearch"/>
+
+    </RelativeLayout>
+</LinearLayout>

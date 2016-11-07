@@ -13,7 +13,7 @@
         android:background="@color/top_bar_normal_bg"
         android:gravity="center_vertical">
 
-        <include layout="@layout/ease_commom_back_btn" />
+        <include layout="@layout/common_title" />
 
         <TextView
             android:id="@+id/add_list_friends"
