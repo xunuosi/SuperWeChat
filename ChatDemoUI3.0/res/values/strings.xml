@@ -158,4 +158,6 @@
     <string name="send_message">Send Message</string>
     <string name="add_contacts">Add Contacts</string>
     <string name="complete_information">Complete Information</string>
+    <string name="send">Send</string>
+    <string name="check_message_prompt">Pleas Wait</string>
 </resources>

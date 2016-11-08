@@ -1,15 +1,12 @@
 package cn.ucai.superwechat.ui;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
@@ -29,7 +26,6 @@ public class FriendProfileActivity extends BaseActivity {
     User mUser;
     String addUserName;
     Map<String, User> contactList;
-    ProgressDialog progressDialog;
 
     @BindView(R.id.ctitle_ivback)
     ImageView mCtitleIvback;
@@ -96,46 +92,6 @@ public class FriendProfileActivity extends BaseActivity {
     }
 
     private void startAddContacts() {
-        MFGT.gotoCheckMessageActivity(this);
-    }
-
-    /**
-     * 环信添加好友的方法
-     *
-     */
-    public void addContact(){
-        progressDialog = new ProgressDialog(this);
-        String stri = getResources().getString(R.string.Is_sending_a_request);
-        progressDialog.setMessage(stri);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
-        new Thread(new Runnable() {
-            public void run() {
-
-                try {
-                    //demo use a hardcode reason here, you need let user to input if you like
-                    String s = getResources().getString(R.string.Add_a_friend);
-                    EMClient.getInstance().contactManager().addContact(addUserName, s);
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            String s1 = getResources().getString(R.string.send_successful);
-                            Toast.makeText(getApplicationContext(), s1, Toast.LENGTH_LONG).show();
-                            MFGT.finish(FriendProfileActivity.this);
-                        }
-                    });
-                } catch (final Exception e) {
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            String s2 = getResources().getString(R.string.Request_add_buddy_failure);
-                            Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
-                            MFGT.finish(FriendProfileActivity.this);
-                        }
-                    });
-                }
-            }
-        }).start();
+        MFGT.gotoCheckMessageActivity(this, addUserName);
     }
 }

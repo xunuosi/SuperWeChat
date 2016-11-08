@@ -68,6 +68,9 @@
         <!-- 好友详情信息界面-->
         <activity android:name=".ui.FriendProfileActivity"
                   android:screenOrientation="portrait"/>
+        <!-- 发送验证消息界面-->
+        <activity android:name=".ui.CheckMessageActivity"
+                  android:screenOrientation="portrait"/>
         <!-- 开屏页 -->
         <activity
             android:name=".ui.SplashActivity"
