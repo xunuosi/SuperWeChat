@@ -113,7 +113,10 @@ public class EaseUserUtils {
      */
     public static void setAppUserAvatar(Context context, String username, ImageView imageView){
         User user = getAppUserInfo(username);
-        if(user != null && user.getAvatar() != null){
+        if (user == null) {
+            user = new User(username);
+        }
+        if(user.getAvatar() != null){
             try {
                 // avatarResId算是键值，头像以键值对的形式缓存在内存和磁盘当中
                 int avatarResId = Integer.parseInt(user.getAvatar());

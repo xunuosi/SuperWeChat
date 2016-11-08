@@ -14,4 +14,5 @@
     <string name="complete_information">详细资料</string>
     <string name="send">发送</string>
     <string name="check_message_prompt">你需要发送验证申请，等待对方通过</string>
+    <string name="new_friend">新的朋友</string>
 </resources>
