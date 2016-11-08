@@ -79,10 +79,10 @@ public class MainActivity extends BaseActivity {
 	private TextView unreadAddressLable;*/
 
     //private Button[] mTabs;
-    //private ContactListFragment contactListFragment;
+    private ContactListFragment contactListFragment;
     //private Fragment[] fragments;
     //private int index;
-    // int currentTabIndex;
+    int currentTabIndex;
 
     @BindView(R.id.ctitle_tvLeft)
     TextView mCtitleTvLeft;
@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         // runtime permission for android 6.0, just require all permissions here for simple
         requestPermissions();
-
+        contactListFragment = new ContactListFragment();
         initView();
         initListener();
         //umeng api
@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChange(int checkedPosition, boolean byUser) {
                 // 点击底部菜单完成pagerView的跟随显示
                 mMainVP.setCurrentItem(checkedPosition, true);
+                currentTabIndex = checkedPosition;
             }
         });
 
@@ -166,6 +167,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mMainDMTabHost.setChecked(position);
+                currentTabIndex = position;
             }
 
             @Override
@@ -259,7 +261,7 @@ public class MainActivity extends BaseActivity {
         mMainVP.setAdapter(mAdpter);
         mAdpter.clear();
         mAdpter.addFragment(new ConversationListFragment(), getString(R.string.app_name));
-        mAdpter.addFragment(new ContactListFragment(), getString(R.string.contacts));
+        mAdpter.addFragment(contactListFragment, getString(R.string.contacts));
         mAdpter.addFragment(new DiscoverFragment(), getString(R.string.discover));
         mAdpter.addFragment(new MyCenterFragment(), getString(R.string.me));
         // 设置pager元素为四个
@@ -351,11 +353,13 @@ public class MainActivity extends BaseActivity {
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
-                } else if (currentTabIndex == 1) {
+                } else */
+                if (currentTabIndex == 1) {
                     if(contactListFragment != null) {
                         contactListFragment.refresh();
                     }
-                }*/
+                }
+
                 String action = intent.getAction();
                 if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
                     if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
@@ -454,11 +458,11 @@ public class MainActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             public void run() {
                 int count = getUnreadAddressCountTotal();
-				/*if (count > 0) {
-					unreadAddressLable.setVisibility(View.VISIBLE);
-				} else {
-					unreadAddressLable.setVisibility(View.INVISIBLE);
-				}*/
+				if (count > 0) {
+                    mMainDMTabHost.setHasNew(1, true);
+                } else {
+                    mMainDMTabHost.setHasNew(1, false);
+                }
             }
         });
 
