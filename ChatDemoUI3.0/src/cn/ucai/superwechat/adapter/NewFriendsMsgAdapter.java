@@ -109,6 +109,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                                 Result result = ResultUtils.getResultFromJson(json, User.class);
                                 User user = (User) result.getRetData();
                                 EaseUserUtils.setAppUserAvatar(context, msg.getFrom(), holder.avator);
+                                EaseUserUtils.setAppUserNick(user.getMUserNick(), holder.name);
                             }
                         }
 
@@ -126,7 +127,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			        msg.getStatus() == InviteMesageStatus.GROUPINVITATION) {
 			    holder.agree.setVisibility(View.VISIBLE);
                 holder.agree.setEnabled(true);
-                holder.agree.setBackgroundResource(android.R.drawable.btn_default);
+                //holder.agree.setBackgroundResource(android.R.drawable.btn_default);
                 holder.agree.setText(str2);
 			    
 //				holder.status.setVisibility(View.VISIBLE);
@@ -165,6 +166,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 //				});
 			} else if (msg.getStatus() == InviteMesageStatus.AGREED) {
                 holder.agree.setText(str5);
+                holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
 			} else if(msg.getStatus() == InviteMesageStatus.REFUSED){
@@ -174,11 +176,13 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			} else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED){
 			    String str = msg.getGroupInviter() + str9 + msg.getGroupName();
                 holder.agree.setText(str);
+                holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
             } else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_DECLINED){
                 String str = msg.getGroupInviter() + str10 + msg.getGroupName();
                 holder.agree.setText(str);
+                holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
             }
