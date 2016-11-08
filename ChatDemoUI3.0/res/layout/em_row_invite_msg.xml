@@ -74,14 +74,14 @@
             android:id="@+id/agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/user_state"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
             android:text="@string/agree"
             android:textSize="13sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
         
         <Button
             android:id="@+id/user_state"
@@ -93,6 +93,7 @@
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
             android:text="@string/refuse"
+            android:visibility="gone"
             android:textSize="13sp" />
     </RelativeLayout>
 

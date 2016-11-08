@@ -64,7 +64,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			holder.reason = (TextView) convertView.findViewById(R.id.message);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.agree = (Button) convertView.findViewById(R.id.agree);
-			holder.status = (Button) convertView.findViewById(R.id.user_state);
+//			holder.status = (Button) convertView.findViewById(R.id.user_state);
 			holder.groupContainer = (LinearLayout) convertView.findViewById(R.id.ll_group);
 			holder.groupname = (TextView) convertView.findViewById(R.id.tv_groupName);
 			// holder.time = (TextView) convertView.findViewById(R.id.time);
@@ -81,7 +81,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		String str5 = context.getResources().getString(R.string.Has_agreed_to);
 		String str6 = context.getResources().getString(R.string.Has_refused_to);
 		
-		String str7 = context.getResources().getString(R.string.refuse);
+//		String str7 = context.getResources().getString(R.string.refuse);
 		String str8 = context.getResources().getString(R.string.invite_join_group);
         String str9 = context.getResources().getString(R.string.accept_join_group);
 		String str10 = context.getResources().getString(R.string.refuse_join_group);
@@ -89,7 +89,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 		final InviteMessage msg = getItem(position);
 		if (msg != null) {
 		    
-		    holder.agree.setVisibility(View.INVISIBLE);
+		    holder.agree.setVisibility(View.VISIBLE);
 		    
 			if(msg.getGroupId() != null){ // show group name
 				holder.groupContainer.setVisibility(View.VISIBLE);
@@ -120,7 +120,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			// holder.time.setText(DateUtils.getTimestampString(new
 			// Date(msg.getTime())));
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {
-				holder.status.setVisibility(View.INVISIBLE);
+//				holder.status.setVisibility(View.INVISIBLE);
 				holder.reason.setText(str1);
 			} else if (msg.getStatus() == InviteMesageStatus.BEINVITEED || msg.getStatus() == InviteMesageStatus.BEAPPLYED ||
 			        msg.getStatus() == InviteMesageStatus.GROUPINVITATION) {
@@ -129,10 +129,10 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.agree.setBackgroundResource(android.R.drawable.btn_default);
                 holder.agree.setText(str2);
 			    
-				holder.status.setVisibility(View.VISIBLE);
-				holder.status.setEnabled(true);
-				holder.status.setBackgroundResource(android.R.drawable.btn_default);
-				holder.status.setText(str7);
+//				holder.status.setVisibility(View.VISIBLE);
+//				holder.status.setEnabled(true);
+//				holder.status.setBackgroundResource(android.R.drawable.btn_default);
+//				holder.status.setText(str7);
 				if(msg.getStatus() == InviteMesageStatus.BEINVITEED){
 					if (msg.getReason() == null) {
 						// use default text
@@ -153,105 +153,105 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                     @Override
                     public void onClick(View v) {
                         // accept invitation
-                        acceptInvitation(holder.agree, holder.status, msg);
+                        acceptInvitation(holder.agree, msg);
                     }
                 });
-				holder.status.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// decline invitation
-					    refuseInvitation(holder.agree, holder.status, msg);
-					}
-				});
+//				holder.status.setOnClickListener(new OnClickListener() {
+//					@Override
+//					public void onClick(View v) {
+//						// decline invitation
+//					    refuseInvitation(holder.agree, holder.status, msg);
+//					}
+//				});
 			} else if (msg.getStatus() == InviteMesageStatus.AGREED) {
-				holder.status.setText(str5);
-				holder.status.setBackgroundDrawable(null);
-				holder.status.setEnabled(false);
+                holder.agree.setText(str5);
+                holder.agree.setBackgroundDrawable(null);
+                holder.agree.setEnabled(false);
 			} else if(msg.getStatus() == InviteMesageStatus.REFUSED){
-				holder.status.setText(str6);
-				holder.status.setBackgroundDrawable(null);
-				holder.status.setEnabled(false);
+                holder.agree.setText(str6);
+                holder.agree.setBackgroundDrawable(null);
+                holder.agree.setEnabled(false);
 			} else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED){
 			    String str = msg.getGroupInviter() + str9 + msg.getGroupName();
-                holder.status.setText(str);
-                holder.status.setBackgroundDrawable(null);
-                holder.status.setEnabled(false);
+                holder.agree.setText(str);
+                holder.agree.setBackgroundDrawable(null);
+                holder.agree.setEnabled(false);
             } else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_DECLINED){
                 String str = msg.getGroupInviter() + str10 + msg.getGroupName();
-                holder.status.setText(str);
-                holder.status.setBackgroundDrawable(null);
-                holder.status.setEnabled(false);
+                holder.agree.setText(str);
+                holder.agree.setBackgroundDrawable(null);
+                holder.agree.setEnabled(false);
             }
 		}
 
 		return convertView;
 	}
 
-	/**
-	 * accept invitation
-	 * 
-	 * @param buttonAgree
-	 * @param msg
-	 */
-	private void acceptInvitation(final Button buttonAgree, final Button buttonRefuse, final InviteMessage msg) {
-		final ProgressDialog pd = new ProgressDialog(context);
-		String str1 = context.getResources().getString(R.string.Are_agree_with);
-		final String str2 = context.getResources().getString(R.string.Has_agreed_to);
-		final String str3 = context.getResources().getString(R.string.Agree_with_failure);
-		pd.setMessage(str1);
-		pd.setCanceledOnTouchOutside(false);
-		pd.show();
+    /**
+     * accept invitation
+     *
+     * @param buttonAgree
+     * @param msg
+     */
+    private void acceptInvitation(final Button buttonAgree, final InviteMessage msg) {
+        final ProgressDialog pd = new ProgressDialog(context);
+        String str1 = context.getResources().getString(R.string.Are_agree_with);
+        final String str2 = context.getResources().getString(R.string.Has_agreed_to);
+        final String str3 = context.getResources().getString(R.string.Agree_with_failure);
+        pd.setMessage(str1);
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
 
-		new Thread(new Runnable() {
-			public void run() {
-				// call api
-				try {
-					if (msg.getStatus() == InviteMesageStatus.BEINVITEED) {//accept be friends
-						EMClient.getInstance().contactManager().acceptInvitation(msg.getFrom());
-					} else if (msg.getStatus() == InviteMesageStatus.BEAPPLYED) { //accept application to join group
-						EMClient.getInstance().groupManager().acceptApplication(msg.getFrom(), msg.getGroupId());
-					} else if (msg.getStatus() == InviteMesageStatus.GROUPINVITATION) {
-					    EMClient.getInstance().groupManager().acceptInvitation(msg.getGroupId(), msg.getGroupInviter());
-					}
+        new Thread(new Runnable() {
+            public void run() {
+                // call api
+                try {
+                    if (msg.getStatus() == InviteMesageStatus.BEINVITEED) {//accept be friends
+                        EMClient.getInstance().contactManager().acceptInvitation(msg.getFrom());
+                    } else if (msg.getStatus() == InviteMesageStatus.BEAPPLYED) { //accept application to join group
+                        EMClient.getInstance().groupManager().acceptApplication(msg.getFrom(), msg.getGroupId());
+                    } else if (msg.getStatus() == InviteMesageStatus.GROUPINVITATION) {
+                        EMClient.getInstance().groupManager().acceptInvitation(msg.getGroupId(), msg.getGroupInviter());
+                    }
                     msg.setStatus(InviteMesageStatus.AGREED);
                     // update database
                     ContentValues values = new ContentValues();
                     values.put(InviteMessgeDao.COLUMN_NAME_STATUS, msg.getStatus().ordinal());
                     messgeDao.updateMessage(msg.getId(), values);
-					((Activity) context).runOnUiThread(new Runnable() {
+                    ((Activity) context).runOnUiThread(new Runnable() {
 
-						@Override
-						public void run() {
-							pd.dismiss();
-							buttonAgree.setText(str2);
-							buttonAgree.setBackgroundDrawable(null);
-							buttonAgree.setEnabled(false);
-							
-							buttonRefuse.setVisibility(View.INVISIBLE);
-						}
-					});
-				} catch (final Exception e) {
-					((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pd.dismiss();
+                            buttonAgree.setText(str2);
+                            buttonAgree.setBackgroundDrawable(null);
+                            buttonAgree.setEnabled(false);
 
-						@Override
-						public void run() {
-							pd.dismiss();
-							Toast.makeText(context, str3 + e.getMessage(), Toast.LENGTH_LONG).show();
-						}
-					});
+//                            buttonRefuse.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                } catch (final Exception e) {
+                    ((Activity) context).runOnUiThread(new Runnable() {
 
-				}
-			}
-		}).start();
-	}
-	
-	/**
-     * decline invitation
-     * 
-     * @param buttonRefuse
-     * @param msg
-     */
-    private void refuseInvitation(final Button buttonAgree, final Button buttonRefuse, final InviteMessage msg) {
+                        @Override
+                        public void run() {
+                            pd.dismiss();
+                            Toast.makeText(context, str3 + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            }
+        }).start();
+    }
+
+//	/**
+//     * decline invitation
+//     *
+//     * @param buttonRefuse
+//     * @param msg
+//     */
+    /*private void refuseInvitation(final Button buttonAgree, final Button buttonRefuse, final InviteMessage msg) {
         final ProgressDialog pd = new ProgressDialog(context);
         String str1 = context.getResources().getString(R.string.Are_refuse_with);
         final String str2 = context.getResources().getString(R.string.Has_refused_to);
@@ -301,14 +301,14 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 }
             }
         }).start();
-    }
+    }*/
 
 	private static class ViewHolder {
 		ImageView avator;
 		TextView name;
 		TextView reason;
         Button agree;
-		Button status;
+		//Button status;
 		LinearLayout groupContainer;
 		TextView groupname;
 		// TextView time;
