@@ -171,6 +171,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.agree.setEnabled(false);
 			} else if(msg.getStatus() == InviteMesageStatus.REFUSED){
                 holder.agree.setText(str6);
+                holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
 			} else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED){
