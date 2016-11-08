@@ -26,6 +26,9 @@ import com.hyphenate.chat.EMMessage.Type;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.chat.EMTextMessageBody;
 
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.db.SuperWeChatDBManager;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.db.UserDao;
@@ -40,6 +43,8 @@ import cn.ucai.superwechat.ui.VideoCallActivity;
 import cn.ucai.superwechat.ui.VoiceCallActivity;
 import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.PreferenceManager;
+import cn.ucai.superwechat.utils.ResultUtils;
+
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseEmojiconInfoProvider;
 import com.hyphenate.easeui.controller.EaseUI.EaseSettingsProvider;
@@ -600,7 +605,7 @@ public class SuperWeChatHelper {
     
     /***
      * 好友变化listener
-     * 
+     * 监听好友变化
      */
     public class MyContactListener implements EMContactListener {
 
@@ -609,13 +614,37 @@ public class SuperWeChatHelper {
             // save contact
             Map<String, EaseUser> localUsers = getContactList();
             Map<String, EaseUser> toAddUsers = new HashMap<String, EaseUser>();
-            EaseUser user = new EaseUser(username);
+            final EaseUser user = new EaseUser(username);
 
             if (!localUsers.containsKey(username)) {
                 userDao.saveContact(user);
             }
             toAddUsers.put(username, user);
             localUsers.putAll(toAddUsers);
+            // 将好友变化存储到AppService
+            Map<String, User> appUsers = getAppContactList();
+            if (!appUsers.containsKey(username)) {// 判断是否存在当前好友
+                NetDao.addContact(appContext, EMClient.getInstance().getCurrentUser(), username
+                        , new OkHttpUtils.OnCompleteListener<String>() {
+                            @Override
+                            public void onSuccess(String json) {
+                                L.e(TAG, "json:" + json);
+                                if (json != null) {
+                                    Result result = ResultUtils.getResultFromJson(json, User.class);
+                                    if (result.isRetMsg()) {
+                                        User addUser = (User) result.getRetData();
+                                        // 将最新好友存储到内存和数据库中
+                                        saveAppContact(addUser);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
+            }
 
             broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
         }

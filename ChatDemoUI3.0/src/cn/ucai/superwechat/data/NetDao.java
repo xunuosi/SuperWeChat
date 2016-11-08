@@ -119,4 +119,15 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    public static void addContact(Context mcontext,String username,String addUsername
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_ADD_CONTACT)
+                .addParam(I.Contact.USER_NAME, username)
+                .addParam(I.Contact.CU_NAME, addUsername)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }
