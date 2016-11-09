@@ -53,6 +53,11 @@ public class FriendProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_friend_profile);
         ButterKnife.bind(this);
         mUser = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
+        if (mUser == null) {
+            MFGT.finish(this);
+            // 下边语句防止为接受到用户信息时空指针异常
+            return;
+        }
         addUserName = mUser.getMUserName();
         initView();
     }
