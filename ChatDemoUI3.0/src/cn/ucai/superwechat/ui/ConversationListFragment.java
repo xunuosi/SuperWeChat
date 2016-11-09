@@ -19,6 +19,7 @@ import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatModel;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.utils.L;
 

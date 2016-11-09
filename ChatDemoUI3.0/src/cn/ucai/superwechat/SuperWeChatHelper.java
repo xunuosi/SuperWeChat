@@ -655,7 +655,9 @@ public class SuperWeChatHelper {
             localUsers.remove(username);
             userDao.deleteContact(username);
             inviteMessgeDao.deleteMessage(username);
-
+            // 接受好友删除自己的消息处理,App服务器删除好友时一次性删除两条好友信息，
+            // 所以接受他人删除自己的消息时只需删除内存和数据库即可
+            delAppContact(username);
             broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
         }
 
@@ -1354,5 +1356,14 @@ public class SuperWeChatHelper {
         ArrayList<User> mList = new ArrayList<User>();
         mList.addAll(appContactList.values());
         demoModel.saveAppContactList(mList);
+    }
+
+    /**
+     * del single contact
+     */
+    public void delAppContact(String username){
+        appContactList.remove(username);
+        UserDao dao = new UserDao(appContext);
+        dao.deleteAppContact(username);
     }
 }

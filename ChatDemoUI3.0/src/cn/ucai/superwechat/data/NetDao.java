@@ -120,6 +120,13 @@ public class NetDao {
                 .execute(listener);
     }
 
+    /**
+     * 添加好友
+     * @param mcontext
+     * @param username
+     * @param addUsername
+     * @param listener
+     */
     public static void addContact(Context mcontext,String username,String addUsername
             ,OkHttpUtils.OnCompleteListener<String> listener) {
 
@@ -127,6 +134,24 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_ADD_CONTACT)
                 .addParam(I.Contact.USER_NAME, username)
                 .addParam(I.Contact.CU_NAME, addUsername)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    /**
+     * 删除好友
+     * @param mcontext
+     * @param username
+     * @param deleteName
+     * @param listener
+     */
+    public static void deleteContact(Context mcontext,String username,String deleteName
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_DELETE_CONTACT)
+                .addParam(I.Contact.USER_NAME, username)
+                .addParam(I.Contact.CU_NAME, deleteName)
                 .targetClass(String.class)
                 .execute(listener);
     }
