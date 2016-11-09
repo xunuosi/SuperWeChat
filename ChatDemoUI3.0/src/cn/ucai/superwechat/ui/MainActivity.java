@@ -121,6 +121,7 @@ public class MainActivity extends BaseActivity {
         // runtime permission for android 6.0, just require all permissions here for simple
         requestPermissions();
         contactListFragment = new ContactListFragment();
+        conversationListFragment = new ConversationListFragment();
         initView();
         initListener();
         //umeng api
@@ -130,7 +131,6 @@ public class MainActivity extends BaseActivity {
 
         inviteMessgeDao = new InviteMessgeDao(this);
         //UserDao userDao = new UserDao(this);
-        conversationListFragment = new ConversationListFragment();
         /*contactListFragment = new ContactListFragment();
 		SettingsFragment settingFragment = new SettingsFragment();
 		fragments = new Fragment[] { conversationListFragment, contactListFragment, settingFragment};
@@ -260,7 +260,7 @@ public class MainActivity extends BaseActivity {
         mAdpter = new MainTabAdpter(getSupportFragmentManager());
         mMainVP.setAdapter(mAdpter);
         mAdpter.clear();
-        mAdpter.addFragment(new ConversationListFragment(), getString(R.string.app_name));
+        mAdpter.addFragment(conversationListFragment, getString(R.string.app_name));
         mAdpter.addFragment(contactListFragment, getString(R.string.contacts));
         mAdpter.addFragment(new DiscoverFragment(), getString(R.string.discover));
         mAdpter.addFragment(new MyCenterFragment(), getString(R.string.me));
@@ -348,17 +348,17 @@ public class MainActivity extends BaseActivity {
             public void onReceive(Context context, Intent intent) {
                 updateUnreadLabel();
                 updateUnreadAddressLable();
-                /*if (currentTabIndex == 0) {
+                //if (currentTabIndex == 0) {
                     // refresh conversation list
                     if (conversationListFragment != null) {
                         conversationListFragment.refresh();
                     }
-                } else */
-                if (currentTabIndex == 1) {
+              //  } else
+               // if (currentTabIndex == 1) {
                     if(contactListFragment != null) {
                         contactListFragment.refresh();
                     }
-                }
+                //}
 
                 String action = intent.getAction();
                 if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
