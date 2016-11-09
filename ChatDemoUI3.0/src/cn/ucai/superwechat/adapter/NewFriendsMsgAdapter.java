@@ -123,7 +123,8 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {
 //				holder.status.setVisibility(View.INVISIBLE);
 				holder.reason.setText(str1);
-			} else if (msg.getStatus() == InviteMesageStatus.BEINVITEED || msg.getStatus() == InviteMesageStatus.BEAPPLYED ||
+                holder.agree.setVisibility(View.GONE);
+            } else if (msg.getStatus() == InviteMesageStatus.BEINVITEED || msg.getStatus() == InviteMesageStatus.BEAPPLYED ||
 			        msg.getStatus() == InviteMesageStatus.GROUPINVITATION) {
 			    holder.agree.setVisibility(View.VISIBLE);
                 holder.agree.setEnabled(true);
@@ -169,12 +170,12 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
-			} else if(msg.getStatus() == InviteMesageStatus.REFUSED){
+			}/* else if(msg.getStatus() == InviteMesageStatus.REFUSED){
                 holder.agree.setText(str6);
                 holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
                 holder.agree.setBackgroundDrawable(null);
                 holder.agree.setEnabled(false);
-			} else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED){
+			} */else if(msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED){
 			    String str = msg.getGroupInviter() + str9 + msg.getGroupName();
                 holder.agree.setText(str);
                 holder.agree.setTextColor(context.getResources().getColor(R.color.black2));
@@ -230,6 +231,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                             pd.dismiss();
                             buttonAgree.setText(str2);
                             buttonAgree.setBackgroundDrawable(null);
+                            buttonAgree.setTextColor(context.getResources().getColor(R.color.black2));
                             buttonAgree.setEnabled(false);
 
 //                            buttonRefuse.setVisibility(View.INVISIBLE);
