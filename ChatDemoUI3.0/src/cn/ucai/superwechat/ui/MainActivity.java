@@ -57,6 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.adapter.MainTabAdpter;
@@ -627,6 +628,11 @@ public class MainActivity extends BaseActivity {
             showConflictDialog();
         } else if (intent.getBooleanExtra(Constant.ACCOUNT_REMOVED, false) && !isAccountRemovedDialogShow) {
             showAccountRemovedDialog();
+        }
+        // 判断来自对话框的返回，默认设置显示对话列表
+        boolean b = intent.getBooleanExtra(I.FROM_CHATACTIVITY, false);
+        if (b) {
+            mMainDMTabHost.setChecked(0);
         }
     }
 
