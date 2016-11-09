@@ -328,6 +328,7 @@ public class MainActivity extends BaseActivity {
 						conversationListFragment.refresh();
 					}
 				}*/
+                conversationListFragment.refresh();
             }
         });
     }
@@ -444,7 +445,8 @@ public class MainActivity extends BaseActivity {
      */
     public void updateUnreadLabel() {
         int count = getUnreadMsgCountTotal();
-		/*if (count > 0) {
+        mMainDMTabHost.setUnreadCount(0, count);
+        /*if (count > 0) {
 			unreadLabel.setText(String.valueOf(count));
 			unreadLabel.setVisibility(View.VISIBLE);
 		} else {
