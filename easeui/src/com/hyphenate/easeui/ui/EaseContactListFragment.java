@@ -89,7 +89,7 @@ public class EaseContactListFragment extends EaseBaseFragment {
     protected void initView() {
         // 修改环信标题头不显示
         mEaseTitleBar = (EaseTitleBar) getActivity().findViewById(R.id.title_bar);
-        mEaseTitleBar.setVisibility(View.GONE);
+        hideTitleBar();
 
         contentContainer = (FrameLayout) getView().findViewById(R.id.content_container);
         

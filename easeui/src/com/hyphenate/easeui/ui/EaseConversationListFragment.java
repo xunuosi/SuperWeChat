@@ -76,7 +76,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected void initView() {
         // 修改环信标题头不显示
         mEaseTitleBar = (EaseTitleBar) getActivity().findViewById(R.id.title_bar);
-        mEaseTitleBar.setVisibility(View.GONE);
+        hideTitleBar();
 
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         conversationListView = (EaseConversationList) getView().findViewById(R.id.list);
