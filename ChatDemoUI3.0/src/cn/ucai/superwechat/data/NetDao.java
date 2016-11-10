@@ -3,6 +3,8 @@ package cn.ucai.superwechat.data;
 import android.content.Context;
 
 
+import com.hyphenate.chat.EMClient;
+
 import java.io.File;
 
 import cn.ucai.superwechat.I;
@@ -152,6 +154,21 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_DELETE_CONTACT)
                 .addParam(I.Contact.USER_NAME, username)
                 .addParam(I.Contact.CU_NAME, deleteName)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    /**
+     * 下载好友
+     *
+     * @param mcontext
+     * @param listener
+     */
+    public static void loadContact(Context mcontext, OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST)
+                .addParam(I.Contact.USER_NAME, EMClient.getInstance().getCurrentUser())
                 .targetClass(String.class)
                 .execute(listener);
     }

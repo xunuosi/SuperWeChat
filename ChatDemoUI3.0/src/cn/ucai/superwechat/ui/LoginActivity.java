@@ -241,7 +241,7 @@ public class LoginActivity extends BaseActivity {
                         if (result != null && result.isRetMsg()) {
                             // 将登录用户保存在数据库中
                             // 将登录信息保存到内存中
-                            Map<String, User> appContactList = new HashMap<String, User>();
+                            Map<String, User> appContactList = SuperWeChatHelper.getInstance().getAppContactList();
                             SuperWeChatHelper.getInstance().setAppContactList(appContactList);
                             SuperWeChatHelper.getInstance().saveAppContact((User) result.getRetData());
                             loginSuccess();

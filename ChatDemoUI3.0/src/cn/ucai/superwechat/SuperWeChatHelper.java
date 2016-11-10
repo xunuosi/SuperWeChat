@@ -1124,6 +1124,41 @@ public class SuperWeChatHelper {
        new Thread(){
            @Override
            public void run(){
+               L.e(TAG,"asyncFetchContactsFromServer........");
+               // 从App服务器异步加载好友数据
+               NetDao.loadContact(appContext, new OkHttpUtils.OnCompleteListener<String>() {
+                   @Override
+                   public void onSuccess(String json) {
+                       if (json != null) {
+                           Result result = ResultUtils.getListResultFromJson(json, User.class);
+                           if (result != null && result.isRetMsg()) {
+                               ArrayList<User> list = (ArrayList<User>) result.getRetData();
+                               if (list != null && list.size() > 0) {
+                                   Map<String, User> appUserlist = new HashMap<String, User>();
+                                   for (User appUser : list) {
+                                       EaseCommonUtils.setAppUserInitialLetter(appUser);
+                                       appUserlist.put(appUser.getMUserName(), appUser);
+                                   }
+                                   // save the contact list to cache
+                                   getAppContactList().clear();
+                                   getAppContactList().putAll(appUserlist);
+                                   // save the contact list to database
+                                   UserDao dao = new UserDao(appContext);
+                                   dao.saveAppContactList(list);
+                                   // 提醒更新好友数据
+                                   broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+                               }
+
+                           }
+                       }
+                   }
+
+                   @Override
+                   public void onError(String error) {
+
+                   }
+               });
+
                List<String> usernames = null;
                try {
                    usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();

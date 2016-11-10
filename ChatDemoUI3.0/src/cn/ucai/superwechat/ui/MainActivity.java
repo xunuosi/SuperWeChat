@@ -635,6 +635,7 @@ public class MainActivity extends BaseActivity {
         boolean b = intent.getBooleanExtra(I.FROM_CHATACTIVITY, false);
         if (b) {
             mMainDMTabHost.setChecked(0);
+            contactListFragment.refresh();
         }
     }
 
