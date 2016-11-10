@@ -71,7 +71,7 @@
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:textSize="18sp" />
-    
+
     <RelativeLayout
         android:id="@+id/nGroup_groupIcon"
         android:layout_width="match_parent"
@@ -91,11 +91,13 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"/>
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/nGroup_iv_groupIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ease_groups_icon"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:scaleType="fitXY"
             android:layout_marginRight="5dp"/>
     </RelativeLayout>
 
