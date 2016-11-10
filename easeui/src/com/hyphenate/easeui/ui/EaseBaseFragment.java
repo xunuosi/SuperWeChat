@@ -20,7 +20,8 @@ public abstract class EaseBaseFragment extends Fragment{
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         //noinspection ConstantConditions
         titleBar = (EaseTitleBar) getView().findViewById(R.id.title_bar);
-        
+        // 设置titleBar的颜色
+        titleBar.setBackgroundColor(getResources().getColor(R.color.black2));
         initView();
         setUpView();
     }
