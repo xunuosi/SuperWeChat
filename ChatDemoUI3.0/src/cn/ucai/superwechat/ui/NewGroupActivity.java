@@ -39,6 +39,7 @@ import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupManager;
 import com.hyphenate.chat.EMGroupManager.EMGroupOptions;
 import com.hyphenate.chat.EMGroupManager.EMGroupStyle;
+import com.hyphenate.easeui.domain.Group;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseImageUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -179,7 +180,7 @@ public class NewGroupActivity extends BaseActivity {
                         }
                         EMGroup emGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
                         // 新建App服务器上的群组
-                        createAppGroup(emGroup);
+                        createAppGroup(emGroup, publibCheckBox.isChecked(), memberCheckbox.isChecked());
 
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -202,8 +203,49 @@ public class NewGroupActivity extends BaseActivity {
         }
     }
 
-    private void createAppGroup(EMGroup emGroup) {
+    /**
+     *
+     * @param emGroup
+     */
+    private void createAppGroup(EMGroup emGroup,boolean isPublic,boolean isMember) {
+        if (fileGroupIcon == null) {
+            NetDao.createGroup(this, emGroup,isPublic, isMember,new OkHttpUtils.OnCompleteListener<String>() {
+                @Override
+                public void onSuccess(String json) {
+                    L.e(TAG,"json:"+json);
+                    if (json != null) {
+                        Result result = ResultUtils.getResultFromJson(json, Group.class);
+                        if (result != null && result.isRetMsg()) {
+                           // CommonUtils.showShortMsgToast(R.string.create_group_success);
+                        }
+                    }
+                }
 
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+        } else {
+            NetDao.createGroup(this, fileGroupIcon, emGroup,isPublic, isMember
+                    , new OkHttpUtils.OnCompleteListener<String>() {
+                        @Override
+                        public void onSuccess(String json) {
+                            L.e(TAG,"json:"+json);
+                            if (json != null) {
+                                Result result = ResultUtils.getResultFromJson(json, Group.class);
+                                if (result != null && result.isRetMsg()) {
+                                    //CommonUtils.showShortMsgToast(R.string.create_group_success);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    });
+        }
     }
 
 

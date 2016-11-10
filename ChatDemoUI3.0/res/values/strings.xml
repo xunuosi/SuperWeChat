@@ -162,4 +162,5 @@
     <string name="check_message_prompt">Pleas Wait</string>
     <string name="new_friend">New Friend</string>
     <string name="group_icon">Group Icon</string>
+    <string name="create_group_success">Create Group Success</string>
 </resources>

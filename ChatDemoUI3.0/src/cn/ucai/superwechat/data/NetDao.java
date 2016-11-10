@@ -4,6 +4,7 @@ import android.content.Context;
 
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 
 import java.io.File;
 
@@ -170,6 +171,50 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_DOWNLOAD_CONTACT_ALL_LIST)
                 .addParam(I.Contact.USER_NAME, EMClient.getInstance().getCurrentUser())
                 .targetClass(String.class)
+                .execute(listener);
+    }
+
+    /**
+     * 新建群组的方法
+     * @param mcontext
+     * @param listener
+     */
+    public static void createGroup(Context mcontext, EMGroup emGroup,boolean isPublic,boolean isMember
+            , OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_CREATE_GROUP)
+                .addParam(I.Group.HX_ID,emGroup.getGroupId())
+                .addParam(I.Group.NAME,emGroup.getGroupName())
+                .addParam(I.Group.DESCRIPTION,emGroup.getDescription())
+                .addParam(I.Group.OWNER,emGroup.getOwner())
+                .addParam(I.Group.IS_PUBLIC,String.valueOf(isPublic))
+                .addParam(I.Group.ALLOW_INVITES,String.valueOf(isMember))
+                .targetClass(String.class)
+                .post()
+                .execute(listener);
+    }
+
+    /**
+     * 新建群组的方法(带群图标)
+     *
+     * @param mcontext
+     * @param listener
+     */
+    public static void createGroup(Context mcontext, File file, EMGroup emGroup,boolean isPublic,boolean isMember
+            , OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_CREATE_GROUP)
+                .addParam(I.Group.HX_ID,emGroup.getGroupId())
+                .addParam(I.Group.NAME,emGroup.getGroupName())
+                .addParam(I.Group.DESCRIPTION,emGroup.getDescription())
+                .addParam(I.Group.OWNER,emGroup.getOwner())
+                .addParam(I.Group.IS_PUBLIC,String.valueOf(isPublic))
+                .addParam(I.Group.ALLOW_INVITES,String.valueOf(isMember))
+                .addFile2(file)
+                .targetClass(String.class)
+                .post()
                 .execute(listener);
     }
 }
