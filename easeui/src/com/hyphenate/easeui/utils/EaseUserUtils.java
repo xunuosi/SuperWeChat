@@ -130,6 +130,25 @@ public class EaseUserUtils {
         }
     }
 
+    /**
+     * set Group avatar
+     * @param Hxid
+     */
+    public static void setAppGroupAvatar(Context context, String Hxid, ImageView imageView){
+        if(Hxid != null){
+            try {
+                // avatarResId算是键值，头像以键值对的形式缓存在内存和磁盘当中
+                int avatarResId = Integer.parseInt(Hxid);
+                Glide.with(context).load(avatarResId).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(Hxid).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.default_avatar).into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.ease_group_icon).into(imageView);
+        }
+    }
+
     public static void setAppCurrentUserAvatar(FragmentActivity activity, ImageView imageView) {
         String username = EMClient.getInstance().getCurrentUser();
         setAppUserAvatar(activity, username, imageView);
