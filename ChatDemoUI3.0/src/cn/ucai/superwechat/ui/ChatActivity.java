@@ -8,12 +8,8 @@ import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.util.EasyUtils;
 
-/**
- * chat activity，EaseChatFragment was used {@link #EaseChatFragment}
- *
- */
+
 public class ChatActivity extends BaseActivity{
     public static ChatActivity activityInstance;
     private EaseChatFragment chatFragment;

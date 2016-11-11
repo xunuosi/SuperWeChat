@@ -102,7 +102,7 @@ public class AddContactActivity extends BaseActivity {
         progressDialog.setMessage(stri);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        String username = mAcTvShowMessage.getText().toString().trim();
+        final String username = mAcTvShowMessage.getText().toString().trim();
         NetDao.findUserByUserName(this, username
                 , new OkHttpUtils.OnCompleteListener<String>() {
                     @Override
@@ -114,7 +114,7 @@ public class AddContactActivity extends BaseActivity {
                             if (result != null && result.isRetMsg()) {
                                 User user = (User) result.getRetData();
                                 if (user != null) {
-                                    MFGT.gotoFriendProfile(AddContactActivity.this, user);
+                                    MFGT.gotoFriendProfile(AddContactActivity.this, user.getMUserName());
                                 }
                             } else {
                                 CommonUtils.showShortToast(R.string.msg_104);

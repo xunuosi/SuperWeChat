@@ -21,14 +21,21 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.utils.L;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 public class FriendProfileActivity extends BaseActivity {
     private static final String TAG = FriendProfileActivity.class.getSimpleName();
 
-    User mUser;
+    User mUser = null;
     String addUserName;
-    Map<String, User> contactList;
+    //Map<String, User> contactList;
+    String username;
+    boolean isFriend;
 
     @BindView(R.id.ctitle_ivback)
     ImageView mCtitleIvback;
@@ -54,14 +61,62 @@ public class FriendProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile);
         ButterKnife.bind(this);
-        mUser = (User) getIntent().getSerializableExtra(I.User.USER_NAME);
-        if (mUser == null) {
+        username = getIntent().getStringExtra(I.User.USER_NAME);
+        if (username == null) {
             MFGT.finish(this);
-            // 下边语句防止为接受到用户信息时空指针异常
             return;
+        } else {
+            mUser = SuperWeChatHelper.getInstance().getAppContactList().get(username);
         }
-        addUserName = mUser.getMUserName();
         initView();
+        // 判断是否为好友
+        if (mUser == null) {
+            isFriend = false;
+        } else {
+            isFriend = true;
+        }
+        // 不是好友应去服务器端下载,是好友应该去更新最新数据
+        syncAppUserInfo();
+    }
+
+    private void syncAppUserInfo() {
+        NetDao.findUserByUserName(this, username, new OkHttpUtils.OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String json) {
+                if (json != null) {
+                    L.e(TAG, "json:" + json);
+                    Result result = ResultUtils.getResultFromJson(json, User.class);
+                    if (result != null && result.isRetMsg()) {
+                        User syncUser = (User) result.getRetData();
+                        if (syncUser != null) {
+                            SuperWeChatHelper.getInstance().saveAppContact(syncUser);
+                            mUser = syncUser;
+                        } else {
+                            syncFailed();
+                        }
+                    } else {
+                        syncFailed();
+                    }
+                } else {
+                    syncFailed();
+                }
+                setView();
+            }
+
+            @Override
+            public void onError(String error) {
+                syncFailed();
+            }
+        });
+    }
+
+    /**
+     * 获取服务器用户信息失败的方法
+     */
+    private void syncFailed() {
+        if (!isFriend && mUser == null) {
+            MFGT.finish(this);
+        }
     }
 
     private void initView() {
@@ -69,13 +124,14 @@ public class FriendProfileActivity extends BaseActivity {
         mCtitleViewLeft.setVisibility(View.VISIBLE);
         mCtitleTvLeft.setVisibility(View.VISIBLE);
         mCtitleTvLeft.setText(R.string.complete_information);
+    }
 
+    private void setView() {
         mFpTvAccount.setText(mUser.getMUserName());
         mFpTvNick.setText(mUser.getMUserNick());
         EaseUserUtils.setAppUserAvatar(this, mUser.getMUserName(), mFpIvAvatar);
         // 判断是否已经是好友
-        contactList = SuperWeChatHelper.getInstance().getAppContactList();
-        if (contactList.containsKey(mUser.getMUserName())) {
+        if (isFriend) {
             mFpBtnSendMessage.setVisibility(View.VISIBLE);
             mFpBtnVideoTalk.setVisibility(View.VISIBLE);
         } else {

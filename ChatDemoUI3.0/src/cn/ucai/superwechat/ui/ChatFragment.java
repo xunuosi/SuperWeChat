@@ -267,7 +267,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         intent.putExtra("username", username);
         startActivity(intent);*/
         // 点击好友头像跳转到好友信息界面
-        MFGT.gotoFriendProfile(getActivity(), SuperWeChatHelper.getInstance().getAppContactList().get(username));
+        MFGT.gotoFriendProfile(getActivity(), username);
     }
     
     @Override

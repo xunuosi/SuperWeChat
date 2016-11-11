@@ -84,10 +84,10 @@ public class MFGT {
         startActivity(activity, AddFriendActivity.class);
     }
 
-    public static void gotoFriendProfile(Activity activity, User user) {
+    public static void gotoFriendProfile(Activity activity, String username) {
         Intent intent = new Intent();
         intent.setClass(activity, FriendProfileActivity.class);
-        intent.putExtra(I.User.USER_NAME, user);
+        intent.putExtra(I.User.USER_NAME, username);
         startActivity(activity, intent);
     }
 
