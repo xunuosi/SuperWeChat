@@ -1,5 +1,7 @@
 package com.hyphenate.easeui.domain;
 
+import android.os.SystemClock;
+
 import java.io.Serializable;
 
 public class Group implements Serializable{
@@ -137,7 +139,7 @@ public class Group implements Serializable{
 	}
 	
 	public String getMAvatarSuffix() {
-		return mavatarSuffix;
+		return mavatarSuffix == null ? ".jpg" : mavatarSuffix;
 	}
 	public void setMAvatarSuffix(String mavatarSuffix) {
 		this.mavatarSuffix = mavatarSuffix;
@@ -153,5 +155,19 @@ public class Group implements Serializable{
 				+ ", mgroupMaxUsers=" + mgroupMaxUsers + ", mgroupAffiliationsCount=" + mgroupAffiliationsCount
 				+ ", mgroupIsPublic=" + mgroupIsPublic + ", mgroupAllowInvites=" + mgroupAllowInvites + "]";
 	}
-	
+
+    public String getGroupIcon() {
+        return "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid=" + getMGroupHxid()
+                + "&avatarType=group_icon&m_avatar_suffix=" + getMAvatarSuffix() + "&updateTime=" + getMAvatarLastUpdateTime();
+    }
+
+    /**
+     * 供外部使用获取群组头像
+     * @param Hxid
+     * @return
+     */
+    public static String getGroupIcon(String Hxid) {
+        return "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid=" + Hxid
+                + "&avatarType=group_icon&m_avatar_suffix=.jpg";
+    }
 }
