@@ -49,6 +49,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +84,7 @@ public class NewGroupActivity extends BaseActivity {
 
     private ProgressDialog dialogImg;
     File fileGroupIcon;// 保存群主图标
+    EMGroup emGroup;// 环信群的对象
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,9 +181,9 @@ public class NewGroupActivity extends BaseActivity {
                         } else {
                             option.style = memberCheckbox.isChecked() ? EMGroupStyle.EMGroupStylePrivateMemberCanInvite : EMGroupStyle.EMGroupStylePrivateOnlyOwnerInvite;
                         }
-                        EMGroup emGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
+                        emGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
                         // 新建App服务器上的群组
-                        createAppGroup(emGroup, publibCheckBox.isChecked(), memberCheckbox.isChecked());
+                        createAppGroup(publibCheckBox.isChecked(), memberCheckbox.isChecked());
 
                     } catch (final HyphenateException e) {
                         runOnUiThread(new Runnable() {
@@ -196,21 +199,13 @@ public class NewGroupActivity extends BaseActivity {
         }
     }
 
-    private void createGroupSuccess() {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                progressDialog.dismiss();
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
-    }
+
 
     /**
      *
-     * @param emGroup
+     *
      */
-    private void createAppGroup(EMGroup emGroup,boolean isPublic,boolean isMember) {
+    private void createAppGroup(boolean isPublic,boolean isMember) {
         if (fileGroupIcon == null) {
             NetDao.createGroup(this, emGroup,isPublic, isMember,listener);
         } else {
@@ -228,16 +223,70 @@ public class NewGroupActivity extends BaseActivity {
             if (json != null) {
                 Result result = ResultUtils.getResultFromJson(json, Group.class);
                 if (result != null && result.isRetMsg()) {
-                    createGroupSuccess();
+                    addMembers();
+                } else {
+                    progressDialog.dismiss();
                 }
+            } else {
+                progressDialog.dismiss();
             }
         }
 
         @Override
         public void onError(String error) {
-
+            progressDialog.dismiss();
         }
     };
+
+    /**
+     * 添加群的成员
+     */
+    private void addMembers() {
+        List<String> members = emGroup.getMembers();
+        if (members != null && members.size() > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (String str : members) {
+                sb.append(str).append(",");
+            }
+            sb.deleteCharAt(sb.lastIndexOf(","));
+            L.e(TAG, "members:" + sb);
+            NetDao.addGroupMembers(this, sb.toString(), emGroup
+                    , new OkHttpUtils.OnCompleteListener<String>() {
+                        @Override
+                        public void onSuccess(String json) {
+                            if (json != null) {
+                                L.e(TAG, "addmembers,json:" + json);
+                                Result result = ResultUtils.getResultFromJson(json, Group.class);
+                                if (result != null && result.isRetMsg()) {
+                                    createGroupSuccess();
+                                } else {
+                                    progressDialog.dismiss();
+                                }
+                            } else {
+                                progressDialog.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            progressDialog.dismiss();
+                        }
+                    });
+
+        } else {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void createGroupSuccess() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+    }
 
     /**
      *

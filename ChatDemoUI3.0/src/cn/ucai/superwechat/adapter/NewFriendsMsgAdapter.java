@@ -96,28 +96,29 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 				holder.groupname.setText(msg.getGroupName());
 			} else{
 				holder.groupContainer.setVisibility(View.GONE);
+                // 初始化添加好友列表的消息
+                NetDao.findUserByUserName(context, msg.getFrom()
+                        , new OkHttpUtils.OnCompleteListener<String>() {
+                            @Override
+                            public void onSuccess(String json) {
+                                if (json != null) {
+                                    Result result = ResultUtils.getResultFromJson(json, User.class);
+                                    User user = (User) result.getRetData();
+                                    EaseUserUtils.setAppUserAvatar(context, msg.getFrom(), holder.avator);
+                                    EaseUserUtils.setAppUserNick(user.getMUserNick(), holder.name);
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
 			}
 			
 			holder.reason.setText(msg.getReason());
 			holder.name.setText(msg.getFrom());
-			// 初始化添加好友列表的消息
-            NetDao.findUserByUserName(context, msg.getFrom()
-                    , new OkHttpUtils.OnCompleteListener<String>() {
-                        @Override
-                        public void onSuccess(String json) {
-                            if (json != null) {
-                                Result result = ResultUtils.getResultFromJson(json, User.class);
-                                User user = (User) result.getRetData();
-                                EaseUserUtils.setAppUserAvatar(context, msg.getFrom(), holder.avator);
-                                EaseUserUtils.setAppUserNick(user.getMUserNick(), holder.name);
-                            }
-                        }
 
-                        @Override
-                        public void onError(String error) {
-
-                        }
-                    });
 			// holder.time.setText(DateUtils.getTimestampString(new
 			// Date(msg.getTime())));
 			if (msg.getStatus() == InviteMesageStatus.BEAGREED) {

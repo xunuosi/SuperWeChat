@@ -7,6 +7,8 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.bean.Result;
@@ -215,6 +217,17 @@ public class NetDao {
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
+                .execute(listener);
+    }
+
+    public static void addGroupMembers(Context mcontext, String members, EMGroup emGroup
+            , OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_ADD_GROUP_MEMBERS)
+                .addParam(I.Member.USER_NAME,members)
+                .addParam(I.Member.GROUP_HX_ID,emGroup.getGroupId())
+                .targetClass(String.class)
                 .execute(listener);
     }
 }
