@@ -18,6 +18,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupInfo;
 import cn.ucai.superwechat.R;
+
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 
 public class GroupSimpleDetailActivity extends BaseActivity {
@@ -36,6 +39,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 	private EMGroup group;
 	private String groupid;
 	private ProgressBar progressBar;
+	private ImageView mAvatar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,10 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 		    groupname = group.getGroupName();
 		    groupid = group.getGroupId();
 		}
-		
-		tv_name.setText(groupname);
+        // 显示群头像
+        mAvatar = (ImageView) findViewById(R.id.avatar);
+        EaseUserUtils.setAppGroupAvatar(this, groupInfo.getGroupId(), mAvatar);
+        tv_name.setText(groupname);
 		
 		
 		if(group != null){
