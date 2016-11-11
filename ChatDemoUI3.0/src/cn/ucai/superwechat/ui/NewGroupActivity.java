@@ -182,13 +182,6 @@ public class NewGroupActivity extends BaseActivity {
                         // 新建App服务器上的群组
                         createAppGroup(emGroup, publibCheckBox.isChecked(), memberCheckbox.isChecked());
 
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                progressDialog.dismiss();
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        });
                     } catch (final HyphenateException e) {
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -203,52 +196,53 @@ public class NewGroupActivity extends BaseActivity {
         }
     }
 
+    private void createGroupSuccess() {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+    }
+
     /**
      *
      * @param emGroup
      */
     private void createAppGroup(EMGroup emGroup,boolean isPublic,boolean isMember) {
         if (fileGroupIcon == null) {
-            NetDao.createGroup(this, emGroup,isPublic, isMember,new OkHttpUtils.OnCompleteListener<String>() {
-                @Override
-                public void onSuccess(String json) {
-                    L.e(TAG,"json:"+json);
-                    if (json != null) {
-                        Result result = ResultUtils.getResultFromJson(json, Group.class);
-                        if (result != null && result.isRetMsg()) {
-                           // CommonUtils.showShortMsgToast(R.string.create_group_success);
-                        }
-                    }
-                }
-
-                @Override
-                public void onError(String error) {
-
-                }
-            });
+            NetDao.createGroup(this, emGroup,isPublic, isMember,listener);
         } else {
-            NetDao.createGroup(this, fileGroupIcon, emGroup,isPublic, isMember
-                    , new OkHttpUtils.OnCompleteListener<String>() {
-                        @Override
-                        public void onSuccess(String json) {
-                            L.e(TAG,"json:"+json);
-                            if (json != null) {
-                                Result result = ResultUtils.getResultFromJson(json, Group.class);
-                                if (result != null && result.isRetMsg()) {
-                                    //CommonUtils.showShortMsgToast(R.string.create_group_success);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onError(String error) {
-
-                        }
-                    });
+            NetDao.createGroup(this, fileGroupIcon, emGroup, isPublic, isMember, listener);
         }
     }
 
+    /**
+     * 网络请求listener
+     */
+    OkHttpUtils.OnCompleteListener<String> listener = new OkHttpUtils.OnCompleteListener<String>() {
+        @Override
+        public void onSuccess(String json) {
+            L.e(TAG, "json:" + json);
+            if (json != null) {
+                Result result = ResultUtils.getResultFromJson(json, Group.class);
+                if (result != null && result.isRetMsg()) {
+                    createGroupSuccess();
+                }
+            }
+        }
 
+        @Override
+        public void onError(String error) {
+
+        }
+    };
+
+    /**
+     *
+     * @param view
+     */
     public void back(View view) {
         finish();
     }
