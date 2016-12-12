@@ -50,7 +50,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper{
-
+    private static final String ARG_USERNAME = "username";
+    private static final String ARG_IS_NORMAL = "isNormalStyle";
 	// constant start from 11 to avoid conflict with constant in base class
     private static final int ITEM_VIDEO = 11;
     private static final int ITEM_FILE = 12;
@@ -82,6 +83,15 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
      * if it is chatBot 
      */
     private boolean isRobot;
+
+    public static ChatFragment newInstance(String toChatUsername, boolean isNormalStyle){
+        ChatFragment fragment = new ChatFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_USERNAME, toChatUsername);
+        args.putBoolean(ARG_IS_NORMAL,isNormalStyle);
+        fragment.setArguments(args);
+        return fragment;
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

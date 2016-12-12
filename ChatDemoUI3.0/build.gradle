@@ -27,8 +27,11 @@ android {
     defaultConfig {
         applicationId "cn.ucai.superwechat"
         minSdkVersion 11
-        targetSdkVersion 23
+        targetSdkVersion 22
         multiDexEnabled true
+        ndk {
+            abiFilters "armeabi"
+        }
     }
 
     dexOptions {
@@ -93,4 +96,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
+    compile 'com.github.florent37:viewanimator:1.0.4'
 }

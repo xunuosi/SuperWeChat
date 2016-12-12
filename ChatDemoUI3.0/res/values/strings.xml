@@ -163,4 +163,9 @@
     <string name="new_friend">New Friend</string>
     <string name="group_icon">Group Icon</string>
     <string name="create_group_success">Create Group Success</string>
+    <string name="pref_default_video_frame_rate">15</string>
+    <string name="pref_default_video_encoding_bit_rate">400</string>
+    <string name="pref_default_log_cache_dir">/sdcard/ucloud/log</string>
+    <string name="pref_default_video_size_width">640</string>
+    <string name="pref_default_video_size_height">480</string>
 </resources>

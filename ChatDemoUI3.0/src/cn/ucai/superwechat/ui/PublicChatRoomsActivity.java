@@ -43,6 +43,8 @@ import com.hyphenate.chat.EMCursorResult;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.data.LiveRoom;
+import cn.ucai.superwechat.data.TestDataRepository;
 import cn.ucai.superwechat.widget.GridMarginDecoration;
 
 import com.hyphenate.easeui.utils.EaseUserUtils;
@@ -87,6 +89,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
 		TextView title = (TextView) findViewById(R.id.tv_title);
 		title.setText(getResources().getString(R.string.chat_room));
 		chatRoomList = new ArrayList<EMChatRoom>();
+
 		rooms = new ArrayList<EMChatRoom>();
 		
 //		View footView = getLayoutInflater().inflate(R.layout.em_listview_footer_view, listView, false);
@@ -333,15 +336,26 @@ public class PublicChatRoomsActivity extends BaseActivity {
 			final LiveViewHolder holder = new LiveViewHolder(LayoutInflater.from(context).
 					inflate(R.layout.layout_livelist_item, parent, false));
 
-//			holder.itemView.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) {
-//					final int position = holder.getAdapterPosition();
-//					if (position == RecyclerView.NO_POSITION) return;
+			holder.itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					final int position = holder.getAdapterPosition();
+					if (position == RecyclerView.NO_POSITION) return;
+//					LiveRoom room = new LiveRoom();
+//					EMChatRoom eRoom = liveRoomList.get(position);
+//					room.setChatroomId(eRoom.getId());
+//					room.setName(eRoom.getName());
+//					room.setAudienceNum(eRoom.getMemberCount());
+//					room.setId(eRoom.getId());
+//					room.setAnchorId(eRoom.getId());
+//					room.setCover(eRoom.getMaxUsers());
+//					LiveRoom room = TestDataRepository.getLiveRoomList().get(position);
+//					Log.e("xns", "room:" + room);
 //					context.startActivity(new Intent(context, LiveDetailsActivity.class)
-//							.putExtra("liveroom", liveRoomList.get(position)));
-//				}
-//			});
+//							.putExtra("liveroom", room));
+					context.startActivity(new Intent(context, StartLiveActivity.class));
+				}
+			});
 			return holder;
 		}
 

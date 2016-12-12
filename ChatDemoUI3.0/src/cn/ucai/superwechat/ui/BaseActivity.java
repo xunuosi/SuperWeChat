@@ -16,6 +16,8 @@ package cn.ucai.superwechat.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,6 +41,22 @@ public class BaseActivity extends EaseBaseActivity {
         super.onStart();
         // umeng
         MobclickAgent.onPause(this);
+    }
+
+    protected void showToast(final String toastContent){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(BaseActivity.this, toastContent, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    protected void showLongToast(final String toastContent){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(BaseActivity.this, toastContent, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
