@@ -18,6 +18,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.easemob.redpacketsdk.RedPacket;
+import com.hyphenate.easeui.controller.EaseUI;
+import com.ucloud.live.UEasyStreaming;
 
 public class SuperWeChatApplication extends Application {
 
@@ -37,7 +39,9 @@ public class SuperWeChatApplication extends Application {
 		super.onCreate();
         applicationContext = this;
         instance = this;
-        
+		// 初始化直播组件
+		EaseUI.getInstance().init(this, null);
+		UEasyStreaming.initStreaming("publish3-key");
         //init demo helper
         SuperWeChatHelper.getInstance().init(applicationContext);
 		//red packet code : 初始化红包上下文，开启日志输出开关
