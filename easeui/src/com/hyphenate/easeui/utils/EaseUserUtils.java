@@ -170,4 +170,33 @@ public class EaseUserUtils {
             textView.setText(username);
         }
     }
+    /**
+     * 供外部使用获取直播封面
+     * @param Hxid
+     * @return
+     */
+    public static String getLiveIcon(String Hxid) {
+        return "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid=" + Hxid
+                + "&avatarType=chatroom_icon&m_avatar_suffix=.jpg";
+    }
+
+    /**
+     * 设置直播封面
+     * @param Hxid
+     */
+    public static void setLiveAvatar(Context context, String Hxid, ImageView imageView){
+        if(Hxid != null){
+            String path = getLiveIcon(Hxid);
+            try {
+                // avatarResId算是键值，头像以键值对的形式缓存在内存和磁盘当中
+                int avatarResId = Integer.parseInt(path);
+                Glide.with(context).load(avatarResId).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(path).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.default_avatar).into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.ease_group_icon).into(imageView);
+        }
+    }
 }
