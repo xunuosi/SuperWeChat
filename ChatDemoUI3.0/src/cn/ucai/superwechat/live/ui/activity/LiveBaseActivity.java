@@ -323,6 +323,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
                     @Override
                     public void onMessageSend(String content) {
                         EMMessage message = EMMessage.createTxtSendMessage(content, chatroomId);
+                        // 显示弹幕
                         if (messageView.isBarrageShow) {
                             message.setAttribute(Constant.EXTRA_IS_BARRAGE_MSG, true);
                             barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());

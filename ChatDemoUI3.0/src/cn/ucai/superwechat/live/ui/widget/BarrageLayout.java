@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.github.florent37.viewanimator.AnimationBuilder;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +94,9 @@ public class BarrageLayout extends LinearLayout {
         View barrageView = LayoutInflater.from(getContext()).inflate(R.layout.layout_barrage_show, null);
         TextView nameView = (TextView) barrageView.findViewById(R.id.name);
         TextView contentView = (TextView) barrageView.findViewById(R.id.content);
+        // 设置弹幕的头像
+        ImageView avatarView = (ImageView) barrageView.findViewById(R.id.avatar);
+        EaseUserUtils.setAppUserAvatar(getContext(), username, avatarView);
         nameView.setText(username);
         contentView.setText(msgContent);
         return barrageView;
