@@ -88,7 +88,7 @@
             android:layout_height="190dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="42dp"></cn.ucai.superwechat.live.ui.widget.PeriscopeLayout>
+            android:layout_marginBottom="42dp"/>
 
         <cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView
             android:id="@+id/left_gift_view1"
