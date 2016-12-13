@@ -6,14 +6,17 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,7 +35,11 @@ import com.ucloud.live.UEasyStreaming;
 import com.ucloud.live.UStreamingProfile;
 import com.ucloud.live.widget.UAspectFrameLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +94,11 @@ public class StartLiveActivity extends LiveBaseActivity
     LiveRoom room;
 
     boolean isStarted;
+
+    private long startTime;
+    private long endTime;
+    // 显示收看人数
+    private String count;
 
     private Handler handler = new Handler() {
         @Override
@@ -206,17 +218,18 @@ public class StartLiveActivity extends LiveBaseActivity
     @OnClick(R.id.btn_start)
     void startLive() {
         //demo为了测试方便，只有指定的账号才能开启直播
-        if (liveId == null) {
-            String[] anchorIds = TestDataRepository.anchorIds;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < anchorIds.length; i++) {
-                sb.append(anchorIds[i]);
-                if (i != (anchorIds.length - 1)) sb.append(",");
-            }
-            new EaseAlertDialog(this, "demo中只有" + sb.toString() + "这几个账户才能开启直播").show();
-            return;
-        }
-
+//        if (liveId == null) {
+//            String[] anchorIds = TestDataRepository.anchorIds;
+//            StringBuilder sb = new StringBuilder();
+//            for (int i = 0; i < anchorIds.length; i++) {
+//                sb.append(anchorIds[i]);
+//                if (i != (anchorIds.length - 1)) sb.append(",");
+//            }
+//            new EaseAlertDialog(this, "demo中只有" + sb.toString() + "这几个账户才能开启直播").show();
+//            return;
+//        }
+        // 记录主播开始直播的时间点
+        startTime = System.currentTimeMillis();
         startContainer.setVisibility(View.INVISIBLE);
         //Utils.hideKeyboard(titleEdit);
         new Thread() {
@@ -272,12 +285,34 @@ public class StartLiveActivity extends LiveBaseActivity
         Button closeConfirmBtn = (Button) view.findViewById(R.id.live_close_confirm);
         TextView usernameView = (TextView) view.findViewById(R.id.tv_username);
         usernameView.setText(EMClient.getInstance().getCurrentUser());
+        // 设置退出直播时显示的内容
+        ImageView ivAvatar = (ImageView) view.findViewById(R.id.iv_avatar);
+        EaseUserUtils.setAppCurrentUserAvatar(StartLiveActivity.this, ivAvatar);
+        // 显示直播时长
+        endTime = System.currentTimeMillis();
+        TextView timeView = (TextView) view.findViewById(R.id.tv_showTime);
+        long diff = endTime - startTime;
+        timeView.setText(myFormatDate(diff));
+        // 显示直播观看人数
+        TextView viewers = (TextView) view.findViewById(R.id.tv_viewers);
+        TextView audienceNum = (TextView) findViewById(R.id.audience_num);
+        count = audienceNum.getText().toString();
+        viewers.setText(count);
         closeConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    private String myFormatDate(long mills) {
+        StringBuilder time = new StringBuilder();
+        String hh = String.format("%02d", (mills / 1000 / 3600));
+        String mm = String.format("%02d",(mills / 1000 / 60 % 60));
+        String ss = String.format("%02d",(mills / 1000 % 60));
+        time.append(hh).append(":").append(mm).append(":").append(ss);
+        return time.toString();
     }
 
     private void confirmClose() {
