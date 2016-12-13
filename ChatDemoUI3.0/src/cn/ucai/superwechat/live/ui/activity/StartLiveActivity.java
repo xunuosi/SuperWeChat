@@ -97,8 +97,6 @@ public class StartLiveActivity extends LiveBaseActivity
 
     private long startTime;
     private long endTime;
-    // 显示收看人数
-    private String count;
 
     private Handler handler = new Handler() {
         @Override
@@ -295,9 +293,7 @@ public class StartLiveActivity extends LiveBaseActivity
         timeView.setText(myFormatDate(diff));
         // 显示直播观看人数
         TextView viewers = (TextView) view.findViewById(R.id.tv_viewers);
-        TextView audienceNum = (TextView) findViewById(R.id.audience_num);
-        count = audienceNum.getText().toString();
-        viewers.setText(count);
+        viewers.setText(String.valueOf(memberList.size()));
         closeConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
