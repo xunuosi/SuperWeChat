@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "cn.ucai.superwechat"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 22
         multiDexEnabled true
         ndk {
@@ -75,10 +75,8 @@ android {
 dependencies {
     compile project(':redpacketlibrary')
     compile project(':EaseUI')
+    compile project(':ulive-android-sdk')
     compile fileTree(include: '*.jar', exclude: 'android-support-multidex.jar', dir: 'libs')
-    compile(project(':ulive-android-sdk')) {
-        exclude module: 'support-v4'
-    }
     //考虑到在eclipse中,直接使用源码
     //    compile ('com.anthonycr.grant:permissions:1.0'){
     //        exclude module: 'support-v4'

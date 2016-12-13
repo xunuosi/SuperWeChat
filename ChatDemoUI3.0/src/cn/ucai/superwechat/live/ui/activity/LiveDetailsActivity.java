@@ -9,31 +9,42 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.live.data.model.LiveRoom;
 
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseImageView;
 import com.ucloud.common.logger.L;
 import com.ucloud.player.widget.v2.UVideoView;
+
 import java.util.Random;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
 
 public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.Callback {
 
     String rtmpPlayStreamUrl = "rtmp://vlive3.rtmp.cdn.ucloud.com.cn/ucloud/";
+
     private UVideoView mVideoView;
 
-    @BindView(R.id.loading_layout) RelativeLayout loadingLayout;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @BindView(R.id.loading_text) TextView loadingText;
-    @BindView(R.id.cover_image) ImageView coverView;
-    @BindView(R.id.tv_username) TextView usernameView;
+    @BindView(R.id.loading_layout)
+    RelativeLayout loadingLayout;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.loading_text)
+    TextView loadingText;
+    @BindView(R.id.cover_image)
+    ImageView coverView;
+    @BindView(R.id.tv_username)
+    TextView usernameView;
+    @BindView(R.id.iv_liver_avatar)
+    EaseImageView mIvLiverAvatar;
 
     @Override
     protected void onActivityCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +76,11 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         mVideoView.registerCallback(this);
         mVideoView.setVideoPath(rtmpPlayStreamUrl + liveId);
 //      mVideoView.setVideoPath(rtmpPlayStreamUrl);
+        initView();
+    }
 
+    private void initView() {
+        EaseUserUtils.setAppUserAvatar(LiveDetailsActivity.this, anchorId, mIvLiverAvatar);
     }
 
 
@@ -150,7 +165,7 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
             case UVideoView.Callback.EVENT_PLAY_STOP:
                 break;
             case UVideoView.Callback.EVENT_PLAY_COMPLETION:
-                Toast.makeText(this, "直播已结束",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "直播已结束", Toast.LENGTH_LONG).show();
                 finish();
                 break;
             case UVideoView.Callback.EVENT_PLAY_DESTORY:
@@ -169,8 +184,15 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         }
     }
 
-    @OnClick(R.id.img_bt_close) void close(){
+    @OnClick(R.id.img_bt_close)
+    void close() {
         finish();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
