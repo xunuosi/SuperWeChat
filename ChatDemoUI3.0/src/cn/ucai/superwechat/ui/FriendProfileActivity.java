@@ -66,6 +66,7 @@ public class FriendProfileActivity extends BaseActivity {
             MFGT.finish(this);
             return;
         } else {
+            addUserName = username;
             mUser = SuperWeChatHelper.getInstance().getAppContactList().get(username);
         }
         initView();
@@ -149,13 +150,13 @@ public class FriendProfileActivity extends BaseActivity {
                 startAddContacts();
                 break;
             case R.id.fp_btn_sendMessage:
-                MFGT.gotoChatActivity(this, addUserName);
+                MFGT.gotoChatActivity(this, username);
                 break;
             case R.id.fp_btn_videoTalk:
                 if (!EMClient.getInstance().isConnected())
                     Toast.makeText(this, R.string.not_connect_to_server, Toast.LENGTH_SHORT).show();
                 else {
-                    startActivity(new Intent(this, VideoCallActivity.class).putExtra("username", addUserName)
+                    startActivity(new Intent(this, VideoCallActivity.class).putExtra("username", username)
                             .putExtra("isComingCall", false));
                 }
                 break;
@@ -163,6 +164,6 @@ public class FriendProfileActivity extends BaseActivity {
     }
 
     private void startAddContacts() {
-        MFGT.gotoCheckMessageActivity(this, addUserName);
+        MFGT.gotoCheckMessageActivity(this, username);
     }
 }

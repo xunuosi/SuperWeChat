@@ -3,6 +3,7 @@ package cn.ucai.superwechat.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
@@ -22,6 +23,7 @@ public class ChatActivity extends BaseActivity{
         activityInstance = this;
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");
+        Log.e("xns", "toChatUsername:" + toChatUsername);
         //use EaseChatFratFragment
         chatFragment = new ChatFragment();
         //pass parameters to chat fragment
