@@ -10,7 +10,7 @@ public class LiveRoom implements Parcelable {
     private String id;
     private String name;
     private int audienceNum;
-    private int cover;
+    private String cover;
     private String chatroomId;
     private String anchorId;
 
@@ -38,11 +38,11 @@ public class LiveRoom implements Parcelable {
         this.audienceNum = audienceNum;
     }
 
-    public int getCover() {
+    public String getCover() {
         return cover;
     }
 
-    public void setCover(int cover) {
+    public void setCover(String cover) {
         this.cover = cover;
     }
 
@@ -70,7 +70,7 @@ public class LiveRoom implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeInt(this.audienceNum);
-        dest.writeInt(this.cover);
+        dest.writeString(this.cover);
         dest.writeString(this.chatroomId);
         dest.writeString(this.anchorId);
     }
@@ -82,7 +82,7 @@ public class LiveRoom implements Parcelable {
         this.id = in.readString();
         this.name = in.readString();
         this.audienceNum = in.readInt();
-        this.cover = in.readInt();
+        this.cover = in.readString();
         this.chatroomId = in.readString();
         this.anchorId = in.readString();
     }
@@ -96,4 +96,9 @@ public class LiveRoom implements Parcelable {
             return new LiveRoom[size];
         }
     };
+
+    public String getLiveAvatar() {
+        return "http://101.251.196.90:8000/SuperWeChatServerV2.0/downloadAvatar?name_or_hxid=" + id
+                + "&avatarType=chatroom_icon&m_avatar_suffix=.jpg";
+    }
 }

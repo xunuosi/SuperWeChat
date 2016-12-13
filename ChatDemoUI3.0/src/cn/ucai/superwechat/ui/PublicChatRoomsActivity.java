@@ -35,6 +35,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.EMChatRoomChangeListener;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
@@ -48,12 +49,14 @@ import cn.ucai.superwechat.live.data.model.LiveRoom;
 import cn.ucai.superwechat.live.ui.GridMarginDecoration;
 import cn.ucai.superwechat.live.ui.activity.LiveDetailsActivity;
 import cn.ucai.superwechat.live.ui.activity.StartLiveActivity;
+import cn.ucai.superwechat.utils.MFGT;
 
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PublicChatRoomsActivity extends BaseActivity {
     private ProgressBar pb;
@@ -225,7 +228,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
                                 pb.setVisibility(View.INVISIBLE);
                                 isFirstLoading = false;
                                 //adapter = new ChatRoomAdapter(PublicChatRoomsActivity.this, 1, chatRoomList);
-                                adapter = new LiveAdapter(PublicChatRoomsActivity.this, chatRoomList);
+                                adapter = new LiveAdapter(PublicChatRoomsActivity.this, getLiveRoomList(chatRoomList));
                                 listView.setAdapter(adapter);
                                 rooms.addAll(chatRooms);
                             } else {
@@ -326,10 +329,10 @@ public class PublicChatRoomsActivity extends BaseActivity {
 
     static class LiveAdapter extends RecyclerView.Adapter<LiveViewHolder> {
 
-        private final List<EMChatRoom> liveRoomList;
+        private final List<LiveRoom> liveRoomList;
         private final Context context;
 
-        public LiveAdapter(Context context, List<EMChatRoom> liveRoomList) {
+        public LiveAdapter(Context context, List<LiveRoom> liveRoomList) {
             this.liveRoomList = liveRoomList;
             this.context = context;
         }
@@ -344,22 +347,10 @@ public class PublicChatRoomsActivity extends BaseActivity {
                 public void onClick(View v) {
                     final int position = holder.getAdapterPosition();
                     if (position == RecyclerView.NO_POSITION) return;
-                    LiveRoom room = new LiveRoom();
-                    EMChatRoom eRoom = liveRoomList.get(position);
-                    // 判断进入直播室的是否为群主
-                    String user = SuperWeChatHelper.getInstance().getCurrentUsernName();
-                    if (eRoom.getOwner().equals(user)) {
-                        context.startActivity(new Intent(context, StartLiveActivity.class));
+                    if (liveRoomList.get(position).getAnchorId().equals(SuperWeChatHelper.getInstance().getCurrentUsernName())) {
+                        MFGT.gotoStartActivity(context,liveRoomList.get(position));
                     } else {
-                        room.setChatroomId(eRoom.getId());
-                        room.setName(eRoom.getName());
-                        room.setAudienceNum(eRoom.getMemberCount());
-                        room.setId(eRoom.getId());
-                        room.setAnchorId(eRoom.getId());
-                        room.setCover(eRoom.getMemberCount());
-                        //LiveRoom room = TestDataRepository.getLiveRoomList().get(position);
-                        context.startActivity(new Intent(context, LiveDetailsActivity.class)
-                                .putExtra("liveroom", room));
+                        MFGT.gotoDetailsLive(context, liveRoomList.get(position));
                     }
                 }
             });
@@ -368,15 +359,13 @@ public class PublicChatRoomsActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(LiveViewHolder holder, int position) {
-            EMChatRoom room = liveRoomList.get(position);
-            holder.anchor.setText(room.getName());
-            holder.audienceNum.setText(room.getAffiliationsCount() + "人");
-            // 设置封面
-            EaseUserUtils.setLiveAvatar(context, room.getId(), holder.imageView);
-//			Glide.with(context)
-//					.load(liveRoomList.get(position).getCover())
-//					.placeholder(R.color.placeholder)
-//					.into(holder.imageView);
+            LiveRoom liveRoom = liveRoomList.get(position);
+            holder.anchor.setText(liveRoom.getName());
+            holder.audienceNum.setText(liveRoom.getAudienceNum() + "人");
+            Glide.with(context)
+                    .load(liveRoomList.get(position).getLiveAvatar())
+                    .placeholder(R.color.placeholder)
+                    .into(holder.imageView);
         }
 
         @Override
@@ -401,5 +390,21 @@ public class PublicChatRoomsActivity extends BaseActivity {
 
     public void back(View view) {
         finish();
+    }
+
+    public static List<LiveRoom> getLiveRoomList(List<EMChatRoom> eRoomList) {
+        List<LiveRoom> roomList = new ArrayList<>();
+        for (EMChatRoom emChatRoom : eRoomList) {
+            LiveRoom room = new LiveRoom();
+            room.setCover(emChatRoom.getId());
+            room.setName(emChatRoom.getName());
+            room.setAnchorId(emChatRoom.getOwner());
+            room.setAudienceNum(emChatRoom.getAffiliationsCount());
+            room.setId(emChatRoom.getId());
+            room.setChatroomId(emChatRoom.getId());
+            roomList.add(room);
+        }
+
+        return roomList;
     }
 }

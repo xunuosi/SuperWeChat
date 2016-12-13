@@ -47,7 +47,7 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");
         liveId = liveRoom.getId();
         chatroomId = liveRoom.getChatroomId();
-        int coverRes = liveRoom.getCover();
+        //int coverRes = liveRoom.getCover();
 //        coverView.setImageResource(coverRes);
         // 设置未开播时显示房间内的封面
         EaseUserUtils.setLiveAvatar(LiveDetailsActivity.this, liveId, coverView);

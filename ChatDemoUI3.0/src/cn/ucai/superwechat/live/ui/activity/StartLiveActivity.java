@@ -1,10 +1,12 @@
 package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -19,10 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.controller.EaseUI;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.ucloud.common.util.DeviceUtils;
 import com.ucloud.live.UEasyStreaming;
@@ -41,6 +45,7 @@ import cn.ucai.superwechat.live.data.model.LiveSettings;
 import cn.ucai.superwechat.live.data.TestDataRepository;
 import cn.ucai.superwechat.ui.ConversationListFragment;
 import cn.ucai.superwechat.live.utils.Log2FileUtil;
+import cn.ucai.superwechat.utils.MFGT;
 
 public class StartLiveActivity extends LiveBaseActivity
     implements UEasyStreaming.UStreamingStateListener {
@@ -67,9 +72,11 @@ public class StartLiveActivity extends LiveBaseActivity
   public static final int COUNTDOWN_START_INDEX = 3;
   public static final int COUNTDOWN_END_INDEX = 1;
   protected boolean isShutDownCountdown = false;
+
   private LiveSettings mSettings;
   private UStreamingProfile mStreamingProfile;
   UEasyStreaming.UEncodingType encodingType;
+  LiveRoom room;
 
   boolean isStarted;
 
@@ -87,12 +94,17 @@ public class StartLiveActivity extends LiveBaseActivity
   @Override protected void onActivityCreate(@Nullable Bundle savedInstanceState) {
     setContentView(R.layout.activity_start_live);
     ButterKnife.bind(this);
-
-    liveId = TestDataRepository.getLiveRoomId(EMClient.getInstance().getCurrentUser());
-    chatroomId = TestDataRepository.getChatRoomId(EMClient.getInstance().getCurrentUser());
-    anchorId = EMClient.getInstance().getCurrentUser();
-    usernameView.setText(anchorId);
-    initEnv();
+    Intent intent = getIntent();
+    if (intent == null) {
+      MFGT.finish(StartLiveActivity.this);
+    } else {
+      room = intent.getParcelableExtra("liveroom");
+      liveId = room.getId();
+      chatroomId = room.getChatroomId();
+      anchorId = room.getAnchorId();
+      usernameView.setText(anchorId);
+      initEnv();
+    }
   }
 
   public void initEnv() {
@@ -230,12 +242,8 @@ public class StartLiveActivity extends LiveBaseActivity
   private void showConfirmCloseLayout() {
     //显示封面
     coverImage.setVisibility(View.VISIBLE);
-    List<LiveRoom> liveRoomList = TestDataRepository.getLiveRoomList();
-    for (LiveRoom liveRoom : liveRoomList) {
-      if (liveRoom.getId().equals(liveId)) {
-        coverImage.setImageResource(liveRoom.getCover());
-      }
-    }
+      EaseUserUtils.setLiveAvatar(StartLiveActivity.this,room.getId(),coverImage);
+
     View view = liveEndLayout.inflate();
     Button closeConfirmBtn = (Button) view.findViewById(R.id.live_close_confirm);
     TextView usernameView = (TextView) view.findViewById(R.id.tv_username);
