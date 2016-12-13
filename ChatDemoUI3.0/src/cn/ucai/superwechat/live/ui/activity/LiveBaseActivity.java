@@ -39,6 +39,7 @@ import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
@@ -519,12 +520,12 @@ public abstract class LiveBaseActivity extends BaseActivity {
     private class AvatarAdapter extends RecyclerView.Adapter<AvatarViewHolder> {
         List<String> namelist;
         Context context;
-        TestAvatarRepository avatarRepository;
+//        TestAvatarRepository avatarRepository;
 
         public AvatarAdapter(Context context, List<String> namelist) {
             this.namelist = namelist;
             this.context = context;
-            avatarRepository = new TestAvatarRepository();
+//            avatarRepository = new TestAvatarRepository();
         }
 
         @Override
@@ -543,7 +544,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
             });
             //暂时使用测试数据
             Glide.with(context)
-                    .load(avatarRepository.getAvatar())
+                    .load(EaseUserUtils.getAppUserInfo(namelist.get(position)).getAvatar())
                     .placeholder(R.drawable.ease_default_avatar)
                     .into(holder.Avatar);
         }

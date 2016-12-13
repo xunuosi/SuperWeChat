@@ -234,9 +234,9 @@ public class PublicChatRoomsActivity extends BaseActivity {
                             } else {
                                 if (chatRooms.size() < pagesize) {
                                     hasMoreData = false;
-                                    footLoadingLayout.setVisibility(View.VISIBLE);
-                                    footLoadingPB.setVisibility(View.GONE);
-                                    footLoadingText.setText(getResources().getString(R.string.no_more_messages));
+//                                    footLoadingLayout.setVisibility(View.VISIBLE);
+//                                    footLoadingPB.setVisibility(View.GONE);
+//                                    footLoadingText.setText(getResources().getString(R.string.no_more_messages));
                                 }
                                 adapter.notifyDataSetChanged();
                             }
@@ -249,7 +249,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
                         public void run() {
                             isLoading = false;
                             pb.setVisibility(View.INVISIBLE);
-                            footLoadingLayout.setVisibility(View.GONE);
+                           // footLoadingLayout.setVisibility(View.GONE);
                             Toast.makeText(PublicChatRoomsActivity.this, getResources().getString(R.string.failed_to_load_data), Toast.LENGTH_SHORT).show();
                         }
                     });
