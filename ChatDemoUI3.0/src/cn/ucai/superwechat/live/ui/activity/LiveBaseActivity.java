@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,12 +18,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.TestAvatarRepository;
-import cn.ucai.superwechat.utils.Utils;
-import cn.ucai.superwechat.widget.BarrageLayout;
-import cn.ucai.superwechat.widget.LiveLeftGiftView;
-import cn.ucai.superwechat.widget.PeriscopeLayout;
-import cn.ucai.superwechat.widget.RoomMessagesView;
+import cn.ucai.superwechat.live.data.TestAvatarRepository;
+import cn.ucai.superwechat.ui.BaseActivity;
+import cn.ucai.superwechat.ui.ConversationListFragment;
+import cn.ucai.superwechat.live.utils.Utils;
+import cn.ucai.superwechat.live.ui.widget.BarrageLayout;
+import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
+import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
+import cn.ucai.superwechat.live.ui.widget.RoomMessagesView;
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.AnimationListener;

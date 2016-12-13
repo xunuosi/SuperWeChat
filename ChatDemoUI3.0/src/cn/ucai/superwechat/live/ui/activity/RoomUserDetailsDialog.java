@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.ui.ChatFragment;
 
 /**
  * Created by wei on 2016/7/25.

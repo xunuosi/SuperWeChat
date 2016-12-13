@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.data;
+package cn.ucai.superwechat.live.data;
 
 
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
 
 /**
  * Created by wei on 2016/5/30.

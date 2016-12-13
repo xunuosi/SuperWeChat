@@ -110,7 +110,7 @@
       android:visibility="gone"
       />
 
-  <cn.ucai.superwechat.widget.RoomMessagesView
+  <cn.ucai.superwechat.live.ui.widget.RoomMessagesView
       android:id="@+id/message_view"
       android:layout_width="match_parent"
       android:layout_height="174dp"
@@ -118,7 +118,7 @@
       android:visibility="invisible"
       />
 
-  <cn.ucai.superwechat.widget.BarrageLayout
+  <cn.ucai.superwechat.live.ui.widget.BarrageLayout
       android:id="@+id/barrage_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
       android:layout_marginBottom="10dp"
       />
 
-  <cn.ucai.superwechat.widget.PeriscopeLayout
+  <cn.ucai.superwechat.live.ui.widget.PeriscopeLayout
       android:id="@+id/periscope_layout"
       android:layout_width="150dp"
       android:layout_height="190dp"
@@ -135,7 +135,7 @@
       android:layout_marginBottom="42dp"
       />
 
-  <cn.ucai.superwechat.widget.LiveLeftGiftView
+  <cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView
       android:id="@+id/left_gift_view1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
       android:layout_marginBottom="4dp"
       android:visibility="invisible"
       />
-  <cn.ucai.superwechat.widget.LiveLeftGiftView
+  <cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView
       android:id="@+id/left_gift_view2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

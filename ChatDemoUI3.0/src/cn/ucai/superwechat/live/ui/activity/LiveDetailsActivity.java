@@ -1,6 +1,5 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -14,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.LiveRoom;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
 
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMChatRoom;
@@ -41,7 +40,7 @@ public class LiveDetailsActivity extends LiveBaseActivity implements UVideoView.
         ButterKnife.bind(this);
 
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
         LiveRoom liveRoom = getIntent().getParcelableExtra("liveroom");

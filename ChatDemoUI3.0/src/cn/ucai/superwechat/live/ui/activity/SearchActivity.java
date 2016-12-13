@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.TestDataRepository;
+import cn.ucai.superwechat.live.data.TestDataRepository;
 
 public class SearchActivity extends AppCompatActivity {
 

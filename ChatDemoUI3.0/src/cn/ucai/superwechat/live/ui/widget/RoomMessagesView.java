@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.widget;
+package cn.ucai.superwechat.live.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;

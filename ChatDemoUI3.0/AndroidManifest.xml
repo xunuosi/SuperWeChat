@@ -60,17 +60,21 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan"/>
         <!-- 欢迎界面-->
-        <activity android:name=".ui.WelcomeActivity"
+        <activity
+            android:name=".ui.WelcomeActivity"
             android:screenOrientation="portrait"/>
         <!-- 添加好友的中转界面-->
-        <activity android:name=".ui.AddFriendActivity"
+        <activity
+            android:name=".ui.AddFriendActivity"
             android:screenOrientation="portrait"/>
         <!-- 好友详情信息界面-->
-        <activity android:name=".ui.FriendProfileActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.FriendProfileActivity"
+            android:screenOrientation="portrait"/>
         <!-- 发送验证消息界面-->
-        <activity android:name=".ui.CheckMessageActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.CheckMessageActivity"
+            android:screenOrientation="portrait"/>
         <!-- 开屏页 -->
         <activity
             android:name=".ui.SplashActivity"
@@ -484,26 +488,19 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="3ecea51f560650b1ed8a4b99808f52e8"/>
-
+        <!-- Live start -->
         <activity
-            android:name=".ui.LiveDetailsActivity"
-            android:parentActivityName=".ui.MainActivity"
+            android:name=".live.ui.activity.LiveDetailsActivity"
             android:screenOrientation="portrait"
             >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
         </activity>
-
         <activity
-            android:name=".ui.StartLiveActivity"
-            android:parentActivityName=".ui.MainActivity"
+            android:name=".live.ui.activity.StartLiveActivity"
             android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.SearchActivity"/>
+        <activity android:name=".live.ui.activity.SearchActivity">
+        </activity>
+        <!-- Live end -->
     </application>
 
 </manifest>

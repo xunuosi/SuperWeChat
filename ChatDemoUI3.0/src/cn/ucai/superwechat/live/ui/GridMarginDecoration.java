@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.ucai.superwechat.widget;
+package cn.ucai.superwechat.live.ui;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

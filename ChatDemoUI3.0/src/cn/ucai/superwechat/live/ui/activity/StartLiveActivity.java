@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -36,10 +36,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.LiveRoom;
-import cn.ucai.superwechat.data.LiveSettings;
-import cn.ucai.superwechat.data.TestDataRepository;
-import cn.ucai.superwechat.utils.Log2FileUtil;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
+import cn.ucai.superwechat.live.data.model.LiveSettings;
+import cn.ucai.superwechat.live.data.TestDataRepository;
+import cn.ucai.superwechat.ui.ConversationListFragment;
+import cn.ucai.superwechat.live.utils.Log2FileUtil;
 
 public class StartLiveActivity extends LiveBaseActivity
     implements UEasyStreaming.UStreamingStateListener {

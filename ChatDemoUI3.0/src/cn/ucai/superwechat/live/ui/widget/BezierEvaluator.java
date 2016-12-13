@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.ucai.superwechat.widget;
+package cn.ucai.superwechat.live.ui.widget;
 
 import android.animation.TypeEvaluator;
 import android.graphics.PointF;

@@ -43,9 +43,9 @@ import com.hyphenate.chat.EMCursorResult;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.LiveRoom;
-import cn.ucai.superwechat.data.TestDataRepository;
-import cn.ucai.superwechat.widget.GridMarginDecoration;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
+import cn.ucai.superwechat.live.ui.GridMarginDecoration;
+import cn.ucai.superwechat.live.ui.activity.LiveDetailsActivity;
 
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
@@ -341,19 +341,19 @@ public class PublicChatRoomsActivity extends BaseActivity {
 				public void onClick(View v) {
 					final int position = holder.getAdapterPosition();
 					if (position == RecyclerView.NO_POSITION) return;
-//					LiveRoom room = new LiveRoom();
-//					EMChatRoom eRoom = liveRoomList.get(position);
-//					room.setChatroomId(eRoom.getId());
-//					room.setName(eRoom.getName());
-//					room.setAudienceNum(eRoom.getMemberCount());
-//					room.setId(eRoom.getId());
-//					room.setAnchorId(eRoom.getId());
-//					room.setCover(eRoom.getMaxUsers());
-//					LiveRoom room = TestDataRepository.getLiveRoomList().get(position);
-//					Log.e("xns", "room:" + room);
-//					context.startActivity(new Intent(context, LiveDetailsActivity.class)
-//							.putExtra("liveroom", room));
-					context.startActivity(new Intent(context, StartLiveActivity.class));
+					LiveRoom room = new LiveRoom();
+					EMChatRoom eRoom = liveRoomList.get(position);
+					room.setChatroomId(eRoom.getId());
+					room.setName(eRoom.getName());
+					room.setAudienceNum(eRoom.getMemberCount());
+					room.setId(eRoom.getId());
+					room.setAnchorId(eRoom.getId());
+					room.setCover(eRoom.getMemberCount());
+					//LiveRoom room = TestDataRepository.getLiveRoomList().get(position);
+					Log.e("xns", "room:" + room);
+					context.startActivity(new Intent(context, LiveDetailsActivity.class)
+							.putExtra("liveroom", room));
+//					context.startActivity(new Intent(context, StartLiveActivity.class));
 				}
 			});
 			return holder;

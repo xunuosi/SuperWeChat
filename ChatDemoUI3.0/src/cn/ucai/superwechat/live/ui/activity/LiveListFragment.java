@@ -1,4 +1,4 @@
-package cn.ucai.superwechat.ui;
+package cn.ucai.superwechat.live.ui.activity;
 
 
 import android.content.Context;
@@ -15,9 +15,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.data.LiveRoom;
-import cn.ucai.superwechat.data.TestDataRepository;
-import cn.ucai.superwechat.widget.GridMarginDecoration;
+import cn.ucai.superwechat.live.data.model.LiveRoom;
+import cn.ucai.superwechat.live.data.TestDataRepository;
+import cn.ucai.superwechat.live.ui.GridMarginDecoration;
 
 import com.bumptech.glide.Glide;
 import java.util.List;

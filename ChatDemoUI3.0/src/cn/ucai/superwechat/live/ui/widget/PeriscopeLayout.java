@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.ucai.superwechat.widget;
+package cn.ucai.superwechat.live.ui.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -40,6 +40,7 @@ import android.widget.RelativeLayout;
 import java.util.Random;
 
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.live.ui.widget.BezierEvaluator;
 
 
 public class PeriscopeLayout extends RelativeLayout {
