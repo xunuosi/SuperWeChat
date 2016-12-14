@@ -17,10 +17,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -111,9 +110,9 @@ public class GiftDetailsDialog extends DialogFragment {
     }
 
 
-    private RoomUserDetailsDialog.UserDetailsDialogListener dialogListener;
+    private GiftDetailsDialogListener dialogListener;
 
-    public void setUserDetailsDialogListener(RoomUserDetailsDialog.UserDetailsDialogListener dialogListener) {
+    public void setGiftDetailsDialogListener(GiftDetailsDialogListener dialogListener) {
         this.dialogListener = dialogListener;
     }
 
@@ -128,7 +127,7 @@ public class GiftDetailsDialog extends DialogFragment {
     }
 
     interface GiftDetailsDialogListener {
-        void onMentionClick(String username);
+        void onMentionClick(String gName,int resId);
     }
 
 
@@ -178,15 +177,21 @@ public class GiftDetailsDialog extends DialogFragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Gift bean = list.get(position);
+            final Gift bean = list.get(position);
             GiftHolder gHolder = (GiftHolder) holder;
 
             gHolder.mGiftItemTvMoney.setText(bean.getGprice() + "无诺币");
             gHolder.mGiftItemTvTitle.setText(bean.getGname());
             String imgStr = "hani_gift_" + bean.getId();
-            int resId = context.getResources().getIdentifier(imgStr,"drawable",context.getPackageName());
+            final int resId = context.getResources().getIdentifier(imgStr, "drawable", context.getPackageName());
             gHolder.mGiftItemIvShow.setImageResource(resId);
 
+            gHolder.mLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogListener.onMentionClick(bean.getGname(), resId);
+                }
+            });
         }
 
         @Override
@@ -206,12 +211,14 @@ public class GiftDetailsDialog extends DialogFragment {
         ImageView mGiftItemIvShow;
         TextView mGiftItemTvTitle;
         TextView mGiftItemTvMoney;
+        LinearLayout mLayout;
 
         public GiftHolder(View view) {
             super(view);
             mGiftItemIvShow = (ImageView) view.findViewById(R.id.gift_item_iv_show);
             mGiftItemTvTitle = (TextView) view.findViewById(R.id.gift_item_tv_title);
             mGiftItemTvMoney = (TextView) view.findViewById(R.id.gift_item_tv_money);
+            mLayout = (LinearLayout) view.findViewById(R.id.gift_item_layout);
         }
     }
 
