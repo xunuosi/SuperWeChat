@@ -17,4 +17,5 @@
     <string name="new_friend">新的朋友</string>
     <string name="group_icon">群图标</string>
     <string name="create_group_success">群组创建成功</string>
+    <string name="show_cz">充值:</string>
 </resources>

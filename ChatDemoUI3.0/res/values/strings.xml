@@ -168,4 +168,5 @@
     <string name="pref_default_log_cache_dir">/sdcard/ucloud/log</string>
     <string name="pref_default_video_size_width">640</string>
     <string name="pref_default_video_size_height">480</string>
+    <string name="show_cz">Money:</string>
 </resources>

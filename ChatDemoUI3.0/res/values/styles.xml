@@ -177,4 +177,11 @@
         <item name="android:textColor">#fff</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="TextShow_White">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+    </style>
 </resources>
