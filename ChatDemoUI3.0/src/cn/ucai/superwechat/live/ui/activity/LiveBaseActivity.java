@@ -20,6 +20,7 @@ import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.live.data.TestAvatarRepository;
+import cn.ucai.superwechat.live.data.model.Gift;
 import cn.ucai.superwechat.ui.BaseActivity;
 import cn.ucai.superwechat.ui.ConversationListFragment;
 import cn.ucai.superwechat.live.utils.Utils;
@@ -124,6 +125,12 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 leftGiftView.setVisibility(View.VISIBLE);
                 leftGiftView.setName(nick);
                 leftGiftView.setAvatar(message.getFrom());
+                try {
+                    leftGiftView.setGiftImageView(message.getIntAttribute(I.Gift.GIFT_RES_ID));
+                    leftGiftView.setLeftGiftTvShowGname(message.getStringAttribute(I.Gift.GIFT_NAME));
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
                 leftGiftView.setTranslationY(0);
                 ViewAnimator.animate(leftGiftView)
                         .alpha(0, 1)
@@ -168,6 +175,12 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 leftGiftView2.setVisibility(View.VISIBLE);
                 leftGiftView2.setName(nick);
                 leftGiftView2.setAvatar(message.getFrom());
+                try {
+                    leftGiftView2.setGiftImageView(message.getIntAttribute(I.Gift.GIFT_RES_ID));
+                    leftGiftView2.setLeftGiftTvShowGname(message.getStringAttribute(I.Gift.GIFT_NAME));
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
                 leftGiftView2.setTranslationY(0);
                 ViewAnimator.animate(leftGiftView2)
                         .alpha(0, 1)
@@ -407,6 +420,13 @@ public abstract class LiveBaseActivity extends BaseActivity {
 //                        showInputView();
 //                    }
 //                });
+        dialog.setGiftDetailsDialogListener(new GiftDetailsDialog.GiftDetailsDialogListener() {
+            @Override
+            public void onMentionClick(String name, int resId) {
+                dialog.dismiss();
+                sendPresentMessage(name,resId);
+            }
+        });
         dialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
     }
 
@@ -489,13 +509,15 @@ public abstract class LiveBaseActivity extends BaseActivity {
     /**
      * 发送礼物时显示的消息
      */
-    public void sendPresentMessage() {
+    public void sendPresentMessage(String gName,int resId) {
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         message.setReceipt(chatroomId);
         EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(Constant.CMD_GIFT);
         message.addBody(cmdMessageBody);
         message.setChatType(EMMessage.ChatType.ChatRoom);
         message.setAttribute(I.User.NICK, EaseUserUtils.getCurrentAppUserInfo().getMUserNick());
+        message.setAttribute(I.Gift.GIFT_NAME, gName);
+        message.setAttribute(I.Gift.GIFT_RES_ID, resId);
         EMClient.getInstance().chatManager().sendMessage(message);
         showLeftGiftVeiw(message);
     }
