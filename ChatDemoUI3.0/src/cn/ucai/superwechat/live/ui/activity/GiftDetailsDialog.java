@@ -181,12 +181,11 @@ public class GiftDetailsDialog extends DialogFragment {
             Gift bean = list.get(position);
             GiftHolder gHolder = (GiftHolder) holder;
 
-                gHolder.mGiftItemTvMoney.setText(bean.getGprice() + "无诺币");
-                gHolder.mGiftItemTvTitle.setText(bean.getGname());
-                Glide.with(context)
-                        .load(bean.getGurl())
-                        .placeholder(R.color.placeholder)
-                        .into(gHolder.mGiftItemIvShow);
+            gHolder.mGiftItemTvMoney.setText(bean.getGprice() + "无诺币");
+            gHolder.mGiftItemTvTitle.setText(bean.getGname());
+            String imgStr = "hani_gift_" + bean.getId();
+            int resId = context.getResources().getIdentifier(imgStr,"drawable",context.getPackageName());
+            gHolder.mGiftItemIvShow.setImageResource(resId);
 
         }
 
