@@ -66,7 +66,6 @@ public class FriendProfileActivity extends BaseActivity {
             MFGT.finish(this);
             return;
         } else {
-            addUserName = username;
             mUser = SuperWeChatHelper.getInstance().getAppContactList().get(username);
         }
         initView();
@@ -85,13 +84,15 @@ public class FriendProfileActivity extends BaseActivity {
             @Override
             public void onSuccess(String json) {
                 if (json != null) {
-                    L.e(TAG, "json:" + json);
                     Result result = ResultUtils.getResultFromJson(json, User.class);
                     if (result != null && result.isRetMsg()) {
                         User syncUser = (User) result.getRetData();
                         if (syncUser != null) {
-                            SuperWeChatHelper.getInstance().saveAppContact(syncUser);
                             mUser = syncUser;
+                            if (isFriend) {
+                                SuperWeChatHelper.getInstance().saveAppContact(syncUser);
+                            }
+                            addUserName = mUser.getMUserName();
                         } else {
                             syncFailed();
                         }
@@ -150,7 +151,7 @@ public class FriendProfileActivity extends BaseActivity {
                 startAddContacts();
                 break;
             case R.id.fp_btn_sendMessage:
-                MFGT.gotoChatActivity(this, username);
+                MFGT.gotoChatActivity(this, addUserName);
                 break;
             case R.id.fp_btn_videoTalk:
                 if (!EMClient.getInstance().isConnected())
@@ -164,6 +165,6 @@ public class FriendProfileActivity extends BaseActivity {
     }
 
     private void startAddContacts() {
-        MFGT.gotoCheckMessageActivity(this, username);
+        MFGT.gotoCheckMessageActivity(this, addUserName);
     }
 }
