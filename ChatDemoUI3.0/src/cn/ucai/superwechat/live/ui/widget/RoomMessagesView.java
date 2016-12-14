@@ -170,7 +170,6 @@ public class RoomMessagesView extends RelativeLayout{
             final EMMessage message = messages[position];
             String username = message.getFrom();
             //holder.name.setText(username);
-            Log.e("RoomMessage", "nick:" + message.getStringAttribute(I.User.NICK, username));
             holder.name.setText(message.getStringAttribute(I.User.NICK, username));// 设置消息显示昵称
 
             holder.content.setText(((EMTextMessageBody)message.getBody()).getMessage());
