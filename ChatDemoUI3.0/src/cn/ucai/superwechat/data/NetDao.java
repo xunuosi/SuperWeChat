@@ -230,4 +230,18 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    /**
+     * 下载礼物信息的请求方法
+     *
+     * @param mcontext
+     * @param listener
+     */
+    public static void findGiftInfo(Context mcontext, OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_ALL_GIFTS)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }
