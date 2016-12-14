@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,14 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.exceptions.HyphenateException;
 
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 
 /**
- * Created by wei on 2016/6/3.
+ * 显示直播房间消息的View
  */
 public class RoomMessagesView extends RelativeLayout{
     private EMConversation conversation;
@@ -164,7 +168,11 @@ public class RoomMessagesView extends RelativeLayout{
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             final EMMessage message = messages[position];
-            holder.name.setText(message.getFrom());
+            String username = message.getFrom();
+            //holder.name.setText(username);
+            Log.e("RoomMessage", "nick:" + message.getStringAttribute(I.User.NICK, username));
+            holder.name.setText(message.getStringAttribute(I.User.NICK, username));// 设置消息显示昵称
+
             holder.content.setText(((EMTextMessageBody)message.getBody()).getMessage());
             holder.itemView.setOnClickListener(new OnClickListener() {
                 @Override public void onClick(View v) {

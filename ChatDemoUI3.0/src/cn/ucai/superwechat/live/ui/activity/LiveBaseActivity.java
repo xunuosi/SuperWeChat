@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.live.data.TestAvatarRepository;
 import cn.ucai.superwechat.ui.BaseActivity;
@@ -209,7 +210,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
             }
 
             @Override
-            public void onMemberJoined(String roomId, String participant) {
+            public void onMemberJoined(String roomId, String participant) {// 成员加入时触发的方法
                 EMMessage message = EMMessage.createReceiveMessage(EMMessage.Type.TXT);
                 message.setReceipt(chatroomId);
                 message.setFrom(participant);
@@ -321,7 +322,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 messageView.init(chatroomId);
                 messageView.setMessageViewListener(new RoomMessagesView.MessageViewListener() {
                     @Override
-                    public void onMessageSend(String content) {
+                    public void onMessageSend(String content) {// 发送信息的方法
                         EMMessage message = EMMessage.createTxtSendMessage(content, chatroomId);
                         // 显示弹幕
                         if (messageView.isBarrageShow) {
@@ -329,6 +330,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
                             barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
                         }
                         message.setChatType(EMMessage.ChatType.ChatRoom);
+                        // 加入发送者的昵称
+                        message.setAttribute(I.User.NICK, EaseUserUtils.getCurrentAppUserInfo().getMUserNick());
                         EMClient.getInstance().chatManager().sendMessage(message);
                         message.setMessageStatusCallback(new EMCallBack() {
                             @Override
