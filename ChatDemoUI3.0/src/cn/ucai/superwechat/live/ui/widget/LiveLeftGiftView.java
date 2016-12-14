@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 
@@ -28,6 +26,8 @@ public class LiveLeftGiftView extends RelativeLayout {
     TextView name;
     @BindView(R.id.gift_image)
     ImageView giftImage;
+    @BindView(R.id.left_gift_tv_showGname)
+    TextView mLeftGiftTvShowGname;
 
     public LiveLeftGiftView(Context context) {
         super(context);
@@ -49,16 +49,28 @@ public class LiveLeftGiftView extends RelativeLayout {
         ButterKnife.bind(this);
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name.setText(name);
     }
 
-    public void setAvatar(String avatar){
+    public void setAvatar(String avatar) {
         EaseUserUtils.setAppUserAvatar(getContext(), avatar, this.avatar);
         //Glide.with(getContext()).load(avatar).into(this.avatar);
     }
 
-    public ImageView getGiftImageView(){
+    public ImageView getGiftImageView() {
         return giftImage;
+    }
+
+    public void setGiftImageView(int resId) {
+        giftImage.setImageResource(resId);
+    }
+
+    public String getLeftGiftTvShowGname() {
+        return mLeftGiftTvShowGname.getText().toString();
+    }
+
+    public void setLeftGiftTvShowGname(String gName) {
+        mLeftGiftTvShowGname.setText(gName);
     }
 }
