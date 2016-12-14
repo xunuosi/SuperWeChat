@@ -395,6 +395,20 @@ public abstract class LiveBaseActivity extends BaseActivity {
         }
     }
 
+    private void showGiftDetailsDialog() {
+        final GiftDetailsDialog dialog =
+                GiftDetailsDialog.newInstance();
+//        dialog.setUserDetailsDialogListener(
+//                new RoomUserDetailsDialog.UserDetailsDialogListener() {
+//                    @Override
+//                    public void onMentionClick(String username) {
+//                        dialog.dismiss();
+//                        messageView.getInputView().setText("@" + username + " ");
+//                        showInputView();
+//                    }
+//                });
+        dialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
+    }
 
     private void showUserDetailsDialog(String username) {
         final RoomUserDetailsDialog dialog =
@@ -472,6 +486,20 @@ public abstract class LiveBaseActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 发送礼物时显示的消息
+     */
+    public void sendPresentMessage() {
+        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
+        message.setReceipt(chatroomId);
+        EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(Constant.CMD_GIFT);
+        message.addBody(cmdMessageBody);
+        message.setChatType(EMMessage.ChatType.ChatRoom);
+        message.setAttribute(I.User.NICK, EaseUserUtils.getCurrentAppUserInfo().getMUserNick());
+        EMClient.getInstance().chatManager().sendMessage(message);
+        showLeftGiftVeiw(message);
+    }
+
     @OnClick(R.id.root_layout)
     void onRootLayoutClick() {
         periscopeLayout.addHeart();
@@ -484,14 +512,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     @OnClick(R.id.present_image)
     void onPresentImageClick() {
-        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-        message.setReceipt(chatroomId);
-        EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(Constant.CMD_GIFT);
-        message.addBody(cmdMessageBody);
-        message.setChatType(EMMessage.ChatType.ChatRoom);
-        message.setAttribute(I.User.NICK, EaseUserUtils.getCurrentAppUserInfo().getMUserNick());
-        EMClient.getInstance().chatManager().sendMessage(message);
-        showLeftGiftVeiw(message);
+        showGiftDetailsDialog();
     }
 
     @OnClick(R.id.chat_image)
