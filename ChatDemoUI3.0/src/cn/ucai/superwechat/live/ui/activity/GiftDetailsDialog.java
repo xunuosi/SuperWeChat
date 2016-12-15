@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
@@ -145,7 +144,7 @@ public class GiftDetailsDialog extends DialogFragment {
     }
 
     interface GiftDetailsDialogListener {
-        void onMentionClick(String gName,int resId);
+        void onMentionClick(String gName,int resId,int price);
     }
 
 
@@ -207,7 +206,7 @@ public class GiftDetailsDialog extends DialogFragment {
             gHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialogListener.onMentionClick(bean.getGname(), resId);
+                    dialogListener.onMentionClick(bean.getGname(), resId, bean.getGprice());
                 }
             });
         }
