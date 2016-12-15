@@ -13,9 +13,13 @@ public interface I {
 
 	public static interface Gift{
 		String TABLE_NAME							=		"t_superwechat_gift";
-		String GIFT_NAME = "gift_name";
-		String GIFT_RES_ID = "gift_resId";
+		String GIFT_NAME                            =       "gift_name";
+		String GIFT_RES_ID                          =       "gift_resId";
 	}
+
+    public static interface Live {
+        String USERNAME                             =       "uname";
+    }
 
 	public static interface Contact {
 		String TABLE_NAME 							= 		"t_superwechat_contact";

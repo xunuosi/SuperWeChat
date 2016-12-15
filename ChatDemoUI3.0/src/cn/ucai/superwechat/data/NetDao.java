@@ -244,4 +244,19 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    /**
+     * 获取用户余额的方法
+     *
+     * @param mcontext
+     * @param listener
+     */
+    public static void findCharge(Context mcontext, String username, OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_BALANCE)
+                .addParam(I.Live.USERNAME,username)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

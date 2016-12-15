@@ -205,4 +205,14 @@
         android:layout_below="@+id/layout_verify_identity"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/transparent">
+        <ProgressBar
+            android:id="@+id/live_charge_progressBar"
+            android:layout_width="46dp"
+            android:layout_height="46dp"/>
+    </LinearLayout>
 </RelativeLayout>

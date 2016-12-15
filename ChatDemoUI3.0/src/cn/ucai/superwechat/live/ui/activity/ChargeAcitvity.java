@@ -1,8 +1,86 @@
 package cn.ucai.superwechat.live.ui.activity;
 
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.hyphenate.easeui.utils.EaseUserUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.live.data.model.Wallet;
+import cn.ucai.superwechat.ui.BaseActivity;
+import cn.ucai.superwechat.utils.ResultUtils;
+
 /**
- * Created by Elder on 2016/12/15.
+ * 显示诺丸币的界面
  */
 
-public class ChargeAcitvity {
+public class ChargeAcitvity extends BaseActivity {
+
+    @BindView(R.id.left_image)
+    ImageView mLeftImage;
+    @BindView(R.id.title)
+    TextView mTitle;
+    @BindView(R.id.subtitle)
+    TextView mSubtitle;
+    @BindView(R.id.tv_change_balance)
+    TextView mTvChangeBalance;
+    @BindView(R.id.live_charge_progressBar)
+    ProgressBar pb;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_live_charge);
+        ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+        pb.setVisibility(View.VISIBLE);
+        mLeftImage.setImageResource(R.drawable.rp_back_arrow_yellow);
+        mTitle.setText(R.string.balance);
+        mSubtitle.setText(R.string.nuo_charge);
+        mTvChangeBalance.setText("￥0.00");
+        syncUpdate();
+    }
+
+    /**
+     * 异步加载钱包数据的方法
+     */
+    private void syncUpdate() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetDao.findCharge(getApplicationContext(), EaseUserUtils.getCurrentAppUserInfo().getMUserName(),
+                        new OkHttpUtils.OnCompleteListener<String>() {
+                            @Override
+                            public void onSuccess(String json) {
+                                Result result = ResultUtils.getResultFromJson(json, Wallet.class);
+                                if (result != null && result.isRetMsg()) {
+                                    Wallet wallet = (Wallet) result.getRetData();
+                                    mTvChangeBalance.setText("￥" + String.valueOf(wallet.getBalance()) + ".00");
+                                } else {
+                                    Toast.makeText(ChargeAcitvity.this, "获取钱包余额失败,请重试。", Toast.LENGTH_SHORT).show();
+                                }
+                                pb.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
+            }
+        }).start();
+    }
 }
