@@ -87,7 +87,8 @@ public class MyCenterFragment extends Fragment {
                 break;
             //red packet code : 进入零钱页面
             case R.id.mycenter_wallet_layout:
-                RedPacketUtil.startChangeActivity(getActivity());
+                //RedPacketUtil.startChangeActivity(getActivity());
+                MFGT.gotoChargeActivity(getActivity());
                 break;
             //end of red packet code
         }

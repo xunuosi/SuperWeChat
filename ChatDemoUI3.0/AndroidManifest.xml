@@ -500,6 +500,10 @@
         </activity>
         <activity android:name=".live.ui.activity.SearchActivity">
         </activity>
+        <activity android:name=".live.ui.activity.ChargeAcitvity"
+                  android:screenOrientation="portrait">
+
+        </activity>
         <!-- Live end -->
     </application>
 
