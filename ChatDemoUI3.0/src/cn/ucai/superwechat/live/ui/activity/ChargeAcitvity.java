@@ -12,6 +12,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
@@ -19,6 +20,7 @@ import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.live.data.model.Wallet;
 import cn.ucai.superwechat.ui.BaseActivity;
+import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.ResultUtils;
 
 /**
@@ -85,5 +87,10 @@ public class ChargeAcitvity extends BaseActivity {
                         });
             }
         }).start();
+    }
+
+    @OnClick(R.id.tv_change_recharge)
+    public void onClick() {
+        MFGT.gotoRechargeActivity(this);
     }
 }

@@ -12,6 +12,7 @@ import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.live.data.model.LiveRoom;
 import cn.ucai.superwechat.live.ui.activity.ChargeAcitvity;
 import cn.ucai.superwechat.live.ui.activity.LiveDetailsActivity;
+import cn.ucai.superwechat.live.ui.activity.RechargeActivity;
 import cn.ucai.superwechat.live.ui.activity.StartLiveActivity;
 import cn.ucai.superwechat.ui.AddContactActivity;
 import cn.ucai.superwechat.ui.AddFriendActivity;
@@ -127,6 +128,12 @@ public class MFGT {
     public static void gotoChargeActivity(Context activity) {
         Intent intent = new Intent();
         intent.setClass(activity, ChargeAcitvity.class);
+        startActivity(activity, intent);
+    }
+
+    public static void gotoRechargeActivity(Context activity) {
+        Intent intent = new Intent();
+        intent.setClass(activity, RechargeActivity.class);
         startActivity(activity, intent);
     }
 }

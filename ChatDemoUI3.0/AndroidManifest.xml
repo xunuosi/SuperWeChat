@@ -504,6 +504,10 @@
                   android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".live.ui.activity.RechargeActivity"
+                  android:screenOrientation="portrait">
+
+        </activity>
         <!-- Live end -->
     </application>
 
