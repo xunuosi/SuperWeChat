@@ -48,6 +48,8 @@ public class PreferenceManager {
 	private static String SHARED_KEY_IM_SERVER = "SHARED_KEY_IM_SERVER";
 	private static String SHARED_KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER";
 
+    private static String SHARED_KEY_CHARGE = "SHARED_KEY_CHARGE";
+
 	@SuppressLint("CommitPrefEdits")
 	private PreferenceManager(Context cxt) {
 		mSharedPreferences = cxt.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -233,4 +235,13 @@ public class PreferenceManager {
 		editor.remove(SHARED_KEY_CURRENTUSER_AVATAR);
 		editor.apply();
 	}
+
+    public void setCharge(int newCharge){
+        editor.putInt(SHARED_KEY_CHARGE, newCharge);
+        editor.commit();
+    }
+
+    public int getCharge(){
+        return mSharedPreferences.getInt(SHARED_KEY_CHARGE, 0);
+    }
 }

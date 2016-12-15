@@ -62,6 +62,7 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
 import android.app.Activity;
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -96,6 +97,8 @@ public class SuperWeChatHelper {
     private Map<String, User> appContactList;
 
     private Map<Integer, Gift> appGiftList;
+
+    private int currentCharge;
 
     private Map<String, RobotUser> robotList;
 
@@ -1453,4 +1456,26 @@ public class SuperWeChatHelper {
         }
         return appGiftList;
     }
+
+    /**
+     * 保存当前用户余额的方法
+     * @param newCharge
+     */
+    public void updateAppCurrentCharge(int newCharge) {
+        currentCharge = newCharge;
+        // 存到首选项一份
+        PreferenceManager.getInstance().setCharge(newCharge);
+    }
+
+    public int getAppCurrentCharge() {
+        int m = 0;
+        if (currentCharge != 0) {
+            return currentCharge;
+        }
+        if (PreferenceManager.getInstance().getCharge() != 0) {
+            return PreferenceManager.getInstance().getCharge();
+        }
+        return m;
+    }
+
 }
