@@ -13,6 +13,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
@@ -69,6 +70,8 @@ public class ChargeAcitvity extends BaseActivity {
                                 if (result != null && result.isRetMsg()) {
                                     Wallet wallet = (Wallet) result.getRetData();
                                     mTvChangeBalance.setText("￥" + String.valueOf(wallet.getBalance()) + ".00");
+                                    // 将更新的余额存入内存和首选项各一份
+                                    SuperWeChatHelper.getInstance().updateAppCurrentCharge(wallet.getBalance());
                                 } else {
                                     Toast.makeText(ChargeAcitvity.this, "获取钱包余额失败,请重试。", Toast.LENGTH_SHORT).show();
                                 }

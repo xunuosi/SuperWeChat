@@ -47,6 +47,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.EMLog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -61,12 +62,17 @@ import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.adapter.MainTabAdpter;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.db.InviteMessgeDao;
 import cn.ucai.superwechat.dialog.TitleMenu.ActionItem;
 import cn.ucai.superwechat.dialog.TitleMenu.TitlePopup;
+import cn.ucai.superwechat.live.data.model.Wallet;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.DMTabHost;
 import cn.ucai.superwechat.widget.MFViewPager;
 
@@ -223,6 +229,35 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }
+        // 登录成功后获取当前用户的余额
+        syncGetCharge();
+    }
+
+    private void syncGetCharge() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetDao.findCharge(getApplicationContext(), EaseUserUtils.getCurrentAppUserInfo().getMUserName(),
+                        new OkHttpUtils.OnCompleteListener<String>() {
+                            @Override
+                            public void onSuccess(String json) {
+                                Result result = ResultUtils.getResultFromJson(json, Wallet.class);
+                                if (result != null && result.isRetMsg()) {
+                                    Wallet wallet = (Wallet) result.getRetData();
+                                    // 将更新的余额存入内存和首选项各一份
+                                    SuperWeChatHelper.getInstance().updateAppCurrentCharge(wallet.getBalance());
+                                } else {
+                                    Toast.makeText(MainActivity.this, "获取钱包余额失败,请重试。", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
+            }
+        }).start();
     }
 
     private void savePower() {
