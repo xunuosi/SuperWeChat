@@ -68,9 +68,9 @@ public class DbOpenHelper extends SQLiteOpenHelper{
 	private static final String CREATE_GIFT_TABLE_SQL =
 			"create table " + UserDao.GIFT_TABLE_NAME + " (" +
 					UserDao.GIFT_COLUMN_NAME_ID + " INTEGER PRIMARY KEY, " +
-					UserDao.GIFT_COLUMN_NAME_GNAME + "TEXT, " +
-					UserDao.GIFT_COLUMN_NAME_PRICE + "INTEGER, " +
-					UserDao.GIFT_COLUMN_NAME_GURL + "TEXT);";
+					UserDao.GIFT_COLUMN_NAME_GNAME + " TEXT, " +
+					UserDao.GIFT_COLUMN_NAME_PRICE + " INTEGER, " +
+					UserDao.GIFT_COLUMN_NAME_GURL + " TEXT);";
 	
 	private DbOpenHelper(Context context) {
 		super(context, getUserDatabaseName(), null, DATABASE_VERSION);
