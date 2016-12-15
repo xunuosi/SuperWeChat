@@ -63,7 +63,14 @@ public class DbOpenHelper extends SQLiteOpenHelper{
                     UserDao.USER_COLUMN_AVATAR_SUFFIX + ", " +
                     UserDao.USER_COLUMN_AVATAR_TYPE + ", " +
                     UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME +
-                    ")";
+                    ");";
+
+	private static final String CREATE_GIFT_TABLE_SQL =
+			"create table " + UserDao.GIFT_TABLE_NAME + " (" +
+					UserDao.GIFT_COLUMN_NAME_ID + " INTEGER PRIMARY KEY, " +
+					UserDao.GIFT_COLUMN_NAME_GNAME + "TEXT, " +
+					UserDao.GIFT_COLUMN_NAME_PRICE + "INTEGER, " +
+					UserDao.GIFT_COLUMN_NAME_GURL + "TEXT);";
 	
 	private DbOpenHelper(Context context) {
 		super(context, getUserDatabaseName(), null, DATABASE_VERSION);
@@ -87,6 +94,7 @@ public class DbOpenHelper extends SQLiteOpenHelper{
 		db.execSQL(CREATE_PREF_TABLE);
 		db.execSQL(ROBOT_TABLE_CREATE);
 		db.execSQL(CREATE_USER_TABLE_SQL);
+        db.execSQL(CREATE_GIFT_TABLE_SQL);
 	}
 
 	@Override

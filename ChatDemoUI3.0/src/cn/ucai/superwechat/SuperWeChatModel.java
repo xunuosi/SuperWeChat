@@ -4,6 +4,7 @@ import android.content.Context;
 
 import cn.ucai.superwechat.db.UserDao;
 import cn.ucai.superwechat.domain.RobotUser;
+import cn.ucai.superwechat.live.data.model.Gift;
 import cn.ucai.superwechat.utils.PreferenceManager;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
@@ -287,6 +288,16 @@ public class SuperWeChatModel {
         UserDao dao = new UserDao(context);
         dao.saveAppContactList(contactList);
         return true;
+    }
+
+    public void saveAppGiftList(ArrayList<Gift> mList) {
+        UserDao dao = new UserDao(context);
+        dao.saveAppGiftList(mList);
+    }
+
+    public Map<Integer, Gift> getAppGiftList() {
+        UserDao dao = new UserDao(context);
+        return dao.getAppGiftList();
     }
 
 

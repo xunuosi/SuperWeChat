@@ -9,6 +9,8 @@ import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.SuperWeChatApplication;
 import cn.ucai.superwechat.domain.InviteMessage;
 import cn.ucai.superwechat.domain.RobotUser;
+import cn.ucai.superwechat.live.data.model.Gift;
+
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.domain.User;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
@@ -473,5 +475,53 @@ public class SuperWeChatDBManager {
         if(db.isOpen()){
             db.delete(UserDao.USER_TABLE_NAME, UserDao.USER_COLUMN_NAME + " = ?", new String[]{username});
         }
+    }
+
+    synchronized public void saveAppGiftList(ArrayList<Gift> gList) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(UserDao.GIFT_TABLE_NAME, null, null);
+            ContentValues contentValues = new ContentValues();
+            for (Gift g : gList) {
+                if(g.getId() != null) {
+                    contentValues.put(UserDao.GIFT_COLUMN_NAME_ID, g.getId());
+                }
+                if(g.getGname() != null) {
+                    contentValues.put(UserDao.GIFT_COLUMN_NAME_GNAME, g.getGname());
+                }
+                if (g.getGprice() != null) {
+                    contentValues.put(UserDao.GIFT_COLUMN_NAME_PRICE, g.getGprice());
+                }
+                if (g.getGurl() != null) {
+                    contentValues.put(UserDao.GIFT_COLUMN_NAME_GURL, g.getGurl());
+                }
+                if(db.isOpen()){
+                    db.replace(UserDao.GIFT_TABLE_NAME, null, contentValues);
+                }
+            }
+        }
+    }
+
+    synchronized public Map<Integer, Gift> getAppGiftList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Map<Integer, Gift> gifts = new Hashtable<>();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select * from " + UserDao.GIFT_TABLE_NAME  + " order by "+UserDao.GIFT_COLUMN_NAME_ID+" asc" , null);
+            while (cursor.moveToNext()) {
+                int key = cursor.getInt(
+                        cursor.getColumnIndex(UserDao.GIFT_COLUMN_NAME_ID));
+                Gift gift = new Gift();
+                gift.setId(key);
+                gift.setGname(cursor.getString(
+                        cursor.getColumnIndex(UserDao.GIFT_COLUMN_NAME_GNAME)));
+                gift.setGprice(cursor.getInt(
+                        cursor.getColumnIndex(UserDao.GIFT_COLUMN_NAME_PRICE)));
+                gift.setGurl(cursor.getString(
+                        cursor.getColumnIndex(UserDao.GIFT_COLUMN_NAME_GURL)));
+                gifts.put(key, gift);
+            }
+            cursor.close();
+        }
+        return gifts;
     }
 }
