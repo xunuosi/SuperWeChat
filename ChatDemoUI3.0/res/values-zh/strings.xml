@@ -20,4 +20,6 @@
     <string name="show_cz">充值:</string>
     <string name="nuo_charge">诺丸币</string>
     <string name="balance">余额</string>
+    <string name="insufficient_balance">余额不足</string>
+    <string name="recharge_money_tip">抱歉!当前余额不足，请充值后重试。</string>
 </resources>

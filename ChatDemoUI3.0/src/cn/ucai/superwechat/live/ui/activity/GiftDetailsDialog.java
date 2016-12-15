@@ -83,6 +83,7 @@ public class GiftDetailsDialog extends DialogFragment {
         mGiftDetailRl.setAdapter(mAdapter);
         mGiftDetailRl.setLayoutManager(mGridLayoutManager);
         mGiftDetailRl.setHasFixedSize(true);
+        mGiftDetailTvShowMoney.setText(String.valueOf(SuperWeChatHelper.getInstance().getAppCurrentCharge()*10));
     }
 
     /**

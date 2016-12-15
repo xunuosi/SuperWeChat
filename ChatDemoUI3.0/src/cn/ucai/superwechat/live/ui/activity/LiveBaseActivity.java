@@ -1,10 +1,12 @@
 package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.live.data.TestAvatarRepository;
 import cn.ucai.superwechat.live.data.model.Gift;
 import cn.ucai.superwechat.ui.BaseActivity;
@@ -95,6 +98,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     protected EMChatRoom chatroom;
     List<String> memberList = new ArrayList<>();
+    // 增加直播界面弹出提示的对话框
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -422,12 +427,49 @@ public abstract class LiveBaseActivity extends BaseActivity {
 //                });
         dialog.setGiftDetailsDialogListener(new GiftDetailsDialog.GiftDetailsDialogListener() {
             @Override
-            public void onMentionClick(String name, int resId) {
+            public void onMentionClick(String gName, int resId, int price) {
                 dialog.dismiss();
-                sendPresentMessage(name,resId);
+                showPayConfirmDialog(gName, resId, price);
             }
         });
         dialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
+    }
+
+    /**
+     * 显示确认支付的对话框
+     * @param name
+     * @param resId
+     */
+    private void showPayConfirmDialog(String name, int resId, int price) {
+        int charge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
+        if (charge > price) {
+            sendPresentMessage(name,resId);
+        } else {
+            showInsufficientBalance();
+        }
+    }
+
+    /**
+     * 显示余额不足的对话框
+     */
+    private void showInsufficientBalance() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.insufficient_balance)
+                .setMessage(R.string.recharge_money_tip);
+        builder.setPositiveButton("去充值", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
     }
 
     private void showUserDetailsDialog(String username) {

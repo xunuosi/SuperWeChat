@@ -171,4 +171,6 @@
     <string name="show_cz">Money:</string>
     <string name="nuo_charge">诺丸币</string>
     <string name="balance">Balance</string>
+    <string name="insufficient_balance">Insufficient Balance</string>
+    <string name="recharge_money_tip">Please Recharge Money</string>
 </resources>
