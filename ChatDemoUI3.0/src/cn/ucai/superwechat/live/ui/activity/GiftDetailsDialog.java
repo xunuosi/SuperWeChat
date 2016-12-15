@@ -22,12 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatApplication;
+import cn.ucai.superwechat.SuperWeChatHelper;
 import cn.ucai.superwechat.bean.Result;
 import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
@@ -88,23 +93,36 @@ public class GiftDetailsDialog extends DialogFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                NetDao.findGiftInfo(context, new OkHttpUtils.OnCompleteListener<String>() {
-                    @Override
-                    public void onSuccess(String json) {
-                        Result result = ResultUtils.getListResultFromJson(json, Gift.class);
-                        if (result != null && result.isRetMsg()) {
-                            mList = (ArrayList<Gift>) result.getRetData();
-                            mAdapter.syncUpdate(mList);
-                        } else {
-                            Toast.makeText(context, getString(R.string.Network_error), Toast.LENGTH_SHORT).show();
+                Map<Integer, Gift> giftMap = SuperWeChatHelper.getInstance().getAppGiftList();
+                if (giftMap != null && !giftMap.isEmpty()) {
+                    ArrayList<Gift> gifts = new ArrayList<>(giftMap.values());
+                    Collections.sort(gifts, new Comparator<Gift>() {
+                        @Override
+                        public int compare(Gift lhs, Gift rhs) {
+                            return lhs.getGprice() - rhs.getGprice();
                         }
-                    }
+                    });
+                    mAdapter.syncUpdate(gifts);
+                } else {
+                    NetDao.findGiftInfo(context, new OkHttpUtils.OnCompleteListener<String>() {
+                        @Override
+                        public void onSuccess(String json) {
+                            Result result = ResultUtils.getListResultFromJson(json, Gift.class);
+                            if (result != null && result.isRetMsg()) {
+                                mList = (ArrayList<Gift>) result.getRetData();
+                                SuperWeChatHelper.getInstance().updateAppGiftList(mList);
+                                mAdapter.syncUpdate(mList);
+                            } else {
+                                Toast.makeText(context, getString(R.string.Network_error), Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                    @Override
-                    public void onError(String error) {
-                        Log.e(TAG, error);
-                    }
-                });
+                        @Override
+                        public void onError(String error) {
+                            Log.e(TAG, error);
+                        }
+                    });
+                }
             }
         }).start();
     }
