@@ -71,7 +71,8 @@ public class ChargeAcitvity extends BaseActivity {
                                 Result result = ResultUtils.getResultFromJson(json, Wallet.class);
                                 if (result != null && result.isRetMsg()) {
                                     Wallet wallet = (Wallet) result.getRetData();
-                                    mTvChangeBalance.setText("￥" + String.valueOf(wallet.getBalance()) + ".00");
+                                    double f = wallet.getBalance() / 10.0;
+                                    mTvChangeBalance.setText("￥" + String.format("%.2f", f));
                                     // 将更新的余额存入内存和首选项各一份
                                     SuperWeChatHelper.getInstance().updateAppCurrentCharge(wallet.getBalance());
                                 } else {
@@ -92,5 +93,10 @@ public class ChargeAcitvity extends BaseActivity {
     @OnClick(R.id.tv_change_recharge)
     public void onClick() {
         MFGT.gotoRechargeActivity(this);
+    }
+
+    @OnClick(R.id.left_image)
+    public void onBackClick() {
+        MFGT.finish(this);
     }
 }
