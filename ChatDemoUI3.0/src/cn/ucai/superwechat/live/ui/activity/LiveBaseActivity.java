@@ -1,5 +1,6 @@
 package cn.ucai.superwechat.live.ui.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -12,8 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +35,7 @@ import cn.ucai.superwechat.live.ui.widget.BarrageLayout;
 import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
 import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
 import cn.ucai.superwechat.live.ui.widget.RoomMessagesView;
+import cn.ucai.superwechat.utils.MFGT;
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.AnimationListener;
@@ -98,8 +103,6 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     protected EMChatRoom chatroom;
     List<String> memberList = new ArrayList<>();
-    // 增加直播界面弹出提示的对话框
-    AlertDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -443,6 +446,19 @@ public abstract class LiveBaseActivity extends BaseActivity {
     private void showPayConfirmDialog(String name, int resId, int price) {
         int charge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
         if (charge > price) {
+            Dialog dialog = new Dialog(this,R.style.Translucent_Dialog);
+
+            dialog.setContentView(R.layout.pay_dialog_layout);
+            //获取到当前Activity的Window
+            Window dialog_window = dialog.getWindow();
+            //获取到LayoutParams
+            WindowManager.LayoutParams dialog_window_attributes = dialog_window.getAttributes();
+            //设置宽度
+            dialog_window_attributes.width=800;
+            //设置高度
+            dialog_window_attributes.height=600;
+            dialog_window.setAttributes(dialog_window_attributes);
+            dialog.show();
             sendPresentMessage(name,resId);
         } else {
             showInsufficientBalance();
@@ -459,7 +475,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
         builder.setPositiveButton("去充值", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        MFGT.gotoRechargeActivity(LiveBaseActivity.this);
                     }
                 });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -468,7 +484,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
-        dialog = builder.create();
+        AlertDialog dialog = builder.create();
         dialog.show();
     }
 
