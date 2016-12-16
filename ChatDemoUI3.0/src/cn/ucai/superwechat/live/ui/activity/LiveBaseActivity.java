@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -86,7 +88,6 @@ public abstract class LiveBaseActivity extends BaseActivity {
     private int charge;
     private int gResId;
     private String gName;
-    private boolean nTip = false;
     Dialog payDialog;
     /**
      * 环信聊天室id
@@ -105,6 +106,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     protected EMChatRoom chatroom;
     List<String> memberList = new ArrayList<>();
+    private boolean notTip = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -433,9 +435,15 @@ public abstract class LiveBaseActivity extends BaseActivity {
             @Override
             public void onMentionClick(String cName, int resId, int price) {
                 // dialog.dismiss();
-                showPayConfirmDialog(price);
+                charge = price;
                 gName = cName;
                 gResId = resId;
+                // 如果已经设置不再弹出支付提示则直接进入支付逻辑方法
+                if (!SuperWeChatHelper.getInstance().getAppPayTip()) {
+                    showPayConfirmDialog();
+                } else {
+                    payGift();
+                }
             }
         });
         gDialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
@@ -445,8 +453,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
      * 显示确认支付的对话框
      *
      */
-    private void showPayConfirmDialog(int price) {
-        charge = price;
+    private void showPayConfirmDialog() {
         payDialog = new Dialog(this, R.style.Translucent_Dialog);
         View view = LayoutInflater.from(this).inflate(R.layout.pay_dialog_layout, null);
         payDialog.setContentView(view);
@@ -463,12 +470,9 @@ public abstract class LiveBaseActivity extends BaseActivity {
         view.findViewById(R.id.pay_dialog_btnPay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int userCharge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
-                if (userCharge < charge) {
-                    showInsufficientBalance();
-                } else {
-                    sendPresentMessage(gName, gResId);
-                }
+                payGift();
+                SuperWeChatHelper.getInstance().setAppPayTip(notTip);
+                payDialog.dismiss();
             }
         });
         view.findViewById(R.id.pay_dialog_btnCancel).setOnClickListener(new View.OnClickListener() {
@@ -477,6 +481,25 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 payDialog.dismiss();
             }
         });
+        CheckBox cbView = (CheckBox) view.findViewById(R.id.pay_dialog_cb);
+        cbView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                notTip = isChecked;
+            }
+        });
+    }
+
+    /**
+     * 支付判断方法
+     */
+    private void payGift() {
+        int userCharge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
+        if (userCharge < charge) {
+            showInsufficientBalance();
+        } else {
+            sendPresentMessage(gName, gResId);
+        }
     }
 
     /**
