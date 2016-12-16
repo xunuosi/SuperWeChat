@@ -259,4 +259,20 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    /**
+     * 发送礼物的方法
+     */
+    public static void sendGift(Context mcontext, String username, String toUser, int gId,
+                                OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_GIVING_GIFT)
+                .addParam(I.Live.USERNAME, username)
+                .addParam(I.Live.ANCHOR, toUser)
+                .addParam(I.Live.GIFT_ID, String.valueOf(gId))
+                .addParam(I.Live.GIFT_NUM,"1")
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

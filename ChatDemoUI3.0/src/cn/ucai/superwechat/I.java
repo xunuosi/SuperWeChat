@@ -19,6 +19,9 @@ public interface I {
 
     public static interface Live {
         String USERNAME                             =       "uname";
+		String ANCHOR                             	=       "anchor";
+        String GIFT_ID                             	=       "giftId";
+        String GIFT_NUM                            	=       "giftNum";
     }
 
 	public static interface Contact {
