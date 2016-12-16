@@ -55,7 +55,7 @@
                 android:id="@+id/gift_detail_tv_send"
                 android:layout_width="62dp"
                 android:layout_height="38dp"
-                android:text="@string/send"
+                android:text="@string/change_recharge"
                 style="@style/TextShow_White"
                 android:textSize="16sp"
                 android:background="@drawable/btn_bg_xns"

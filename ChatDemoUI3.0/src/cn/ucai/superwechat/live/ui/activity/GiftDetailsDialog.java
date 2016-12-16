@@ -37,6 +37,7 @@ import cn.ucai.superwechat.data.NetDao;
 import cn.ucai.superwechat.data.OkHttpUtils;
 import cn.ucai.superwechat.live.data.model.Gift;
 import cn.ucai.superwechat.live.ui.GridMarginDecoration;
+import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.ResultUtils;
 
 /**
@@ -83,7 +84,7 @@ public class GiftDetailsDialog extends DialogFragment {
         mGiftDetailRl.setAdapter(mAdapter);
         mGiftDetailRl.setLayoutManager(mGridLayoutManager);
         mGiftDetailRl.setHasFixedSize(true);
-        mGiftDetailTvShowMoney.setText(String.valueOf(SuperWeChatHelper.getInstance().getAppCurrentCharge()*10));
+        mGiftDetailTvShowMoney.setText(String.valueOf(SuperWeChatHelper.getInstance().getAppCurrentCharge()));
     }
 
     /**
@@ -140,12 +141,13 @@ public class GiftDetailsDialog extends DialogFragment {
             case R.id.gift_detail_tv_showMoney:
                 break;
             case R.id.gift_detail_tv_send:
+                MFGT.gotoRechargeActivity(getContext());
                 break;
         }
     }
 
     interface GiftDetailsDialogListener {
-        void onMentionClick(String gName,int resId,int price);
+        void onMentionClick(String gName, int gId, int resId, int price);
     }
 
 
@@ -207,7 +209,7 @@ public class GiftDetailsDialog extends DialogFragment {
             gHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialogListener.onMentionClick(bean.getGname(), resId, bean.getGprice());
+                    dialogListener.onMentionClick(bean.getGname(), bean.getId(), resId, bean.getGprice());
                 }
             });
         }

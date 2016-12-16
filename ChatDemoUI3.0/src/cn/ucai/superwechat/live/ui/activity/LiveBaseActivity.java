@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.AnimationListener;
@@ -48,6 +49,11 @@ import cn.ucai.superwechat.Constant;
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
 import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.bean.Result;
+import cn.ucai.superwechat.data.NetDao;
+import cn.ucai.superwechat.data.OkHttpUtils;
+import cn.ucai.superwechat.live.data.model.Gift;
+import cn.ucai.superwechat.live.data.model.Wallet;
 import cn.ucai.superwechat.live.ui.widget.BarrageLayout;
 import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
 import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
@@ -56,6 +62,7 @@ import cn.ucai.superwechat.live.utils.Utils;
 import cn.ucai.superwechat.ui.BaseActivity;
 import cn.ucai.superwechat.ui.ConversationListFragment;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.ResultUtils;
 
 /**
  * Created by wei on 2016/6/12.
@@ -89,6 +96,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
     private int gResId;
     private String gName;
     Dialog payDialog;
+    private Gift gift;
     /**
      * 环信聊天室id
      */
@@ -433,11 +441,12 @@ public abstract class LiveBaseActivity extends BaseActivity {
 //                });
         gDialog.setGiftDetailsDialogListener(new GiftDetailsDialog.GiftDetailsDialogListener() {
             @Override
-            public void onMentionClick(String cName, int resId, int price) {
+            public void onMentionClick(String cName, int gId, int resId, int price) {
                 // dialog.dismiss();
                 charge = price;
                 gName = cName;
                 gResId = resId;
+                gift = SuperWeChatHelper.getInstance().getAppGiftList().get(gId);
                 // 如果已经设置不再弹出支付提示则直接进入支付逻辑方法
                 if (!SuperWeChatHelper.getInstance().getAppPayTip()) {
                     showPayConfirmDialog();
@@ -498,9 +507,42 @@ public abstract class LiveBaseActivity extends BaseActivity {
         if (userCharge < charge) {
             showInsufficientBalance();
         } else {
-            sendPresentMessage(gName, gResId);
+            pay2sendGift();
         }
     }
+
+    /**
+     * 支付礼物和发送礼物的方法
+     */
+    private void pay2sendGift() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String user = SuperWeChatHelper.getInstance().getCurrentUsernName();
+                String toUser = anchorId;
+                int gId = gift.getId();
+                NetDao.sendGift(LiveBaseActivity.this, user, toUser, gId, new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String json) {
+                        Result result = ResultUtils.getResultFromJson(json, Wallet.class);
+                        if (result != null && result.isRetMsg()) {
+                            sendPresentMessage(gName, gResId);
+                            Wallet wallet = (Wallet) result.getRetData();
+                            SuperWeChatHelper.getInstance().updateAppCurrentCharge(wallet.getBalance());
+                        } else {
+                            Toast.makeText(LiveBaseActivity.this, "抱歉！网络异常，支付失败。", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(LiveBaseActivity.this, "抱歉！网络异常，支付失败。", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
+    }
+
 
     /**
      * 显示余额不足的对话框
