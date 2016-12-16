@@ -72,6 +72,7 @@ import cn.ucai.superwechat.live.data.model.Wallet;
 import cn.ucai.superwechat.runtimepermissions.PermissionsManager;
 import cn.ucai.superwechat.runtimepermissions.PermissionsResultAction;
 import cn.ucai.superwechat.utils.MFGT;
+import cn.ucai.superwechat.utils.PreferenceManager;
 import cn.ucai.superwechat.utils.ResultUtils;
 import cn.ucai.superwechat.widget.DMTabHost;
 import cn.ucai.superwechat.widget.MFViewPager;
@@ -231,6 +232,8 @@ public class MainActivity extends BaseActivity {
         }
         // 登录成功后获取当前用户的余额
         syncGetCharge();
+        // 是否弹出支付确认提示
+        SuperWeChatHelper.getInstance().setAppPayTip(PreferenceManager.getInstance().getPayTip());
     }
 
     private void syncGetCharge() {

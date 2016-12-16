@@ -49,6 +49,7 @@ public class PreferenceManager {
 	private static String SHARED_KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER";
 
     private static String SHARED_KEY_CHARGE = "SHARED_KEY_CHARGE";
+    private static String SHARED_KEY_PAY_TIP = "SHARED_KEY_PAY_TIP";
 
 	@SuppressLint("CommitPrefEdits")
 	private PreferenceManager(Context cxt) {
@@ -244,4 +245,13 @@ public class PreferenceManager {
     public int getCharge(){
         return mSharedPreferences.getInt(SHARED_KEY_CHARGE, 0);
     }
+
+	public void setPayTip(boolean tipChoose){
+		editor.putBoolean(SHARED_KEY_PAY_TIP, tipChoose);
+		editor.commit();
+	}
+
+	public boolean getPayTip(){
+		return mSharedPreferences.getBoolean(SHARED_KEY_PAY_TIP, false);
+	}
 }

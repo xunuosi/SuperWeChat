@@ -100,6 +100,8 @@ public class SuperWeChatHelper {
 
     private int currentCharge;
 
+    private boolean noPayTip = false;
+
     private Map<String, RobotUser> robotList;
 
     private UserProfileManager userProManager;
@@ -1459,6 +1461,20 @@ public class SuperWeChatHelper {
 
     /**
      * 保存当前用户余额的方法
+     * @param tip
+     */
+    public void setAppPayTip(boolean tip) {
+        noPayTip = tip;
+        // 存到首选项一份
+        PreferenceManager.getInstance().setPayTip(noPayTip);
+    }
+
+    public boolean getAppPayTip() {
+        return noPayTip;
+    }
+
+    /**
+     * 保存是否弹出付款提示的方法
      * @param newCharge
      */
     public void updateAppCurrentCharge(int newCharge) {

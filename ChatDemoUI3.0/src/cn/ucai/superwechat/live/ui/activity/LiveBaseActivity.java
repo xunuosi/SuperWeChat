@@ -17,25 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.ucai.superwechat.Constant;
-import cn.ucai.superwechat.I;
-import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.SuperWeChatHelper;
-import cn.ucai.superwechat.live.data.TestAvatarRepository;
-import cn.ucai.superwechat.live.data.model.Gift;
-import cn.ucai.superwechat.ui.BaseActivity;
-import cn.ucai.superwechat.ui.ConversationListFragment;
-import cn.ucai.superwechat.live.utils.Utils;
-import cn.ucai.superwechat.live.ui.widget.BarrageLayout;
-import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
-import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
-import cn.ucai.superwechat.live.ui.widget.RoomMessagesView;
-import cn.ucai.superwechat.utils.MFGT;
 
 import com.bumptech.glide.Glide;
 import com.github.florent37.viewanimator.AnimationListener;
@@ -57,6 +38,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.superwechat.Constant;
+import cn.ucai.superwechat.I;
+import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.live.ui.widget.BarrageLayout;
+import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
+import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
+import cn.ucai.superwechat.live.ui.widget.RoomMessagesView;
+import cn.ucai.superwechat.live.utils.Utils;
+import cn.ucai.superwechat.ui.BaseActivity;
+import cn.ucai.superwechat.ui.ConversationListFragment;
+import cn.ucai.superwechat.utils.MFGT;
 
 /**
  * Created by wei on 2016/6/12.
@@ -85,7 +82,12 @@ public abstract class LiveBaseActivity extends BaseActivity {
     ImageView newMsgNotifyImage;
 
     protected String anchorId;
-
+    GiftDetailsDialog gDialog;
+    private int charge;
+    private int gResId;
+    private String gName;
+    private boolean nTip = false;
+    Dialog payDialog;
     /**
      * 环信聊天室id
      */
@@ -417,8 +419,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
     }
 
     private void showGiftDetailsDialog() {
-        final GiftDetailsDialog dialog =
-                GiftDetailsDialog.newInstance();
+        gDialog = GiftDetailsDialog.newInstance();
 //        dialog.setUserDetailsDialogListener(
 //                new RoomUserDetailsDialog.UserDetailsDialogListener() {
 //                    @Override
@@ -428,56 +429,70 @@ public abstract class LiveBaseActivity extends BaseActivity {
 //                        showInputView();
 //                    }
 //                });
-        dialog.setGiftDetailsDialogListener(new GiftDetailsDialog.GiftDetailsDialogListener() {
+        gDialog.setGiftDetailsDialogListener(new GiftDetailsDialog.GiftDetailsDialogListener() {
             @Override
-            public void onMentionClick(String gName, int resId, int price) {
-                dialog.dismiss();
-                showPayConfirmDialog(gName, resId, price);
+            public void onMentionClick(String cName, int resId, int price) {
+                // dialog.dismiss();
+                showPayConfirmDialog(price);
+                gName = cName;
+                gResId = resId;
             }
         });
-        dialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
+        gDialog.show(getSupportFragmentManager(), "GiftDetailsDialog");
     }
 
     /**
      * 显示确认支付的对话框
-     * @param name
-     * @param resId
+     *
      */
-    private void showPayConfirmDialog(String name, int resId, int price) {
-        int charge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
-        if (charge > price) {
-            Dialog dialog = new Dialog(this,R.style.Translucent_Dialog);
-
-            dialog.setContentView(R.layout.pay_dialog_layout);
-            //获取到当前Activity的Window
-            Window dialog_window = dialog.getWindow();
-            //获取到LayoutParams
-            WindowManager.LayoutParams dialog_window_attributes = dialog_window.getAttributes();
-            //设置宽度
-            dialog_window_attributes.width=800;
-            //设置高度
-            dialog_window_attributes.height=600;
-            dialog_window.setAttributes(dialog_window_attributes);
-            dialog.show();
-            sendPresentMessage(name,resId);
-        } else {
-            showInsufficientBalance();
-        }
+    private void showPayConfirmDialog(int price) {
+        charge = price;
+        payDialog = new Dialog(this, R.style.Translucent_Dialog);
+        View view = LayoutInflater.from(this).inflate(R.layout.pay_dialog_layout, null);
+        payDialog.setContentView(view);
+        //获取到当前Activity的Window
+        Window dialog_window = payDialog.getWindow();
+        //获取到LayoutParams
+        WindowManager.LayoutParams dialog_window_attributes = dialog_window.getAttributes();
+        //设置宽度
+        dialog_window_attributes.width = 800;
+        //设置高度
+        dialog_window_attributes.height = 600;
+        dialog_window.setAttributes(dialog_window_attributes);
+        payDialog.show();
+        view.findViewById(R.id.pay_dialog_btnPay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int userCharge = SuperWeChatHelper.getInstance().getAppCurrentCharge();
+                if (userCharge < charge) {
+                    showInsufficientBalance();
+                } else {
+                    sendPresentMessage(gName, gResId);
+                }
+            }
+        });
+        view.findViewById(R.id.pay_dialog_btnCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payDialog.dismiss();
+            }
+        });
     }
 
     /**
      * 显示余额不足的对话框
      */
     private void showInsufficientBalance() {
+        payDialog.dismiss();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.insufficient_balance)
                 .setMessage(R.string.recharge_money_tip);
         builder.setPositiveButton("去充值", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        MFGT.gotoRechargeActivity(LiveBaseActivity.this);
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MFGT.gotoRechargeActivity(LiveBaseActivity.this);
+            }
+        });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -567,7 +582,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
     /**
      * 发送礼物时显示的消息
      */
-    public void sendPresentMessage(String gName,int resId) {
+    public void sendPresentMessage(String gName, int resId) {
+        gDialog.dismiss();
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         message.setReceipt(chatroomId);
         EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(Constant.CMD_GIFT);
