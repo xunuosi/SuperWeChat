@@ -21,6 +21,7 @@ import com.hyphenate.easeui.utils.EaseUserUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
+import cn.ucai.superwechat.SuperWeChatHelper;
 
 /**
  * Created by wei on 2016/6/13.
@@ -97,7 +98,7 @@ public class BarrageLayout extends LinearLayout {
         // 设置弹幕的头像
         ImageView avatarView = (ImageView) barrageView.findViewById(R.id.avatar);
         EaseUserUtils.setAppUserAvatar(getContext(), username, avatarView);
-        nameView.setText(username);
+        nameView.setText(EaseUserUtils.getAppUserInfo(username).getMUserNick());
         contentView.setText(msgContent);
         return barrageView;
     }

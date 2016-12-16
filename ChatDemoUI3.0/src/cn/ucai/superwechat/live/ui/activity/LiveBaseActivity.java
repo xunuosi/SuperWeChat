@@ -364,6 +364,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
                         // 显示弹幕
                         if (messageView.isBarrageShow) {
                             message.setAttribute(Constant.EXTRA_IS_BARRAGE_MSG, true);
+                            //barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
+                            // 弹幕显示昵称
                             barrageLayout.addBarrage(content, EMClient.getInstance().getCurrentUser());
                         }
                         message.setChatType(EMMessage.ChatType.ChatRoom);
@@ -733,7 +735,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
                     showUserDetailsDialog(namelist.get(position));
                 }
             });
-            //暂时使用测试数据
+
             Glide.with(context)
                     .load(EaseUserUtils.getAppUserInfo(namelist.get(position)).getAvatar())
                     .placeholder(R.drawable.ease_default_avatar)
