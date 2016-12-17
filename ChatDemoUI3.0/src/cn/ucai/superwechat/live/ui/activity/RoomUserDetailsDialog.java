@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.ui.ChatFragment;
 
 /**
  * Created by wei on 2016/7/25.

@@ -21,8 +21,6 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
-import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.hyphenate.exceptions.HyphenateException;
 
 import cn.ucai.superwechat.I;
 import cn.ucai.superwechat.R;
@@ -143,6 +141,7 @@ public class RoomMessagesView extends RelativeLayout{
 
     public void refreshSelectLast(){
         if(adapter != null){
+            Log.e("adapter", "refreshSelectLast");
             adapter.refresh();
             listview.smoothScrollToPosition(adapter.getItemCount()-1);
         }

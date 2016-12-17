@@ -6,17 +6,14 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,28 +25,20 @@ import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.ucloud.common.util.DeviceUtils;
 import com.ucloud.live.UEasyStreaming;
 import com.ucloud.live.UStreamingProfile;
 import com.ucloud.live.widget.UAspectFrameLayout;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
-import java.util.TimeZone;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.live.data.TestDataRepository;
 import cn.ucai.superwechat.live.data.model.LiveRoom;
 import cn.ucai.superwechat.live.data.model.LiveSettings;
 import cn.ucai.superwechat.live.utils.Log2FileUtil;
-import cn.ucai.superwechat.ui.ConversationListFragment;
 import cn.ucai.superwechat.utils.MFGT;
 
 public class StartLiveActivity extends LiveBaseActivity
@@ -122,8 +111,8 @@ public class StartLiveActivity extends LiveBaseActivity
         room = intent.getParcelableExtra("liveroom");
         liveId = room.getId();
         chatroomId = room.getChatroomId();
-        anchorId = room.getAnchorId();
-        usernameView.setText(anchorId);
+        anchorId = EMClient.getInstance().getCurrentUser();
+        usernameView.setText(EaseUserUtils.getCurrentAppUserInfo().getMUserNick());
         initEnv();
         initView();
     }

@@ -3,7 +3,9 @@ package cn.ucai.superwechat.live.ui.widget;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,11 +19,12 @@ import com.github.florent37.viewanimator.AnimationBuilder;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.SuperWeChatHelper;
+import cn.ucai.superwechat.SuperWeChatApplication;
 
 /**
  * Created by wei on 2016/6/13.
@@ -55,7 +58,8 @@ public class BarrageLayout extends LinearLayout {
         public void handleMessage(Message msg) {
             int what = msg.what;
             final View barrageView = (View) msg.obj;
-            System.out.println("what = " + what);
+            //System.out.println("what = " + what);
+            Log.e("barrageLayout,what=", what + "");
             if(what == 0){
                 container2.addView(barrageView);
             }else{
@@ -92,12 +96,13 @@ public class BarrageLayout extends LinearLayout {
     }
 
     private View newBarrageView(String msgContent, String username){
+        Log.e("barrageLayout", msgContent + ":" + username);
         View barrageView = LayoutInflater.from(getContext()).inflate(R.layout.layout_barrage_show, null);
         TextView nameView = (TextView) barrageView.findViewById(R.id.name);
         TextView contentView = (TextView) barrageView.findViewById(R.id.content);
         // 设置弹幕的头像
-        ImageView avatarView = (ImageView) barrageView.findViewById(R.id.avatar);
-        EaseUserUtils.setAppUserAvatar(getContext(), username, avatarView);
+        EaseImageView avatarView = (EaseImageView) barrageView.findViewById(R.id.avatar);
+        EaseUserUtils.setAppUserAvatar(getContext(),username,avatarView);
         nameView.setText(EaseUserUtils.getAppUserInfo(username).getMUserNick());
         contentView.setText(msgContent);
         return barrageView;

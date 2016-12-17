@@ -40,7 +40,6 @@ import android.widget.RelativeLayout;
 import java.util.Random;
 
 import cn.ucai.superwechat.R;
-import cn.ucai.superwechat.live.ui.widget.BezierEvaluator;
 
 
 public class PeriscopeLayout extends RelativeLayout {

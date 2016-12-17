@@ -508,6 +508,10 @@
                   android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".live.ui.activity.ChatActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTop"
+            />
         <!-- Live end -->
     </application>
 

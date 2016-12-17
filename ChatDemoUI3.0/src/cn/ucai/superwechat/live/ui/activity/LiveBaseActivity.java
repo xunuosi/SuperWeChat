@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +60,6 @@ import cn.ucai.superwechat.live.ui.widget.LiveLeftGiftView;
 import cn.ucai.superwechat.live.ui.widget.PeriscopeLayout;
 import cn.ucai.superwechat.live.ui.widget.RoomMessagesView;
 import cn.ucai.superwechat.live.utils.Utils;
-import cn.ucai.superwechat.ui.BaseActivity;
-import cn.ucai.superwechat.ui.ConversationListFragment;
 import cn.ucai.superwechat.utils.MFGT;
 import cn.ucai.superwechat.utils.ResultUtils;
 
@@ -303,8 +302,7 @@ public abstract class LiveBaseActivity extends BaseActivity {
                 // 如果是当前会话的消息，刷新聊天页面
                 if (username.equals(chatroomId)) {
                     if (message.getBooleanAttribute(Constant.EXTRA_IS_BARRAGE_MSG, false)) {
-                        barrageLayout.addBarrage(((EMTextMessageBody) message.getBody()).getMessage(),
-                                message.getFrom());
+                        barrageLayout.addBarrage(((EMTextMessageBody) message.getBody()).getMessage(),"xns2016");
                     }
                     messageView.refreshSelectLast();
                 } else {

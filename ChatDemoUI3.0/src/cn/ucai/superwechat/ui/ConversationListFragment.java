@@ -31,8 +31,6 @@ import com.hyphenate.util.NetUtils;
 
 public class ConversationListFragment extends EaseConversationListFragment{
     private static final java.lang.String TAG = ConversationListFragment.class.getSimpleName();
-    private static final String ARG_ANCHOOR = "anchorId";
-    private static final String ARG_IS_NORMAL = "isNormalStyle";
 
     private TextView errorText;
 
@@ -151,18 +149,4 @@ public class ConversationListFragment extends EaseConversationListFragment{
         return true;
     }
 
-    /**
-     * create a ConversationListFragment instance
-     * @param anchorId anchori id
-     * @param isNormalStyle whether the fragemnt is normal style
-     * @return
-     */
-    public static ConversationListFragment newInstance(String anchorId, boolean isNormalStyle){
-        ConversationListFragment fragment = new ConversationListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ARG_ANCHOOR,anchorId);
-        bundle.putBoolean(ARG_IS_NORMAL,isNormalStyle);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 }
