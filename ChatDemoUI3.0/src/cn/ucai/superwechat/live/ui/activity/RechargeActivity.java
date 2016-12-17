@@ -2,6 +2,7 @@ package cn.ucai.superwechat.live.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -42,15 +43,15 @@ public class RechargeActivity extends BaseActivity {
     }
 
     private void checkInfo() {
-        String n = mEtRechargeAmount.getText().toString();
+        String n = mEtRechargeAmount.getText().toString().trim();
         if (n.equals("")) {
             Toast.makeText(this, R.string.recharge_money_not_null, Toast.LENGTH_SHORT).show();
             return;
-        } else if (n.indexOf("0") == 0) {
-            Toast.makeText(this, R.string.recharge_invalid, Toast.LENGTH_SHORT).show();
-            return;
-        } else if (Integer.parseInt(n) == 0) {
+        } else if (Double.parseDouble(n) == 0) {
             Toast.makeText(this, R.string.recharge_money_not_zero, Toast.LENGTH_SHORT).show();
+            return;
+        } else if (!n.matches("^[0-9]+(.[0-9]{1})?$")) {
+            Toast.makeText(this, "只能输入小数点后一位", Toast.LENGTH_SHORT).show();
             return;
         }
         gotoRecharge(n);
