@@ -54,7 +54,6 @@ public class ChargeAcitvity extends BaseActivity {
         mTitle.setText(R.string.balance);
         mSubtitle.setText(R.string.nuo_charge);
         mTvChangeBalance.setText("￥0.00");
-        syncUpdate();
     }
 
     /**
@@ -98,5 +97,11 @@ public class ChargeAcitvity extends BaseActivity {
     @OnClick(R.id.left_image)
     public void onBackClick() {
         MFGT.finish(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        syncUpdate();
     }
 }

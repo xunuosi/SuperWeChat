@@ -22,6 +22,7 @@ public interface I {
 		String ANCHOR                             	=       "anchor";
         String GIFT_ID                             	=       "giftId";
         String GIFT_NUM                            	=       "giftNum";
+		String RMB									=		"rmb";
     }
 
 	public static interface Contact {

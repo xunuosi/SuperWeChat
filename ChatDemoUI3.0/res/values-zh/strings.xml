@@ -24,4 +24,6 @@
     <string name="recharge_money_tip">抱歉!当前余额不足，请充值后重试。</string>
     <string name="not_notify">不再提示</string>
     <string name="confirm_pay">支付</string>
+    <string name="recharge_invalid">输入金额格式非法!</string>
+    <string name="recharge_fail">抱歉!充值失败,请重试。</string>
 </resources>

@@ -175,4 +175,6 @@
     <string name="recharge_money_tip">Please Recharge Money</string>
     <string name="not_notify">Not Notify</string>
     <string name="confirm_pay">Pay</string>
+    <string name="recharge_invalid">Invalid</string>
+    <string name="recharge_fail">Recharge Fail</string>
 </resources>

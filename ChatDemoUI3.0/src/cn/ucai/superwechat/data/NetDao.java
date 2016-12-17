@@ -275,4 +275,21 @@ public class NetDao {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    /**
+     * 获取用户余额的方法
+     *
+     * @param mcontext
+     * @param listener
+     */
+    public static void recharege(Context mcontext, String username, String amount,
+                                 OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_RECHARGE)
+                .addParam(I.Live.USERNAME, username)
+                .addParam(I.Live.RMB, amount)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }
